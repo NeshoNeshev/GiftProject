@@ -3,17 +3,15 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using GiftProject.Web.ViewModels.Administration.Product;
+
     public interface IProductService
     {
-        Task CreateAsync();
+        Task CreateAsync(ProductInputModel model);
 
         public IEnumerable<T> GetAll<T>(int? count = null);
 
-        public bool FindByNameAsync(string name);
-
-        public bool FindByIdAsync(int id);
-
-        public Task UpdateAsync();
+        public Task EditAsync(EditProductModel model);
 
     }
 }

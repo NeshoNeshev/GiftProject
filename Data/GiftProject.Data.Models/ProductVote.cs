@@ -1,4 +1,6 @@
-﻿namespace GiftProject.Data.Models
+﻿using System;
+
+namespace GiftProject.Data.Models
 {
     using GiftProject.Data.Common.Models;
 
@@ -12,6 +14,8 @@
 
         public ApplicationUser ApplicationUser { get; set; }
 
-        public decimal Value { get; set; }
+        public int Rate { get; set; }
+
+        public DateTime NextVoteDate { get; set; }
     }
 }

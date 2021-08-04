@@ -3,31 +3,40 @@
     ViewData["Title"] = "Create Product";
 }
 <div class="text-center">
-    <h1 class="text-primary">@this.ViewData["Title"]</h1>
+    <h1 class="text-primary" >@this.ViewData["Title"]</h1>
 </div>
 <form method="post" asp-action="CreateProduct">
-    <section class="border border-primary">
+    <section class="border">
         <div class="container">
             <div class="row" style="margin-bottom: 20px">
-                <div class="col-md-2">
-                    <label asp-for="CategoryId" class="text-primary"></label>
+                <div class="col-md-4">
+                    <label asp-for="CategoryId" ></label>
                     <select asp-for="CategoryId" class="form-control">
                         @foreach (var item in Model.CategoryDropDown)
                         {
-                            <option value="@item.Id">@item.Name</option>
+                            <option class="text-center" value="@item.Id">@item.Name</option>
                         }
                     </select>
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
-                </div>
-                <div class="col-md-2">
-                    <label asp-for="ImgUrl" class="text-primary"></label>
-                    <input asp-for="ImgUrl" class="form-control" placeholder="Enter Img Url" />
-                    <span asp-validation-for="ImgUrl" class="text-danger"></span>
-                </div>
-                <div class="col-md-4">
-                    <label asp-for="Description" class="text-primary"></label>
-                    <textarea asp-for="Description" rows="4" class="form-control" placeholder="Enter description"></textarea>
-                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <div >
+                        <label class="text-center"  asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Enter Img Url" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div >
+                        <label class="text-center"  asp-for="ImgUrl"></label>
+                        <input asp-for="ImgUrl" class="form-control" placeholder="Enter Img Url" />
+                        <span asp-validation-for="ImgUrl" class="text-danger"></span>
+                    </div>
+                    <div >
+                        <label class="text-center"  asp-for="Description"></label>
+                        <textarea asp-for="Description" rows="4" class="form-control" placeholder="Enter description"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+                        <input class="form-control" type="file" id="formFileMultiple" multiple />
+                    </div>
                 </div>
             </div>
         </div>

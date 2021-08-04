@@ -14,9 +14,9 @@
 <body>
 
     <header>
-        <nav class="navbar navbar-expand-lg  navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg  navbar-light bg-white border-bottom ">
             <div class="container">
-                <a style="color: #0563bb" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Index</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Index</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -28,8 +28,8 @@
                                 Category
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Category" asp-action="CreateCategory">Create Category</a>
-                                <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Category" asp-action="EditCategory">Edit Category</a>
+                                <a class="nav-link" asp-area="Administration" asp-controller="Category" asp-action="CreateCategory">Create Category</a>
+                                <a  class="nav-link" asp-area="Administration" asp-controller="Category" asp-action="EditCategory">Edit Category</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -37,8 +37,8 @@
                                 Product
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Product" asp-action="CreateProduct">Create Product</a>
-                                <a style="color: #0563bb" class="nav-link" asp-area="Administration" asp-controller="Product" asp-action="EditProduct">Edit Product</a>
+                                <a  class="nav-link" asp-area="Administration" asp-controller="Product" asp-action="CreateProduct">Create Product</a>
+                                <a  class="nav-link" asp-area="Administration" asp-controller="Product" asp-action="EditProduct">Edit Product</a>
                             </div>
                         </li>
                     </ul>
@@ -47,7 +47,7 @@
         </nav>
     </header>
 
-    <div class="container box-shadow mb-3">
+    <div class="container">
         <main role="main" class="pb-3">
             @this.RenderBody()
         </main>

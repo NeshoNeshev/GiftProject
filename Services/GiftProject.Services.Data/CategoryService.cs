@@ -1,15 +1,13 @@
-﻿using System;
-using System.Threading.Tasks;
-using GiftProject.Web.ViewModels.Administration.Category;
-
-namespace GiftProject.Services.Data
+﻿namespace GiftProject.Services.Data
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using GiftProject.Data.Common.Repositories;
     using GiftProject.Data.Models;
     using GiftProject.Services.Mapping;
+    using GiftProject.Web.ViewModels.Administration.Category;
 
     public class CategoryService : ICategoryService
     {
@@ -50,6 +48,5 @@ namespace GiftProject.Services.Data
         public bool FindByName(string name) => this.categoryRepository
                 .All()
                 .Any(c => c.Name == name);
-
     }
 }

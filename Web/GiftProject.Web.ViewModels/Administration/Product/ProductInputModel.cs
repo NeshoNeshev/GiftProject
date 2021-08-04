@@ -1,15 +1,16 @@
-﻿using GiftProject.Services.Mapping;
-
-namespace GiftProject.Web.ViewModels.Administration.Product
+﻿namespace GiftProject.Web.ViewModels.Administration.Product
 {
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
+    using GiftProject.Services.Mapping;
     using GiftProject.Web.ViewModels.Administration.Category;
 
     public class ProductInputModel : IMapFrom<Data.Models.Product>
     {
+        public int Id { get; set; }
+
         [Required]
         [DisplayName("Product Name")]
         public string Name { get; set; }

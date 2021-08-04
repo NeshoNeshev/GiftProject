@@ -1,0 +1,18 @@
+﻿
+@using GiftProject.Web.ViewModels.Product
+@model GiftProject.Web.ViewModels.Product.AllProductViewModel
+@{
+    var number = 0;
+    this.ViewData["Title"] = "All Products";
+}
+@foreach (var product in Model.AllProducts)
+{
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="@product.ImgUrl" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">@product.Name</h5>
+            <p class="card-text">@product.Description</p>
+            <button type="submit" class="btn btn-danger">Delete product</button>
+        </div>
+    </div>
+}
