@@ -7,6 +7,7 @@
     using CloudinaryDotNet;
     using GiftProject.Common;
     using GiftProject.Services.Data;
+    using GiftProject.Web.CloudinaryHelper;
     using GiftProject.Web.ViewModels.Administration.Category;
     using GiftProject.Web.ViewModels.Administration.Product;
     using GiftProject.Web.ViewModels.Product;
@@ -20,17 +21,15 @@
     {
         private readonly IProductService productService;
         private readonly ICategoryService categoryService;
-        private readonly ICloudinaryExtensionService cloudinaryExtension;
-        private readonly Cloudinary cloudinary;
+        private readonly Cloudinary _cloudinary;
         private readonly IEnumerable<ProductDropDownModel> productDropDown;
         private readonly IEnumerable<CategoryDropDownModel> categoryDropDown;
 
-        public ProductController(IProductService productService, ICategoryService categoryService, ICloudinaryExtensionService cloudinaryExtension, Cloudinary cloudinary)
+        public ProductController(IProductService productService, ICategoryService categoryService, Cloudinary cloudinary)
         {
             this.productService = productService;
             this.categoryService = categoryService;
-            this.cloudinaryExtension = cloudinaryExtension;
-            this.cloudinary = cloudinary;
+            _cloudinary = cloudinary;
             this.categoryDropDown = this.categoryService.GetAll<CategoryDropDownModel>();
             this.productDropDown = this.productService.GetAll<ProductDropDownModel>();
         }
@@ -44,16 +43,17 @@
         [Authorize]
         public async Task<IActionResult> CreateProduct(ProductInputModel model, IFormFile file)
         {
+            model.ImgUrl = await CloudinaryExtension.UploadAsync(_cloudinary, file);
 
             if (!this.ModelState.IsValid)
             {
+                model.CategoryDropDown = this.categoryDropDown.ToList();
                 return this.View(model);
             }
 
-            model.ImgUrl = await this.cloudinaryExtension.UploadAsync(this.cloudinary, file);
             await this.productService.CreateAsync(model);
 
-            return this.View();
+            return this.RedirectToAction("AllProduct", "Product", new { area = "Administration" });
         }
 
         [HttpGet]
@@ -73,6 +73,21 @@
             await this.productService.EditAsync(model);
 
             return this.View();
+        }
+
+        //[HttpGet]
+        //[Authorize]
+        //public async Task<IActionResult> Remove(int id)
+        //{
+           
+        //    return this.View();
+        //}
+
+        [HttpPost]
+        public async Task<IActionResult> Remove( int id)
+        {
+            await this.productService.DeleteByIdAsync(id);
+            return this.RedirectToAction("AllProduct", "Product", new { area = "Administration" });
         }
 
         [HttpGet]

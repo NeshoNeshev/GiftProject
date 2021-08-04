@@ -23,7 +23,7 @@
 
         public async Task CreateAsync(ProductInputModel model)
         {
-            var productExist = await this.productRepository.All().AnyAsync(x => x.Id == model.Id);
+            var productExist = await this.productRepository.All().AnyAsync(x => x.Name == model.Name);
             if (productExist)
             {
                 throw new ArgumentException(
@@ -31,7 +31,6 @@
             }
 
             //Todo : ProductVote
-
             var product = new Product
             {
                 Name = model.Name,

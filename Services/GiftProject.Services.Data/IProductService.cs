@@ -13,5 +13,6 @@
 
         public Task EditAsync(EditProductModel model);
 
+        public Task DeleteByIdAsync(int id);
     }
 }

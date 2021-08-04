@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace GiftProject.Services.Data
+﻿namespace GiftProject.Web.CloudinaryHelper
 {
     using System;
     using System.IO;
@@ -10,15 +8,9 @@ namespace GiftProject.Services.Data
     using CloudinaryDotNet.Actions;
     using Microsoft.AspNetCore.Http;
 
-    public class CloudinaryExtensionService : ICloudinaryExtensionService
+    public class CloudinaryExtension
     {
-        private readonly Cloudinary cloudinary;
-
-        public CloudinaryExtensionService(Cloudinary cloudinary)
-        {
-            this.cloudinary = cloudinary;
-        }
-        public async Task<string> UploadAsync(IFormFile file, string fileName)
+        public static async Task<string> UploadAsync(Cloudinary cloudinary, IFormFile file)
         {
             string url = String.Empty;
             byte[] destinationImage;
@@ -40,17 +32,6 @@ namespace GiftProject.Services.Data
             }
 
             return url;
-        }
-
-        public async Task DeleteImage(Cloudinary cloudinary, string name)
-        {
-            var delParams = new DelResParams()
-            {
-                PublicIds = new List<string>() { name },
-                Invalidate = true,
-            };
-
-            await cloudinary.DeleteResourcesAsync(delParams);
         }
     }
 }

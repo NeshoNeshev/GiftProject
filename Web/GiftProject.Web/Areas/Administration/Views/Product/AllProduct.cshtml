@@ -1,18 +1,43 @@
-﻿
-@using GiftProject.Web.ViewModels.Product
-@model GiftProject.Web.ViewModels.Product.AllProductViewModel
+﻿@model GiftProject.Web.ViewModels.Product.AllProductViewModel
 @{
-    var number = 0;
+
     this.ViewData["Title"] = "All Products";
 }
+
 @foreach (var product in Model.AllProducts)
 {
     <div class="card" style="width: 18rem;">
         <img class="card-img-top" src="@product.ImgUrl" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">@product.Name</h5>
+            <h5 class="card-title text-center">@product.Name</h5>
             <p class="card-text">@product.Description</p>
-            <button type="submit" class="btn btn-danger">Delete product</button>
         </div>
     </div>
+    <form asp-area="Administration" asp-controller="Product" asp-action="Remove" method="post">
+        <div class="form-group">
+            <label asp-for="@product.Id"></label>
+
+        </div>
+        <button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#exampleModalLong">Remove</button>
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Do you want to save these changes</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" asp-area="Administration" asp-controller="Product" asp-action="Remove" asp-route-Id="@product.Id" class="btn btn-danger">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button asp-area="Administration" asp-controller="Product" asp-action="AllProduct" class="btn btn-primary">Back</button>
+    </form>
 }

@@ -6,16 +6,15 @@
 
     using GiftProject.Services.Mapping;
     using GiftProject.Web.ViewModels.Administration.Category;
+    using Microsoft.AspNetCore.Http;
 
-    public class ProductInputModel : IMapFrom<Data.Models.Product>
+    public class ProductInputModel 
     {
-        public int Id { get; set; }
 
         [Required]
         [DisplayName("Product Name")]
         public string Name { get; set; }
 
-        [Required]
         [DisplayName("Img Url")]
         public string ImgUrl { get; set; }
 

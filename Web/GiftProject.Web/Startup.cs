@@ -77,8 +77,9 @@ namespace GiftProject.Web
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<ICloudinaryExtensionService, CloudinaryExtensionService>();
             services.AddTransient<IRatingsService, RatingsService>();
+
+            services.AddSingleton(cloudinary);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
