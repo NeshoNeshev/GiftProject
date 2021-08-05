@@ -11,6 +11,12 @@
 
         public Task CreateAsync(InputCategoryModel model);
 
+        public Task EditAsync(EditCategoryModel model);
+
+        public Task DeleteByIdAsync(int id);
+
         public bool FindByName(string name);
+
+        Task<T> GetByNameAsync<T>(string name);
     }
 }

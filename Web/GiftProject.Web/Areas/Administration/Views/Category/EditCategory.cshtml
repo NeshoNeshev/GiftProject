@@ -1,5 +1,26 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model GiftProject.Web.ViewModels.Administration.Category.EditCategoryModel
 @{
+    this.ViewData["Title"] = "Edit Category";
 }
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-area="Administration" asp-controller="Category" asp-action="EditCategory"  method="post">
+            <hr />
+            <label asp-for="Id"></label>
+            <select asp-for="Id" class="form-control">
+                @foreach (var item in Model.CategoryDropDown)
+                {
+                    <option class="text-center" value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <div class="form-group">
+                <label asp-for="NewName"></label>
+                <input asp-for="NewName" class="form-control" placeholder="Ново име"/>
+                <span asp-validation-for="NewName" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-danger">Edit product</button>
+            <a class="btn btn-primary" asp-area="Administration" asp-controller="Product" asp-action="AllProduct" role="button">All</a>
+        </form>
+    </div>
+</div>

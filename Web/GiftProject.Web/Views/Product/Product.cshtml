@@ -1,34 +1,148 @@
-﻿@{
+﻿@model GiftProject.Web.ViewModels.Product.AllProductViewModel
+@{
     this.ViewData["Title"] = "Product Page";
 }
-<div class="container">
-    <div class="card">
-        <div class="imgBx">
-            <img src="https://res.cloudinary.com/dhtcvjbya/image/upload/v1627912328/First_uvbk1h.png">
+
+
+@{ var prevDisabled = !Model.ProductsViewModel.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.ProductsViewModel.HasNextPage ? "disabled" : "";
+    int movieCounter = 0; }
+
+@*<link rel="stylesheet" type="text/css" href="~/list-css/table-style.css" />
+<link rel="stylesheet" type="text/css" href="~/list-css/basictable.css" />
+<link rel="stylesheet" type="text/css" href="~/list-css/medile.css" />*@
+<link rel="stylesheet" type="text/css" href="~/list-css/StyleSheet.css" />
+<link rel="stylesheet" type="text/css" href="~/list-css/fontawesome.css" />
+<div class="faq">
+    <div class="container">
+        <div class="agileits-news-top">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="active">All movies</li>
+            </ol>
         </div>
-        <div class="contentBx">
-            <h2>Nike Shoes</h2>
-            <div class="size">
-                <h3>Size :</h3>
-                <span>7</span>
-                <span>8</span>
-                <span>9</span>
-                <span>10</span>
-            </div>
-            <div class="form-group">
-                <span class="text-warning">
-                    <i class="ratingStar fas bx bx-star"></i>
-                    <i class="ratingStar far bx bx-star"></i>
-                    <i class="ratingStar far bx bx-star"></i>
-                    <i class="ratingStar far bx bx-star"></i>
-                    <i class="ratingStar far bx bx-star"></i>
-                </span>               
-            </div>
-            <a href="#">Buy Now</a>
+
+        <div class="container">
+            <form asp-action="Product" method="get">
+                <div class="form-group col-md-6">
+                    <label for="search">Find by name:</label>
+                    <input id="search" type="text" class="form-control" name="SearchString" value="@ViewData["currentSearchFilter"]" required />
+                </div>
+                <div class="form-group col-md-9">
+                    <input type="submit" value="Search" class="btn btn-sm btn-primary" />
+                </div>
+            </form>
         </div>
+        <div class="row">
+
+            @foreach (var movie in Model.ProductsViewModel)
+            {
+                movieCounter++;
+
+                <div class="col-md-4">
+                    <div class="card mb-4 product-wap rounded-0">
+                        <div class="card rounded-0">
+                            <img class="card-img rounded-0 img-fluid" src="@movie.ImgUrl">
+                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                <ul class="list-unstyled">
+                                    <li><a class="btn btn-success text-white" href="#"><i class="far fa-heart"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="#"><i class="far fa-eye"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" href="#"><i class="fas fa-cart-plus"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a href="#" class="h3 text-decoration-none">@movie.Name</a>
+                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                <li>M/L/X/XL</li>
+                                <li class="pt-2">
+                                    <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                    <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                </li>
+                            </ul>
+                            <ul class="list-unstyled d-flex justify-content-center mb-1">
+                                <li>
+                                    <i class="text-warning bx bx-star"></i>
+                                    <i class="text-warning bx bx-star"></i>
+                                    <i class="text-warning bx bx-star"></i>
+                                    <i class="text-muted bx bx-star"></i>
+                                    <i class="text-muted bx bx-star"></i>
+                                </li>
+                            </ul>
+                            <p class="text-center mb-0">$250.00</p>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="@movie.ImgUrl" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">@movie.Name</h5>
+                            <p class="card-text">@movie.Description</p>
+                        </div>
+                    </div>
+                </div>*@
+            }
+        </div>
+        @if (Model.ProductsViewModel.TotalPages != 0)
+        {
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @prevDisabled">
+                        <a class="page-link" asp-action="Product"
+                           asp-route-currentFilter="@ViewData["CurrentSearchFilter"]" tabindex="-1">Previous</a>
+                    </li>
+                    @for (int i = 1; i <= Model.ProductsViewModel.TotalPages; i++)
+                    {
+                        var active = i == Model.ProductsViewModel.PageIndex ? "active" : string.Empty;
+                        <li class="page-item @active">
+                            <a class="page-link" asp-action="Product"
+                               asp-route-pageNumber="@i"
+                               asp-route-currentFilter="@ViewData["CurrentSearchFilter"]">
+                                @i
+                            </a>
+                        </li>
+                    }
+                    <li class="page-item @nextDisabled">
+                        <a class="page-link" asp-action="Product"
+                           asp-route-currentFilter="@ViewData["CurrentSearchFilter"]">Next</a>
+                    </li>
+                </ul>
+            </nav>
+            @*<div class="blog-pagenat-wthree">
+                <ul class="pagination">
+                    <li>
+                        <a class="frist @prevDisabled"
+                           asp-action="Product"
+                           asp-route-currentFilter="@ViewData["CurrentSearchFilter"]">
+                            Previous
+                        </a>
+                    </li>
+                    @for (int i = 1; i <= Model.ProductsViewModel.TotalPages; i++)
+                    {
+                        var active = i == Model.ProductsViewModel.PageIndex ? "active" : string.Empty;
+                        <li class="@active">
+                            <a asp-action="Product"
+                               asp-route-pageNumber="@i"
+                               asp-route-currentFilter="@ViewData["CurrentSearchFilter"]">
+                                @i
+                            </a>
+                        </li>
+                    }
+                    <li>
+                        <a class="last @nextDisabled"
+                           asp-action="Product"
+                           asp-route-currentFilter="@ViewData["CurrentSearchFilter"]">
+                            Next
+                        </a>
+                    </li>
+                </ul>
+            </div>*@
+
+        }
     </div>
 </div>
-<div class="container">
-    <span id="rateMe1"></span>
-</div>
-

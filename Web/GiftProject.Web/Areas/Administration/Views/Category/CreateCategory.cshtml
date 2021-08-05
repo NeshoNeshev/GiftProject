@@ -1,6 +1,6 @@
 ﻿@model GiftProject.Web.ViewModels.Administration.Category.InputCategoryModel
 @{
-    ViewData["Title"] = "Create Product";
+    ViewData["Title"] = "Create Category";
 }
 <div class="text-center">
     <h1 class="text-primary">@this.ViewData["Title"]</h1>
@@ -9,17 +9,17 @@
     <section class="border border-primary">
         <div class="container">
             <div class="row" style="margin-bottom: 20px">
-                <div class="col-md-2">
+                <div class="col-md-4">
                     <label asp-for="Name" class="text-primary"></label>
-                    <input asp-for="Name" class="form-control" placeholder="Enter Img Url" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <input asp-for="Name" class="form-control text-center" placeholder="Име на категорията" />
+                    <span asp-validation-for="Name" class="text-danger text-center"></span>
                 </div>
             </div>
         </div>
     </section>
     <br />
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-        Save
+        Запази
     </button>
 
     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -35,8 +35,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Затвори</button>
+                    <button type="submit" class="btn btn-primary">Запази</button>
                 </div>
             </div>
         </div>

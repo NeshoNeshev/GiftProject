@@ -6,7 +6,7 @@
     public class InputCategoryModel
     {
         [Required]
-        [DisplayName("Enter Category Name")]
+        [DisplayName("Име на категорията")]
         public string Name { get; set; }
     }
 }

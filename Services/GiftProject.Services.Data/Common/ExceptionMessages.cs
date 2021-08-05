@@ -20,7 +20,7 @@
 
         public const string CountryAlreadyExists = "Country with name {0} already exists";
 
-        public const string CountryNotFound = "Country with id {0} is not found.";
+        public const string CategoryNotFound = "Category with id {0} is not found.";
 
         public const string ProductNotFound = "Product with id {0} is not found.";
 

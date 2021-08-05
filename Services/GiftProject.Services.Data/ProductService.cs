@@ -15,6 +15,8 @@
     public class ProductService : IProductService
     {
         private readonly IDeletableEntityRepository<Product> productRepository;
+        private const string AllPaginationFilter = "All";
+        private const string DigitPaginationFilter = "0 - 9";
 
         public ProductService(IDeletableEntityRepository<Product> productRepository)
         {
@@ -30,7 +32,6 @@
                     string.Format(ExceptionMessages.ProductAlreadyExists, model.Name, model.ImgUrl, model.Description));
             }
 
-            //Todo : ProductVote
             var product = new Product
             {
                 Name = model.Name,
@@ -85,6 +86,43 @@
             }
 
             return query.To<T>().ToList();
+        }
+
+        public IQueryable<TViewModel> GetAllProductAsQueryeable<TViewModel>()
+        {
+            var product = this.productRepository
+                .All()
+                .OrderBy(x => x.Name)
+                .To<TViewModel>();
+
+            return product;
+        }
+
+        public IQueryable<TViewModel> GetAllMoviesByFilterAsQueryeable<TViewModel>(string letter = null)
+        {
+            var productByFilter = Enumerable.Empty<TViewModel>().AsQueryable();
+
+            if (!string.IsNullOrEmpty(letter) && letter != AllPaginationFilter && letter != DigitPaginationFilter)
+            {
+                productByFilter = this.productRepository
+                    .All()
+                    .Where(x => x.Name.ToLower().StartsWith(letter))
+                    .To<TViewModel>();
+            }
+            else if (letter == DigitPaginationFilter)
+            {
+                var numbers = Enumerable.Range(0, 10).Select(i => i.ToString());
+                productByFilter = this.productRepository
+                    .All()
+                    .Where(x => numbers.Contains(x.Name.Substring(0, 1)))
+                    .To<TViewModel>();
+            }
+            else
+            {
+                productByFilter = this.GetAllProductAsQueryeable<TViewModel>();
+            }
+
+            return productByFilter;
         }
     }
 }

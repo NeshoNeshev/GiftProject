@@ -21,7 +21,7 @@
     {
         private readonly IProductService productService;
         private readonly ICategoryService categoryService;
-        private readonly Cloudinary _cloudinary;
+        private readonly Cloudinary cloudinary;
         private readonly IEnumerable<ProductDropDownModel> productDropDown;
         private readonly IEnumerable<CategoryDropDownModel> categoryDropDown;
 
@@ -29,7 +29,7 @@
         {
             this.productService = productService;
             this.categoryService = categoryService;
-            _cloudinary = cloudinary;
+            this.cloudinary = cloudinary;
             this.categoryDropDown = this.categoryService.GetAll<CategoryDropDownModel>();
             this.productDropDown = this.productService.GetAll<ProductDropDownModel>();
         }
@@ -43,7 +43,7 @@
         [Authorize]
         public async Task<IActionResult> CreateProduct(ProductInputModel model, IFormFile file)
         {
-            model.ImgUrl = await CloudinaryExtension.UploadAsync(_cloudinary, file);
+            model.ImgUrl = await CloudinaryExtension.UploadAsync(this.cloudinary, file);
 
             if (!this.ModelState.IsValid)
             {
@@ -59,12 +59,14 @@
         [HttpGet]
         [Authorize]
         public IActionResult EditProduct()
-            => this.View(new EditProductModel {ProductDropDown = this.productDropDown.ToList()});
+            => this.View(new EditProductModel { ProductDropDown = this.productDropDown.ToList() });
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> EditProduct(EditProductModel model)
+        public async Task<IActionResult> EditProduct(EditProductModel model, IFormFile file)
         {
+            model.NewImgUrl = await CloudinaryExtension.UploadAsync(this.cloudinary, file);
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(model);
@@ -72,18 +74,11 @@
 
             await this.productService.EditAsync(model);
 
-            return this.View();
+            return this.RedirectToAction("AllProduct", "Product", new { area = "Administration" });
         }
 
-        //[HttpGet]
-        //[Authorize]
-        //public async Task<IActionResult> Remove(int id)
-        //{
-           
-        //    return this.View();
-        //}
-
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Remove( int id)
         {
             await this.productService.DeleteByIdAsync(id);
@@ -95,7 +90,7 @@
         public IActionResult AllProduct()
         {
             var model = this.productService.GetAll<ProductsViewModel>();
-            var viewModel = new AllProductViewModel { AllProducts = model };
+            var viewModel = new AllProductViewModel { AllProducts = model};
             return this.View(viewModel);
         }
     }

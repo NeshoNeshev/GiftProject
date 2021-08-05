@@ -13,7 +13,6 @@
         [DisplayName("New Name")]
         public string NewName { get; set; }
 
-        [Required]
         [DisplayName("New Img Url")]
         public string NewImgUrl { get; set; }
 

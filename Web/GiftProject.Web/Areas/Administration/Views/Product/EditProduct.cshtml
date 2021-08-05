@@ -1,23 +1,36 @@
 ﻿@model GiftProject.Web.ViewModels.Administration.Product.EditProductModel
 @{
-    this.ViewData["Title"] = "Delete Cinema";
+    this.ViewData["Title"] = "Edit Product";
 }
 
 <div class="row">
     <div class="col-md-6">
-        <form asp-area="Administration" asp-controller="Product" asp-action="" method="post">
-            <h4 class="text-danger">Are you sure you want to delete <b>@Model.NewName</b> cinema?</h4>
+        <form asp-area="Administration" asp-controller="Product" asp-action="EditProduct" enctype="multipart/form-data" method="post">
             <hr />
+            <label asp-for="Id" ></label>
+            <select asp-for="Id" class="form-control">
+                @foreach (var item in Model.ProductDropDown)
+                {
+                    <option class="text-center" value="@item.Id">@item.Name</option>
+                }
+            </select>
             <div class="form-group">
                 <label asp-for="NewName"></label>
-                <input asp-for="NewName" class="form-control" disabled="" />
+                <input asp-for="NewName" class="form-control" placeholder="Ново име"/>
+                <span asp-validation-for="NewName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NewDescription"></label>
-                <input asp-for="NewDescription" class="form-control" disabled="" />
+                <input asp-for="NewDescription" class="form-control" placeholder="Ново описание"/>
+                <span asp-validation-for="NewDescription" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-danger">Delete cinema</button>
-            <button asp-area="Administration" asp-controller="Product" asp-action="Product" class="btn btn-primary">Back to all cinemas</button>
+
+            <div class="form-group" style="margin-top: 10px">
+                <input type="file" name="file" multiple="" />
+            </div>
+
+            <button type="submit" class="btn btn-danger">Edit category</button>
+            <a class="btn btn-primary" asp-area="Administration" asp-controller="Product" asp-action="AllProduct" role="button">All</a>
         </form>
     </div>
 </div>

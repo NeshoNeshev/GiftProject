@@ -1,10 +1,10 @@
 ﻿namespace GiftProject.Web.Areas.Administration.Controllers
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using GiftProject.Common;
-    using GiftProject.Data.Common.Repositories;
-    using GiftProject.Data.Models;
     using GiftProject.Services.Data;
     using GiftProject.Web.ViewModels.Administration.Category;
     using Microsoft.AspNetCore.Authorization;
@@ -16,9 +16,12 @@
     {
         private readonly ICategoryService categoryService;
 
+        private readonly IEnumerable<CategoryDropDownModel> categoryDropDown;
+
         public CategoryController(ICategoryService categoryService)
         {
             this.categoryService = categoryService;
+            this.categoryDropDown = this.categoryService.GetAll<CategoryDropDownModel>();
         }
 
         [HttpGet]
@@ -42,20 +45,24 @@
             }
 
             await this.categoryService.CreateAsync(input);
-            return this.View();
+            return this.RedirectToAction("CreateProduct", "Product", new {area = "Administration"});
         }
 
         [HttpGet]
         [Authorize]
         public IActionResult EditCategory()
-        {
-            return this.View();
-        }
+            => this.View(new EditCategoryModel() { CategoryDropDown = this.categoryDropDown.ToList() });
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> EditCategory(string name)
+        public async Task<IActionResult> EditCategory(EditCategoryModel model)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            await this.categoryService.EditAsync(model);
             return this.View();
         }
     }
