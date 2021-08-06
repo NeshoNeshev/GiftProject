@@ -1,5 +1,6 @@
 ﻿namespace GiftProject.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -13,18 +14,26 @@
     {
         private readonly IProductService productService;
         private readonly ICategoryService categoryService;
-
+        private readonly IEnumerable<CategoryViewModel> category;
         private const int PageSize = 6;
 
-        public ProductController(IProductService productService, ICategoryService categoryService)
+        public ProductController(IProductService productService, ICategoryService categoryService, IEnumerable<CategoryViewModel> category)
         {
             this.productService = productService;
             this.categoryService = categoryService;
+            this.category = this.categoryService.GetAll<CategoryViewModel>();
         }
 
-        public async Task<IActionResult> Product(string searchString, string currentFilter, string selectedLetter, int? pageNumber)
+        public async Task<IActionResult> Product()
         {
-            this.ViewData["Current"] = nameof(this.Product);
+            var model = this.categoryService.GetAll<CategoryViewModel>();
+            var viewModel = new AllCategoryViewModel() {AllCategories = model};
+            return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> AllProducts(string searchString, string currentFilter, string selectedLetter, int? pageNumber)
+        {
+            this.ViewData["Current"] = nameof(this.AllProducts);
             if (searchString != null)
             {
                 pageNumber = 1;
@@ -36,14 +45,14 @@
 
             this.ViewData["CurrentSearchFilter"] = searchString;
             var movies = this.productService
-                .GetAllMoviesByFilterAsQueryeable<ProductsViewModel>(selectedLetter);
+                .GetAllProductsByFilterAsQueryeable<ProductsViewModel>(selectedLetter);
 
             if (!string.IsNullOrEmpty(searchString))
             {
                 movies = movies.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
             }
 
-            var moviesPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(movies, pageNumber ?? 1, PageSize);
+            var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(movies, pageNumber ?? 1, PageSize);
 
             var alphabeticalPagingViewModel = new AlphabeticalPagingViewModel
             {
@@ -52,11 +61,17 @@
 
             var viewModel = new AllProductViewModel
             {
-                ProductsViewModel = moviesPaginated,
+                ProductsViewModel = productPaginated,
                 AlphabeticalProductsViewModel = alphabeticalPagingViewModel,
             };
-
             return this.View(viewModel);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var category = this.categoryService.GetByIdAsync<CategoryDropDownModel>(id);
+
+            return this.View(category);
         }
     }
 }

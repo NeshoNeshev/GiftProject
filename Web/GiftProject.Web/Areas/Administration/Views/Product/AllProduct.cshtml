@@ -6,34 +6,38 @@
 }
 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
 {
-    @foreach (var product in Model.AllProducts)
-    {
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="@product.ImgUrl" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title text-center">@product.Name</h5>
-                <p class="card-text">@product.Description</p>
-            </div>
-        </div>
-        <form asp-area="Administration" asp-controller="Product" method="post">
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong">Remove</button>
-            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-center text-danger" id="exampleModalLongTitle">Изтриване !!!</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-footer" style="margin-top: 10px">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" asp-area="Administration" asp-controller="Product" asp-action="Remove" asp-route-Id="@product.Id" class="btn btn-danger">Save changes</button>
-                        </div>
+    <div class="row">
+        @foreach (var product in Model.AllProducts)
+        {
+            <div class="col-md-4 ">
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="@product.ImgUrl" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">@product.Name</h5>
+                        <p class="card-text">@product.Description</p>
                     </div>
                 </div>
+                <form asp-area="Administration" asp-controller="Product" method="post">
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong">Remove</button>
+                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-center text-danger" id="exampleModalLongTitle">Изтриване !!!</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-footer" style="margin-top: 10px">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" asp-area="Administration" asp-controller="Product" asp-action="Remove" asp-route-Id="@product.Id" class="btn btn-danger">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary" asp-area="Administration" asp-controller="Product" asp-action="EditProduct" asp-route-Id="@product.Id" role="button">Edit</a>
+                </form>
             </div>
-            <a class="btn btn-primary" asp-area="Administration" asp-controller="Product" asp-action="EditProduct" asp-route-Id="@product.Id" role="button">Edit</a>
-        </form>
-    }
+        }
+    </div>
 }

@@ -98,7 +98,7 @@
             return product;
         }
 
-        public IQueryable<TViewModel> GetAllMoviesByFilterAsQueryeable<TViewModel>(string letter = null)
+        public IQueryable<TViewModel> GetAllProductsByFilterAsQueryeable<TViewModel>(string letter = null)
         {
             var productByFilter = Enumerable.Empty<TViewModel>().AsQueryable();
 

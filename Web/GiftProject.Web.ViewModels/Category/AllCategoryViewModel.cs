@@ -4,6 +4,8 @@
 
     public class AllCategoryViewModel
     {
+        public string Brand { get; set; }
+
         public IEnumerable<CategoryViewModel> AllCategories { get; set; }
     }
 }

@@ -18,5 +18,7 @@
         public bool FindByName(string name);
 
         Task<T> GetByNameAsync<T>(string name);
+
+        public CategoryDropDownModel GetByIdAsync<T>(int id);
     }
 }

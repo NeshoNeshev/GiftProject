@@ -18,6 +18,6 @@
 
         public IQueryable<TViewModel> GetAllProductAsQueryeable<TViewModel>();
 
-        public IQueryable<TViewModel> GetAllMoviesByFilterAsQueryeable<TViewModel>(string letter = null);
+        public IQueryable<TViewModel> GetAllProductsByFilterAsQueryeable<TViewModel>(string letter = null);
     }
 }

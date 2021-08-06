@@ -88,5 +88,12 @@ namespace GiftProject.Services.Data
 
         public async Task<T> GetByNameAsync<T>(string name)
             => await this.categoryRepository.All().Where(x => x.Name == name).To<T>().FirstOrDefaultAsync();
+
+
+        public CategoryDropDownModel GetByIdAsync<T>(int id)
+        {
+            var result = this.categoryRepository.All().To<CategoryDropDownModel>().FirstOrDefault(x => x.Id == id);
+            return result;
+        }
     }
 }
