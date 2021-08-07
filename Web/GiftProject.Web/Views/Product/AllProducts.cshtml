@@ -29,24 +29,25 @@
 
         <div class="row">
 
-            @foreach (var movie in Model.ProductsViewModel)
+            @foreach (var product in Model.ProductsViewModel)
             {
                 movieCounter++;
 
                 <div class="col-md-4">
                     <div class="card mb-4 product-wap rounded-0">
                         <div class="card rounded-0">
-                            <img class="card-img-top" src="@movie.ImgUrl">
+                            <img class="card-img-top" src="@product.ImgUrl" alt="@product.Name" width="250" height="300">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
+
                                     <li><a class="btn btn-success text-white" href="#"><i class="far fa-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="#"><i class="far fa-eye"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"><i class="far fa-eye"></i></a></li>
                                     <li><a class="btn btn-success text-white mt-2" href="#"><i class="fas fa-cart-plus"></i></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="card-body text-center">
-                            <a href="#" class="h3 text-decoration-none">@movie.Name</a>
+                            <a href="#" class="h3 text-decoration-none">@product.Name</a>
                             <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                 <li>M/L/X/XL</li>
                                 <li class="pt-2">

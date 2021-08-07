@@ -1,0 +1,16 @@
+﻿@model GiftProject.Web.ViewModels.Category.CategoryViewModel
+@{
+    ViewData["Title"] = " ProductsInCategory";
+}
+@foreach (var product in Model.Products)
+{
+
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="@product.ImgUrl" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title text-center">@product.Name</h5>
+            <p class="card-text">@product.Description</p>
+        </div>
+    </div>
+}
+

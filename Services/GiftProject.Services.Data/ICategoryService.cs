@@ -1,4 +1,6 @@
-﻿namespace GiftProject.Services.Data
+﻿using GiftProject.Web.ViewModels.Category;
+
+namespace GiftProject.Services.Data
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -19,6 +21,6 @@
 
         Task<T> GetByNameAsync<T>(string name);
 
-        public CategoryDropDownModel GetByIdAsync<T>(int id);
+        public CategoryViewModel GetById<T>(int id);
     }
 }

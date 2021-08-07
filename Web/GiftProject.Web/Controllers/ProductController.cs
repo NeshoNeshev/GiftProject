@@ -69,9 +69,8 @@
 
         public IActionResult Details(int id)
         {
-            var category = this.categoryService.GetByIdAsync<CategoryDropDownModel>(id);
-
-            return this.View(category);
+            var product = this.productService.GetById<ProductsViewModel>(id);
+            return this.View(product);
         }
     }
 }

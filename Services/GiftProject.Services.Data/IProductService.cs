@@ -1,4 +1,6 @@
-﻿namespace GiftProject.Services.Data
+﻿using GiftProject.Web.ViewModels.Product;
+
+namespace GiftProject.Services.Data
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -19,5 +21,7 @@
         public IQueryable<TViewModel> GetAllProductAsQueryeable<TViewModel>();
 
         public IQueryable<TViewModel> GetAllProductsByFilterAsQueryeable<TViewModel>(string letter = null);
+
+        public ProductsViewModel GetById<T>(int id);
     }
 }

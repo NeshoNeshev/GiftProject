@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace GiftProject.Services.Data
+﻿namespace GiftProject.Services.Data
 {
     using System;
     using System.Collections.Generic;
@@ -12,6 +10,8 @@ namespace GiftProject.Services.Data
     using GiftProject.Services.Data.Common;
     using GiftProject.Services.Mapping;
     using GiftProject.Web.ViewModels.Administration.Category;
+    using GiftProject.Web.ViewModels.Category;
+    using Microsoft.EntityFrameworkCore;
 
     public class CategoryService : ICategoryService
     {
@@ -89,10 +89,9 @@ namespace GiftProject.Services.Data
         public async Task<T> GetByNameAsync<T>(string name)
             => await this.categoryRepository.All().Where(x => x.Name == name).To<T>().FirstOrDefaultAsync();
 
-
-        public CategoryDropDownModel GetByIdAsync<T>(int id)
+        public CategoryViewModel GetById<T>(int id)
         {
-            var result = this.categoryRepository.All().To<CategoryDropDownModel>().FirstOrDefault(x => x.Id == id);
+            var result = this.categoryRepository.All().To<CategoryViewModel>().FirstOrDefault(x => x.Id == id);
             return result;
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace GiftProject.Services.Data
+﻿using GiftProject.Web.ViewModels.Product;
+
+namespace GiftProject.Services.Data
 {
     using System;
     using System.Collections.Generic;
@@ -124,5 +126,8 @@
 
             return productByFilter;
         }
+
+        public ProductsViewModel GetById<T>(int id)
+            => this.productRepository.All().To<ProductsViewModel>().FirstOrDefault(x => x.Id == id);
     }
 }

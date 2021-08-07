@@ -63,7 +63,7 @@
             }
 
             await this.categoryService.EditAsync(model);
-            return this.View();
+            return this.RedirectToAction("Index", "Dashboard", new { area = "Administration" });
         }
     }
 }
