@@ -44,15 +44,15 @@
             }
 
             this.ViewData["CurrentSearchFilter"] = searchString;
-            var movies = this.productService
+            var product = this.productService
                 .GetAllProductsByFilterAsQueryeable<ProductsViewModel>(selectedLetter);
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                movies = movies.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
+                product = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
             }
 
-            var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(movies, pageNumber ?? 1, PageSize);
+            var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, PageSize);
 
             var alphabeticalPagingViewModel = new AlphabeticalPagingViewModel
             {

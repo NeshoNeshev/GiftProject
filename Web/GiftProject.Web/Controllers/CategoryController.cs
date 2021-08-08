@@ -19,5 +19,12 @@
 
             return this.View(category);
         }
+
+        public IActionResult AllCategories()
+        {
+            var model = this.categoryService.GetAll<CategoryViewModel>();
+            var viewModel = new AllCategoryViewModel() { AllCategories = model };
+            return this.View(viewModel);
+        }
     }
 }

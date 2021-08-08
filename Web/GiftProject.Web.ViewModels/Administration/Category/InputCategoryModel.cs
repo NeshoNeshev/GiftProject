@@ -8,5 +8,8 @@
         [Required]
         [DisplayName("Име на категорията")]
         public string Name { get; set; }
+
+        [DisplayName("Snimka")]
+        public string ImgUrl { get; set; }
     }
 }

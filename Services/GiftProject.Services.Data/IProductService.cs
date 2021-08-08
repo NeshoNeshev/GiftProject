@@ -1,12 +1,11 @@
-﻿using GiftProject.Web.ViewModels.Product;
-
-namespace GiftProject.Services.Data
+﻿namespace GiftProject.Services.Data
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using GiftProject.Web.ViewModels.Administration.Product;
+    using GiftProject.Web.ViewModels.Product;
 
     public interface IProductService
     {

@@ -4,10 +4,13 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using CloudinaryDotNet;
     using GiftProject.Common;
     using GiftProject.Services.Data;
+    using GiftProject.Web.CloudinaryHelper;
     using GiftProject.Web.ViewModels.Administration.Category;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -16,11 +19,14 @@
     {
         private readonly ICategoryService categoryService;
 
+        private readonly Cloudinary cloudinary;
+
         private readonly IEnumerable<CategoryDropDownModel> categoryDropDown;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService, Cloudinary cloudinary)
         {
             this.categoryService = categoryService;
+            this.cloudinary = cloudinary;
             this.categoryDropDown = this.categoryService.GetAll<CategoryDropDownModel>();
         }
 
@@ -30,8 +36,9 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateCategory(InputCategoryModel input)
+        public async Task<IActionResult> CreateCategory(InputCategoryModel input, IFormFile file)
         {
+            input.ImgUrl = await CloudinaryExtension.UploadAsync(this.cloudinary, file);
             var exist = this.categoryService.FindByName(input.Name);
             if (exist)
             {
@@ -55,8 +62,9 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> EditCategory(EditCategoryModel model)
+        public async Task<IActionResult> EditCategory(EditCategoryModel model, IFormFile file)
         {
+            model.NewImgUrl = await CloudinaryExtension.UploadAsync(this.cloudinary, file);
             if (!this.ModelState.IsValid)
             {
                 return this.View(model);

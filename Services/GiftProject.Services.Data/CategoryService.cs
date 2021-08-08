@@ -33,6 +33,7 @@
             var category = new Category
             {
                 Name = model.Name,
+                ImgUrl = model.ImgUrl,
             };
             await this.categoryRepository.AddAsync(category);
             await this.categoryRepository.SaveChangesAsync();
@@ -49,6 +50,7 @@
             }
 
             category.Name = model.NewName;
+            category.ImgUrl = model.NewImgUrl;
             category.ModifiedOn = DateTime.UtcNow;
 
             this.categoryRepository.Update(category);

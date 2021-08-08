@@ -11,6 +11,8 @@
 
         public string Name { get; set; }
 
+        public string ImgUrl { get; set; }
+
         public IEnumerable<ProductsViewModel> Products { get; set; }
     }
 }

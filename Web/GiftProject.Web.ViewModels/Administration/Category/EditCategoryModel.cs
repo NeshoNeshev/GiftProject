@@ -15,6 +15,9 @@
         [DisplayName("Име на категорията")]
         public string NewName { get; set; }
 
+        [DisplayName("New url")]
+        public string NewImgUrl { get; set; }
+
         public ICollection<CategoryDropDownModel> CategoryDropDown { get; set; }
     }
 }

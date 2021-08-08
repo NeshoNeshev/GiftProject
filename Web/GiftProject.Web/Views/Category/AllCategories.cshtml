@@ -1,0 +1,23 @@
+﻿@model GiftProject.Web.ViewModels.Category.AllCategoryViewModel
+@{
+    this.ViewData["Title"] = "All Categories";
+}
+<section class="container py-5">
+    <div class="row text-center pt-3">
+        <div class="col-lg-6 m-auto">
+            <h1 class="h1">Categories of The Month</h1>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var category in Model.AllCategories)
+        {
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a href="#"><img src="@category.ImgUrl" class="rounded-circle img-fluid border" alt="@category.Name"></a>
+                <h5 class="text-center mt-3 mb-3">@category.Name</h5>
+                <p class="text-center"><a class="btn btn-success" asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-Id="@category.Id">Go Shop</a></p>
+
+            </div>
+        }
+       
+    </div>
+</section>

@@ -4,40 +4,91 @@
 
     this.ViewData["Title"] = "All Products";
 }
+@{
+    var prevDisabled = !Model.ProductsViewModel.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.ProductsViewModel.HasNextPage ? "disabled" : "";
+    int movieCounter = 0;
+
+}
 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
 {
-    <div class="row">
-        @foreach (var product in Model.AllProducts)
-        {
-            <div class="col-md-4 ">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="@product.ImgUrl" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">@product.Name</h5>
-                        <p class="card-text">@product.Description</p>
-                    </div>
+    <div>
+        <div class="container">
+            <div class="breadcrumb">
+                <a asp-controller="Home" asp-action="Index">Home</a>
+                <div class="rounded float-right">
+                    <form class="form-inline " asp-area="Administration" asp-controller="Product" asp-action="AllProduct" method="get">
+                        <input id="search" type="text" class="form-control mr-sm-2" name="SearchString" value="@ViewData["currentSearchFilter"]" required />
+                        <button class="btn btn-primary my-2 my-sm-0" value="Search" type="submit">Search</button>
+                    </form>
                 </div>
-                <form asp-area="Administration" asp-controller="Product" method="post">
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong">Remove</button>
-                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title text-center text-danger" id="exampleModalLongTitle">Изтриване !!!</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-footer" style="margin-top: 10px">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" asp-area="Administration" asp-controller="Product" asp-action="Remove" asp-route-Id="@product.Id" class="btn btn-danger">Save changes</button>
-                                </div>
+
+            </div>
+
+            <div class="row">
+
+                @foreach (var product in Model.ProductsViewModel)
+                {
+                    movieCounter++;
+
+                    <div class="col-md-4 ">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="@product.ImgUrl" alt="@product.Name" width="250" height="300">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">@product.Name</h5>
+                                <p class="card-text">@product.Description</p>
                             </div>
                         </div>
+                        <form asp-area="Administration" asp-controller="Product" method="post">
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong">Remove</button>
+                            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-center text-danger" id="exampleModalLongTitle">Изтриване !!!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-footer" style="margin-top: 10px">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" asp-area="Administration" asp-controller="Product" asp-action="Remove" asp-route-Id="@product.Id" class="btn btn-danger">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="btn btn-primary" asp-area="Administration" asp-controller="Product" asp-action="EditProduct" asp-route-Id="@product.Id" role="button">Edit</a>
+                        </form>
                     </div>
-                    <a class="btn btn-primary" asp-area="Administration" asp-controller="Product" asp-action="EditProduct" asp-route-Id="@product.Id" role="button">Edit</a>
-                </form>
+                }
             </div>
-        }
+            @if (Model.ProductsViewModel.TotalPages != 0)
+            {
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item ">
+                            <a class="page-link" asp-action="AllProducts"
+                               asp-route-currentFilter="@ViewData["CurrentSearchFilter"]" tabindex="-1">Previous</a>
+                        </li>
+                        @for (int i = 1; i <= Model.ProductsViewModel.TotalPages; i++)
+                        {
+                            var active = i == Model.ProductsViewModel.PageIndex ? "active" : string.Empty;
+                            <li class="page-item @active">
+                                <a class="page-link" asp-action="AllProducts"
+                                   asp-route-pageNumber="@i"
+                                   asp-route-currentFilter="@ViewData["CurrentSearchFilter"]">
+                                    @i
+                                </a>
+                            </li>
+                        }
+                        <li class="page-item ">
+                            <a class="page-link" asp-action="AllProducts"
+                               asp-route-currentFilter="@ViewData["CurrentSearchFilter"]">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            }
+        </div>
     </div>
+
 }

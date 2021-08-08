@@ -8,6 +8,7 @@
     using GiftProject.Common;
     using GiftProject.Services.Data;
     using GiftProject.Web.CloudinaryHelper;
+    using GiftProject.Web.Infrastructure.Pagination;
     using GiftProject.Web.ViewModels.Administration.Category;
     using GiftProject.Web.ViewModels.Administration.Product;
     using GiftProject.Web.ViewModels.Product;
@@ -19,6 +20,7 @@
     [Area("Administration")]
     public class ProductController : AdministrationController
     {
+        private const int PageSize = 6;
         private readonly IProductService productService;
         private readonly ICategoryService categoryService;
         private readonly Cloudinary cloudinary;
@@ -87,10 +89,39 @@
 
         [HttpGet]
         [Authorize]
-        public IActionResult AllProduct()
+        public async Task<IActionResult> AllProduct(string searchString, string currentFilter, string selectedLetter, int? pageNumber)
         {
-            var model = this.productService.GetAll<ProductsViewModel>();
-            var viewModel = new AllProductViewModel { AllProducts = model};
+            this.ViewData["Current"] = nameof(this.AllProduct);
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            this.ViewData["CurrentSearchFilter"] = searchString;
+            var movies = this.productService
+                .GetAllProductsByFilterAsQueryeable<ProductsViewModel>(selectedLetter);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                movies = movies.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
+            }
+
+            var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(movies, pageNumber ?? 1, PageSize);
+
+            var alphabeticalPagingViewModel = new AlphabeticalPagingViewModel
+            {
+                SelectedLetter = selectedLetter,
+            };
+
+            var viewModel = new AllProductViewModel
+            {
+                ProductsViewModel = productPaginated,
+                AlphabeticalProductsViewModel = alphabeticalPagingViewModel,
+            };
             return this.View(viewModel);
         }
     }

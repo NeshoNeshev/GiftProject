@@ -5,7 +5,7 @@
 <div class="text-center">
     <h1 class="text-primary">@this.ViewData["Title"]</h1>
 </div>
-<form method="post" asp-action="CreateCategory">
+<form method="post" asp-action="CreateCategory"  enctype="multipart/form-data">
     <section class="border border-primary">
         <div class="container">
             <div class="row" style="margin-bottom: 20px">
@@ -13,6 +13,9 @@
                     <label asp-for="Name" class="text-primary"></label>
                     <input asp-for="Name" class="form-control text-center" placeholder="Име на категорията" />
                     <span asp-validation-for="Name" class="text-danger text-center"></span>
+                    <div class="form-group" style="margin-top: 10px">
+                        <input type="file" name="file" multiple="" />
+                    </div>
                 </div>
             </div>
         </div>
