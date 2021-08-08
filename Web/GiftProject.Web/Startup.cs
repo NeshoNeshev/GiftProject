@@ -78,6 +78,8 @@ namespace GiftProject.Web
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IRatingsService, RatingsService>();
+            services.AddTransient<ICatalogueNumber, CatalogueNumber>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
 
             services.AddSingleton(cloudinary);
         }

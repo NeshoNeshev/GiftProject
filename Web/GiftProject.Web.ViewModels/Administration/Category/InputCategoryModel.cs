@@ -1,4 +1,6 @@
-﻿namespace GiftProject.Web.ViewModels.Administration.Category
+﻿using Microsoft.AspNetCore.Http;
+
+namespace GiftProject.Web.ViewModels.Administration.Category
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
@@ -9,7 +11,8 @@
         [DisplayName("Име на категорията")]
         public string Name { get; set; }
 
+        [Required]
         [DisplayName("Snimka")]
-        public string ImgUrl { get; set; }
+        public IFormFile ImgUrl { get; set; }
     }
 }

@@ -43,9 +43,8 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateProduct(ProductInputModel model, IFormFile file)
+        public async Task<IActionResult> CreateProduct(ProductInputModel model)
         {
-            model.ImgUrl = await CloudinaryExtension.UploadAsync(this.cloudinary, file);
 
             if (!this.ModelState.IsValid)
             {
@@ -65,12 +64,12 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> EditProduct(EditProductModel model, IFormFile file)
+        public async Task<IActionResult> EditProduct(EditProductModel model)
         {
-            model.NewImgUrl = await CloudinaryExtension.UploadAsync(this.cloudinary, file);
 
             if (!this.ModelState.IsValid)
             {
+                model.ProductDropDown = this.productDropDown.ToList();
                 return this.View(model);
             }
 

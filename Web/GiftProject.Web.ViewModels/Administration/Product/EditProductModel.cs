@@ -4,6 +4,8 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
+    using Microsoft.AspNetCore.Http;
+
     public class EditProductModel
     {
         [DisplayName("Product")]
@@ -13,8 +15,9 @@
         [DisplayName("New Name")]
         public string NewName { get; set; }
 
+        [Required]
         [DisplayName("New Img Url")]
-        public string NewImgUrl { get; set; }
+        public IFormFile NewImgUrl { get; set; }
 
         [Required]
         [DisplayName("New Description")]

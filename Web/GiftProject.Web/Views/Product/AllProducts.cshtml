@@ -49,7 +49,7 @@
                         <div class="card-body text-center">
                             <a href="#" class="h3 text-decoration-none">@product.Name</a>
                             <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>M/L/X/XL</li>
+                                <li>@product.CatalogueNumber</li>
                                 <li class="pt-2">
                                     <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
                                     <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
@@ -67,7 +67,7 @@
                                     <i class="text-muted bx bx-star"></i>
                                 </li>
                             </ul>
-                            <p class="text-center mb-0">$250.00</p>
+                            <p class="text-center mb-0">@product.ShortDescription<a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"></a></p>
                         </div>
                     </div>
                 </div>

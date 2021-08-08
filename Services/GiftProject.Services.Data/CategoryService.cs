@@ -16,10 +16,12 @@
     public class CategoryService : ICategoryService
     {
         private readonly IDeletableEntityRepository<Category> categoryRepository;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public CategoryService(IDeletableEntityRepository<Category> categoryRepository)
+        public CategoryService(IDeletableEntityRepository<Category> categoryRepository, ICloudinaryService cloudinaryService)
         {
             this.categoryRepository = categoryRepository;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public async Task CreateAsync(InputCategoryModel model)
@@ -30,10 +32,12 @@
                 return;
             }
 
+            var coverUrl = await this.cloudinaryService
+                .UploadAsync(model.ImgUrl, model.Name);
             var category = new Category
             {
                 Name = model.Name,
-                ImgUrl = model.ImgUrl,
+                ImgUrl = coverUrl,
             };
             await this.categoryRepository.AddAsync(category);
             await this.categoryRepository.SaveChangesAsync();
@@ -48,9 +52,10 @@
                 throw new NullReferenceException(
                     string.Format(ExceptionMessages.CategoryNotFound, model.Id));
             }
-
+            var coverUrl = await this.cloudinaryService
+                .UploadAsync(model.NewImgUrl, model.NewName);
             category.Name = model.NewName;
-            category.ImgUrl = model.NewImgUrl;
+            category.ImgUrl = coverUrl;
             category.ModifiedOn = DateTime.UtcNow;
 
             this.categoryRepository.Update(category);

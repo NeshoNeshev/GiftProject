@@ -10,13 +10,13 @@
 
     public class ProductInputModel 
     {
-
         [Required]
         [DisplayName("Product Name")]
         public string Name { get; set; }
 
+        [Required]
         [DisplayName("Img Url")]
-        public string ImgUrl { get; set; }
+        public IFormFile ImgUrl { get; set; }
 
         [Required]
         [DisplayName("Description")]

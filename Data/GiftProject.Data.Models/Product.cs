@@ -15,6 +15,8 @@
 
         public string ImgUrl { get; set; }
 
+        public string CatalogueNumber { get; set; }
+
         public string Description { get; set; }
 
         public int CategoryId { get; set; }

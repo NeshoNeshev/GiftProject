@@ -19,8 +19,10 @@
                 <input asp-for="NewName" class="form-control" placeholder="Ново име" />
                 <span asp-validation-for="NewName" class="text-danger"></span>
             </div>
-            <div class="form-group" style="margin-top: 10px">
-                <input type="file" name="file" multiple="" />
+            <div class="form-group">
+                <label for="customFile">Upload Picture</label>
+                <input type="file" class="form-control-file" id="customFile" asp-for="NewImgUrl" />
+                <span asp-validation-for="NewImgUrl" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-danger">Edit product</button>
             <a class="btn btn-primary" asp-area="Administration" asp-controller="Product" asp-action="AllProduct" role="button">All</a>

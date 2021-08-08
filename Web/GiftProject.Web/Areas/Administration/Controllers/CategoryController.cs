@@ -36,9 +36,8 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateCategory(InputCategoryModel input, IFormFile file)
+        public async Task<IActionResult> CreateCategory(InputCategoryModel input)
         {
-            input.ImgUrl = await CloudinaryExtension.UploadAsync(this.cloudinary, file);
             var exist = this.categoryService.FindByName(input.Name);
             if (exist)
             {
@@ -64,9 +63,9 @@
         [Authorize]
         public async Task<IActionResult> EditCategory(EditCategoryModel model, IFormFile file)
         {
-            model.NewImgUrl = await CloudinaryExtension.UploadAsync(this.cloudinary, file);
             if (!this.ModelState.IsValid)
             {
+                model.CategoryDropDown = this.categoryDropDown.ToList();
                 return this.View(model);
             }
 

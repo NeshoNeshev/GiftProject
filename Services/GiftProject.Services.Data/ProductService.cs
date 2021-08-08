@@ -1,6 +1,4 @@
-﻿using GiftProject.Web.ViewModels.Product;
-
-namespace GiftProject.Services.Data
+﻿namespace GiftProject.Services.Data
 {
     using System;
     using System.Collections.Generic;
@@ -12,17 +10,23 @@ namespace GiftProject.Services.Data
     using GiftProject.Services.Data.Common;
     using GiftProject.Services.Mapping;
     using GiftProject.Web.ViewModels.Administration.Product;
+    using GiftProject.Web.ViewModels.Product;
     using Microsoft.EntityFrameworkCore;
 
     public class ProductService : IProductService
     {
+        private const string ConstDate = "2016,1,1";
         private readonly IDeletableEntityRepository<Product> productRepository;
+        private readonly ICatalogueNumber number;
+        private readonly ICloudinaryService cloudinaryService;
         private const string AllPaginationFilter = "All";
         private const string DigitPaginationFilter = "0 - 9";
 
-        public ProductService(IDeletableEntityRepository<Product> productRepository)
+        public ProductService(IDeletableEntityRepository<Product> productRepository, ICatalogueNumber number, ICloudinaryService cloudinaryService)
         {
             this.productRepository = productRepository;
+            this.number = number;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public async Task CreateAsync(ProductInputModel model)
@@ -34,10 +38,25 @@ namespace GiftProject.Services.Data
                     string.Format(ExceptionMessages.ProductAlreadyExists, model.Name, model.ImgUrl, model.Description));
             }
 
+            var coverUrl = await this.cloudinaryService
+                .UploadAsync(model.ImgUrl, model.Name);
+
+            var catalogerNumber = String.Empty;
+
+            try
+            {
+                 catalogerNumber = this.number.CreateCatalogueNumber(ConstDate);
+            }
+            catch (Exception e)
+            {
+                throw new InvalidCastException("Date not parse");
+            }
+
             var product = new Product
             {
                 Name = model.Name,
-                ImgUrl = model.ImgUrl,
+                ImgUrl = coverUrl,
+                CatalogueNumber = catalogerNumber,
                 Description = model.Description,
                 CategoryId = model.CategoryId,
             };
@@ -55,8 +74,11 @@ namespace GiftProject.Services.Data
                     string.Format(ExceptionMessages.ProductNotFound, model.Id));
             }
 
+            var coverUrl = await this.cloudinaryService
+                .UploadAsync(model.NewImgUrl, model.NewName);
+
             product.Name = model.NewName;
-            product.ImgUrl = model.NewImgUrl;
+            product.ImgUrl = coverUrl;
             product.Description = model.NewDescription;
             product.ModifiedOn = DateTime.UtcNow;
 

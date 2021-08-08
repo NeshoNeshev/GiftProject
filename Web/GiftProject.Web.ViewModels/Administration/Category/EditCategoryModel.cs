@@ -5,6 +5,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using GiftProject.Services.Mapping;
+    using Microsoft.AspNetCore.Http;
 
     public class EditCategoryModel
     {
@@ -15,8 +16,9 @@
         [DisplayName("Име на категорията")]
         public string NewName { get; set; }
 
+        [Required]
         [DisplayName("New url")]
-        public string NewImgUrl { get; set; }
+        public IFormFile NewImgUrl { get; set; }
 
         public ICollection<CategoryDropDownModel> CategoryDropDown { get; set; }
     }
