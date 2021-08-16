@@ -7,7 +7,7 @@
     {
         Task VoteAsync(int productId, string userId, int rating);
 
-        Task<int> GetStarRatingsAsync(int productId);
+        //Task<int> GetStarRatingsAsync(int productId);
 
         Task<DateTime> GetNextVoteDateAsync(int productId, string userId);
     }

@@ -45,7 +45,9 @@
         [Authorize]
         public async Task<IActionResult> CreateProduct(ProductInputModel model)
         {
+            //todo: findByName and FindById
 
+            //todo : "Details", "Product", new { area = string.Empty, model.Id }
             if (!this.ModelState.IsValid)
             {
                 model.CategoryDropDown = this.categoryDropDown.ToList();
@@ -78,11 +80,11 @@
             return this.RedirectToAction("AllProduct", "Product", new { area = "Administration" });
         }
 
-        [HttpPost]
+
         [Authorize]
-        public async Task<IActionResult> Remove( int id)
+        public async Task<IActionResult> Remove(int productId)
         {
-            await this.productService.DeleteByIdAsync(id);
+            await this.productService.DeleteByIdAsync(productId);
             return this.RedirectToAction("AllProduct", "Product", new { area = "Administration" });
         }
 

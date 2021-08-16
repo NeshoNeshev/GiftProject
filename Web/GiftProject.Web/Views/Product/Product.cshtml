@@ -3,41 +3,44 @@
     this.ViewData["Title"] = "Product Page";
 }
 @{
-    var firstCategory = Model.AllCategories.First();
+    var firstCategory = Model.AllCategories.FirstOrDefault(c => c.Products.Count()>2);
+    if (Model.AllCategories.Any())
+    {
+
+
+    }
 }
-<link rel="stylesheet" type="text/css" href="~/list-css/StyleSheet.css" />
-<link rel="stylesheet" type="text/css" href="~/list-css/fontawesome.css" />
-
-<div class="container">
-    <div class="breadcrumb">
-        <a class="h2 text-dark text-decoration-none mr-3" asp-controller="Home" asp-action="Index">Home</a>
-        <a class="h2 text-dark text-decoration-none mr-3" asp-controller="Product" asp-action="AllProducts">Home</a>
-        @foreach (var category in Model.AllCategories)
-        {
-            <a class="h3 text-dark text-decoration-none mr-3" asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-Id="@category.Id" role="button">@category.Name</a>
-        }
-    </div>
-</div>
-
 <div class="container py-5">
     <div class="row">
         <div class="col-lg-3">
             <h1 class="h2 pb-4">Categories</h1>
             @foreach (var category in Model.AllCategories)
             {
-                <a class="d-flex justify-content-between h4 text-decoration-none" asp-area="" asp-controller="Product" asp-action="Details" asp-route-Id="@category.Id" role="button">
-                    @category.Name"</a>
+                <ul class="list-unstyled templatemo-accordion">
+                    <li class="pb-3">
+                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-id="@category.Id">
+                            @category.Name
+                            <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
+                        </a>
+                    </li>
+                
+                </ul>
             }
+            
         </div>
+
         <div class="col-lg-9">
             <div class="row">
                 <div class="col-md-6">
                     <ul class="list-inline shop-top-menu pb-3 pt-1">
                         <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none mr-3" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="h3 text-dark text-decoration-none mr-3" asp-area="" asp-controller="Product" asp-action="AllProducts">All</a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none mr-3" asp-controller="Product" asp-action="AllProducts">All</a>
+                            <a class="h3 text-dark text-decoration-none mr-3" href="#">Naj novi</a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a class="h3 text-dark text-decoration-none" href="#">Women's</a>
                         </li>
                     </ul>
                 </div>
@@ -50,24 +53,26 @@
                         </select>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 @foreach (var product in firstCategory.Products)
                 {
                     <div class="col-md-4">
                         <div class="card mb-4 product-wap rounded-0">
                             <div class="card rounded-0">
-                                <img class="card-img-top" src="@product.ImgUrl" alt="@product.Name" width="250" height="300">
+                                <img class="card-img rounded-0 img-fluid" src="@product.ImgUrl" alt="">
                                 <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
-                                        <li><a class="btn btn-success text-white" href="#"><i class="far fa-heart"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="#"><i class="far fa-eye"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="#"><i class="fas fa-cart-plus"></i></a></li>
+                                        <li><a class="btn btn-success text-white" href="shop-single.html"><i class="bx bx-heart"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" asp-area="" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"><i class="bx bxs-eyedropper"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i class="fas bx bx-phone"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="card-body text-center">
-                                <a href="#" class="h3 text-decoration-none">@product.Name</a>
+                            <div class="card-body">
+                                <a href="shop-single.html" class="h3 text-decoration-none">@product.Name</a>
                                 <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                    <li><textarea>@product.ShortDescription</textarea></li>
+                                    <li>M/L/X/XL</li>
                                     <li class="pt-2">
                                         <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
                                         <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
@@ -78,11 +83,11 @@
                                 </ul>
                                 <ul class="list-unstyled d-flex justify-content-center mb-1">
                                     <li>
-                                        <i class="text-warning bx bx-star"></i>
-                                        <i class="text-warning bx bx-star"></i>
-                                        <i class="text-warning bx bx-star"></i>
-                                        <i class="text-muted bx bx-star"></i>
-                                        <i class="text-muted bx bx-star"></i>
+                                        <i class="text-warning fa fa-star"></i>
+                                        <i class="text-warning fa fa-star"></i>
+                                        <i class="text-warning fa fa-star"></i>
+                                        <i class="text-muted fa fa-star"></i>
+                                        <i class="text-muted fa fa-star"></i>
                                     </li>
                                 </ul>
                                 <p class="text-center mb-0">$250.00</p>
@@ -90,8 +95,31 @@
                         </div>
                     </div>
                 }
-
             </div>
         </div>
+
     </div>
 </div>
+
+
+@*<script>
+        $(document).ready(function() {
+            $('#selectType').prop('disabled', true);
+            $('#selectCategory').on('change',
+                function() {
+                    $.ajax({
+                        url: '@Url.Action("CascadeCategory", "Product")',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: { catId: $('#selectCategory').val() },
+                        success: function(data) {
+                            $('#selectType').prop('disabled'), $('#selectCategory').val() == 0 ? true : false);
+                            $('#selectType').html('').append('<option value="0">Chose...</option>');
+                            $(data).each(function(index, item) {
+                                $('#selectType').append(`<option value="${item.id}>${item.name}</option>"`);
+                            });
+                        }
+                    });
+                });
+        });
+    </script>*@

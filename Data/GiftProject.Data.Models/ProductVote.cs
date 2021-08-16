@@ -1,8 +1,9 @@
-﻿using System;
-
-namespace GiftProject.Data.Models
+﻿namespace GiftProject.Data.Models
 {
+    using System;
+
     using GiftProject.Data.Common.Models;
+    using GiftProject.Data.Models.Enumeration;
 
     public class ProductVote : BaseDeletableModel<int>
     {
@@ -14,7 +15,7 @@ namespace GiftProject.Data.Models
 
         public ApplicationUser ApplicationUser { get; set; }
 
-        public int Rate { get; set; }
+        public VoteType Vote { get; set; }
 
         public DateTime NextVoteDate { get; set; }
     }

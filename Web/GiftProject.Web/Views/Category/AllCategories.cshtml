@@ -2,22 +2,44 @@
 @{
     this.ViewData["Title"] = "All Categories";
 }
-<section class="container py-5">
+<link rel="stylesheet" href="css/templatemo.css">
+
+<section class="bg-light">
     <div class="row text-center pt-3">
         <div class="col-lg-6 m-auto">
-            <h1 class="h1">Categories of The Month</h1>
+            <h1 class="h1">Категории</h1>
         </div>
     </div>
-    <div class="row">
-        @foreach (var category in Model.AllCategories)
-        {
-            <div class="col-12 col-md-4 p-5 mt-3">
-                <a href="#"><img src="@category.ImgUrl" class="rounded-circle img-fluid border" alt="@category.Name"></a>
-                <h5 class="text-center mt-3 mb-3">@category.Name</h5>
-                <p class="text-center"><a class="btn btn-success" asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-Id="@category.Id">Go Shop</a></p>
+    <div class="container py-5">
+        <div class="row">
+            @foreach (var category in Model.AllCategories)
+            {
 
-            </div>
-        }
-       
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card h-100">
+                        <a asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-Id="@category.Id">
+                            <img src="@category.ImgUrl" class="card-img-top" alt="@category.Name" width="800" height="400">
+                        </a>
+                        <div class="card-body">
+                            <ul class="list-unstyled d-flex justify-content-between">
+                                <li>
+                                    <i class="text-warning bx bx-star"></i>
+                                    <i class="text-warning bx bx-star"></i>
+                                    <i class="text-warning bx bx-star"></i>
+                                    <i class="text-muted bx bx-star"></i>
+                                    <i class="text-muted bx bx-star"></i>
+                                </li>
+                                <li class="text-muted text-right">$240.00</li>
+                            </ul>
+                            <h3 style="text-align: center">@category.Name</h3>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt in culpa qui officia deserunt.
+                            </p>
+                            <p class="text-muted">Products @category.Products.Count()</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 </section>

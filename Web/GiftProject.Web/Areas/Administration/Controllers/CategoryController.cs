@@ -1,4 +1,6 @@
-﻿namespace GiftProject.Web.Areas.Administration.Controllers
+﻿using GiftProject.Web.ViewModels.Category;
+
+namespace GiftProject.Web.Areas.Administration.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -54,6 +56,13 @@
             return this.RedirectToAction("CreateProduct", "Product", new {area = "Administration"});
         }
 
+        [Authorize]
+        public async Task<IActionResult> Delete(int categoryId)
+        {
+            await this.categoryService.DeleteByIdAsync(categoryId);
+            return this.RedirectToAction("Index", "Dashboard", new { area = "Administration" });
+        }
+
         [HttpGet]
         [Authorize]
         public IActionResult EditCategory()
@@ -71,6 +80,16 @@
 
             await this.categoryService.EditAsync(model);
             return this.RedirectToAction("Index", "Dashboard", new { area = "Administration" });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult AllCategory()
+        {
+            var model = this.categoryService.GetAll<CategoryViewModel>();
+
+            var viewModel = new AllCategoryViewModel {AllCategories = model};
+            return this.View(viewModel);
         }
     }
 }

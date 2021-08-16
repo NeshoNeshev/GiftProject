@@ -2,11 +2,13 @@
 @{
     this.ViewData["Title"] = "Edit Category";
 }
-
+<div class="text-center">
+    <h1 class="text-secondary">Промени категория</h1>
+</div>
 <div class="row">
-    <div class="col-md-6">
-        <form asp-area="Administration" asp-controller="Category" asp-action="EditCategory"  enctype="multipart/form-data" method="post">
-            <hr />
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        
+        <form asp-area="Administration" asp-controller="Category" asp-action="EditCategory" enctype="multipart/form-data" method="post">
             <label asp-for="Id"></label>
             <select asp-for="Id" class="form-control">
                 @foreach (var item in Model.CategoryDropDown)
@@ -19,13 +21,13 @@
                 <input asp-for="NewName" class="form-control" placeholder="Ново име" />
                 <span asp-validation-for="NewName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label for="customFile">Upload Picture</label>
-                <input type="file" class="form-control-file" id="customFile" asp-for="NewImgUrl" />
+            <div class="form-group border border-secondary">
+                <label for="customFile">Нова снимка</label>
+                <input type="file" class="form-control-file border border-secondary" id="customFile" asp-for="NewImgUrl" />
                 <span asp-validation-for="NewImgUrl" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-danger">Edit product</button>
-            <a class="btn btn-primary" asp-area="Administration" asp-controller="Product" asp-action="AllProduct" role="button">All</a>
+            <button type="submit" class="btn btn-danger">Промени</button>
+            <a class="btn btn-primary" asp-area="" asp-controller="Category" asp-action="AllCategories" role="button">Всички</a>
         </form>
     </div>
 </div>

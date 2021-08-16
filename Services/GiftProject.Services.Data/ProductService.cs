@@ -45,7 +45,7 @@
 
             try
             {
-                 catalogerNumber = this.number.CreateCatalogueNumber(ConstDate);
+                catalogerNumber = this.number.CreateCatalogueNumber(ConstDate);
             }
             catch (Exception e)
             {
@@ -148,6 +148,9 @@
 
             return productByFilter;
         }
+
+        public IEnumerable<ProductsViewModel> NewProducts<T>()
+            => this.productRepository.All().To<ProductsViewModel>().OrderBy(p => p.CreatedOn).Take(3);
 
         public ProductsViewModel GetById<T>(int id)
             => this.productRepository.All().To<ProductsViewModel>().FirstOrDefault(x => x.Id == id);

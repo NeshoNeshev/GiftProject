@@ -24,10 +24,10 @@
             this.category = this.categoryService.GetAll<CategoryViewModel>();
         }
 
-        public async Task<IActionResult> Product()
+        public IActionResult Product()
         {
             var model = this.categoryService.GetAll<CategoryViewModel>();
-            var viewModel = new AllCategoryViewModel() {AllCategories = model};
+            var viewModel = new AllCategoryViewModel() { AllCategories = model };
             return this.View(viewModel);
         }
 
@@ -72,7 +72,19 @@
         public IActionResult Details(int id)
         {
             var product = this.productService.GetById<ProductsViewModel>(id);
+            if (product == null)
+            {
+                return this.NotFound();
+            }
+
             return this.View(product);
+        }
+
+        public IActionResult _GetRelatedProducts(int id)
+        {
+            var related = this.categoryService.GetById<CategoryViewModel>(id).Products.ToList();
+
+            return this.PartialView(related);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace GiftProject.Web.ViewModels.Product
+﻿using System;
+
+namespace GiftProject.Web.ViewModels.Product
 {
     using System.Linq;
 
@@ -13,19 +15,25 @@
 
         public string ImgUrl { get; set; }
 
+        public int CategoryId { get; set; }
+
+        public string CategoryName { get; set; }
+
         public string CatalogueNumber { get; set; }
+
+        public DateTime CreatedOn { get; set; }
 
         public string Description { get; set; }
 
-        public int StarRatingsSum { get; set; }
+        public int VotesCount { get; set; }
 
         public string ShortDescription
         {
             get
             {
                 var shortDescription = this.Description;
-                return shortDescription.Length > 200
-                    ? shortDescription.Substring(0, 200) + " ..."
+                return shortDescription.Length > 50
+                    ? shortDescription.Substring(0, 50) + " ..."
                     : shortDescription;
             }
         }
@@ -33,9 +41,9 @@
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Data.Models.Product, ProductsViewModel>()
-                .ForMember(x => x.StarRatingsSum, options =>
+                .ForMember(x => x.VotesCount, options =>
                 {
-                    options.MapFrom(m => m.ProductVotes.Sum(st => st.Rate));
+                    options.MapFrom(m => m.ProductVotes.Sum(pv => (int)pv.Vote));
                 });
         }
     }

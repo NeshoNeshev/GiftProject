@@ -13,11 +13,11 @@
         public int Id { get; set; }
 
         [Required]
-        [DisplayName("Име на категорията")]
+        [DisplayName("Ново име")]
         public string NewName { get; set; }
 
         [Required]
-        [DisplayName("New url")]
+        [DisplayName("Снимка")]
         public IFormFile NewImgUrl { get; set; }
 
         public ICollection<CategoryDropDownModel> CategoryDropDown { get; set; }

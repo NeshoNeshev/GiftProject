@@ -62,18 +62,18 @@
             await this.categoryRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteByIdAsync(int id)
+        public async Task DeleteByIdAsync(int categoryId)
         {
-            var product = this.categoryRepository.All().FirstOrDefault(x => x.Id == id);
-            if (product == null)
+            var category = this.categoryRepository.All().FirstOrDefault(x => x.Id == categoryId);
+            if (category == null)
             {
                 throw new NullReferenceException(
-                    string.Format(ExceptionMessages.ProductNotFound, id));
+                    string.Format(ExceptionMessages.ProductNotFound, categoryId));
             }
 
-            product.IsDeleted = true;
-            product.DeletedOn = DateTime.UtcNow;
-            this.categoryRepository.Update(product);
+            category.IsDeleted = true;
+            category.DeletedOn = DateTime.UtcNow;
+            this.categoryRepository.Update(category);
             await this.categoryRepository.SaveChangesAsync();
         }
 

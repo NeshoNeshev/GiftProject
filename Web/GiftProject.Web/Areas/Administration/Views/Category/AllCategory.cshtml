@@ -1,0 +1,32 @@
+﻿@using GiftProject.Common
+@model GiftProject.Web.ViewModels.Category.AllCategoryViewModel
+@{
+    this.ViewData["Title"] = "All Admin Category";
+}
+
+@if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+{
+    <div>
+        <div class="container">
+            <div class="row">
+
+                @foreach (var category in Model.AllCategories)
+                {
+
+                    <div class="col-md-4 ">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="@category.ImgUrl" alt="@category.Name" width="250" height="300">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">@category.Name</h5>
+                                <h5>@category.Products.Count()</h5>
+                            </div>
+                        </div>
+                        <a class="btn btn-danger" asp-area="Administration" asp-controller="Category" asp-action="Delete" asp-route-categoryId="@category.Id">Delete</a>
+                        <a class="btn btn-primary" asp-area="Administration" asp-controller="Category" asp-action="EditCategory" asp-route-Id="@category.Id" role="button">Промени</a>
+                        
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}

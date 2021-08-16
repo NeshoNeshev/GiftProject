@@ -15,7 +15,7 @@ namespace GiftProject.Services.Data
 
         public Task EditAsync(EditCategoryModel model);
 
-        public Task DeleteByIdAsync(int id);
+        public Task DeleteByIdAsync(int categoryId);
 
         public bool FindByName(string name);
 

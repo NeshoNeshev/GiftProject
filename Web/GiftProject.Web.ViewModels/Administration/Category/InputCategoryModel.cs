@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace GiftProject.Web.ViewModels.Administration.Category
+﻿namespace GiftProject.Web.ViewModels.Administration.Category
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+
+    using Microsoft.AspNetCore.Http;
 
     public class InputCategoryModel
     {
@@ -12,7 +12,7 @@ namespace GiftProject.Web.ViewModels.Administration.Category
         public string Name { get; set; }
 
         [Required]
-        [DisplayName("Snimka")]
+        [DisplayName("Снимка")]
         public IFormFile ImgUrl { get; set; }
     }
 }

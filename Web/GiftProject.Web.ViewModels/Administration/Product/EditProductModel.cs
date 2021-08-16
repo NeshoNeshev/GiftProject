@@ -8,19 +8,19 @@
 
     public class EditProductModel
     {
-        [DisplayName("Product")]
+        [DisplayName("Продукт")]
         public int Id { get; set; }
 
         [Required]
-        [DisplayName("New Name")]
+        [DisplayName("Ново Име")]
         public string NewName { get; set; }
 
         [Required]
-        [DisplayName("New Img Url")]
+        [DisplayName("Нова снимка")]
         public IFormFile NewImgUrl { get; set; }
 
         [Required]
-        [DisplayName("New Description")]
+        [DisplayName("Ново описание")]
         public string NewDescription { get; set; }
 
         public ICollection<ProductDropDownModel> ProductDropDown { get; set; }

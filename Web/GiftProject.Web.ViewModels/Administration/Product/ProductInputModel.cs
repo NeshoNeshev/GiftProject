@@ -8,22 +8,24 @@
     using GiftProject.Web.ViewModels.Administration.Category;
     using Microsoft.AspNetCore.Http;
 
-    public class ProductInputModel 
+    public class ProductInputModel
     {
+        public int Id { get; set; }
+
         [Required]
-        [DisplayName("Product Name")]
+        [DisplayName("Име на продукта")]
         public string Name { get; set; }
 
         [Required]
-        [DisplayName("Img Url")]
+        [DisplayName("Снимка")]
         public IFormFile ImgUrl { get; set; }
 
         [Required]
-        [DisplayName("Description")]
+        [DisplayName("Описание")]
         public string Description { get; set; }
 
         [Required]
-        [DisplayName("Category")]
+        [DisplayName("Категория")]
         public int CategoryId { get; set; }
 
         public ICollection<CategoryDropDownModel> CategoryDropDown { get; set; }

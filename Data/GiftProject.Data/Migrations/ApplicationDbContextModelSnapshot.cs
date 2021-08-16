@@ -242,7 +242,7 @@ namespace GiftProject.Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Rate")
+                    b.Property<int>("Vote")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

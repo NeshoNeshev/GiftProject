@@ -11,5 +11,7 @@
         public const string AdministratorPassword = "Administrator";
 
         public const string AdministratorEmail = "neshev1978@gmail.com";
+
+        public const string PhoneNumber = "888 888 888";
     }
 }

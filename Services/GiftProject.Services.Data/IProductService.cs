@@ -22,5 +22,7 @@
         public IQueryable<TViewModel> GetAllProductsByFilterAsQueryeable<TViewModel>(string letter = null);
 
         public ProductsViewModel GetById<T>(int id);
+
+        public IEnumerable<ProductsViewModel> NewProducts<T>();
     }
 }

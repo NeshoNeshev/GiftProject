@@ -54,11 +54,14 @@ namespace GiftProject.Web
                     {
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
+            });
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddSingleton(this.configuration);
-
 
             Account account = new Account
             (
@@ -80,6 +83,7 @@ namespace GiftProject.Web
             services.AddTransient<IRatingsService, RatingsService>();
             services.AddTransient<ICatalogueNumber, CatalogueNumber>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
+            services.AddTransient<IVoteService, VoteService>();
 
             services.AddSingleton(cloudinary);
         }

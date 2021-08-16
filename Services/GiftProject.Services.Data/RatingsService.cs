@@ -31,7 +31,7 @@
                     throw new ArgumentException(ExceptionMessages.AlreadySentVote);
                 }
 
-                starRating.Rate += rating;
+                starRating.Vote += rating;
                 starRating.NextVoteDate = DateTime.UtcNow.AddDays(1);
             }
             else
@@ -40,7 +40,7 @@
                 {
                     ProductId = productId,
                     ApplicationUserId = userId,
-                    Rate = rating,
+                    //Vote = rating,
                     NextVoteDate = DateTime.UtcNow.AddDays(1),
                 };
 
@@ -50,15 +50,15 @@
             await this._productvoteRepository.SaveChangesAsync();
         }
 
-        public async Task<int> GetStarRatingsAsync(int productId)
-        {
-            var starRatings = await this._productvoteRepository
-                .All()
-                .Where(x => x.ProductId == productId)
-                .SumAsync(x => x.Rate);
+        //public async Task<int> GetStarRatingsAsync(int productId)
+        //{
+        //    //var starRatings = await this._productvoteRepository
+        //    //    .All()
+        //    //    .Where(x => x.ProductId == productId)
+        //    //    .SumAsync(x => x.Rate);
 
-            return starRatings;
-        }
+        //    return starRatings;
+        //}
 
         public async Task<DateTime> GetNextVoteDateAsync(int productId, string userId)
         {

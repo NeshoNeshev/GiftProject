@@ -1,4 +1,8 @@
-﻿namespace GiftProject.Web.Controllers
+﻿using System.Linq;
+using GiftProject.Web.ViewModels.Index;
+using GiftProject.Web.ViewModels.Product;
+
+namespace GiftProject.Web.Controllers
 {
     using System.Diagnostics;
 
@@ -10,17 +14,31 @@
     public class HomeController : BaseController
     {
         private readonly ICategoryService categoryService;
+        private readonly IProductService productService;
 
-        public HomeController(ICategoryService categoryService)
+        public HomeController(ICategoryService categoryService, IProductService productService)
         {
             this.categoryService = categoryService;
+            this.productService = productService;
         }
 
         public IActionResult Index()
         {
-            var model = this.categoryService.GetAll<CategoryViewModel>();
-            var viewModel = new AllCategoryViewModel() { AllCategories = model };
+            var categoryModel = this.categoryService.GetAll<CategoryViewModel>();
+
+            var productModel = this.productService.GetAll<ProductsViewModel>().OrderBy(x => x.CreatedOn).Take(3);
+            var viewModel = new IndexViewModel
+            {
+                CategoryViewModels = categoryModel,
+                ProductsViewModels = productModel,
+
+            };
             return this.View(viewModel);
+        }
+
+        public IActionResult About()
+        {
+            return this.View();
         }
 
         public IActionResult Privacy()
