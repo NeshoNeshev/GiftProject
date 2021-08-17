@@ -85,7 +85,7 @@
     <div class="container py-5">
         <div class="row text-center py-3">
             <div class="col-lg-6 m-auto">
-                <h1 class="h1">Featured Product</h1>
+                <h1 class="h1">Най-нови продукти</h1>
                 <p>
                     Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                     Excepteur sint occaecat cupidatat non proident.
@@ -98,7 +98,7 @@
                 <div class="col-md-4">
                     <div class="card mb-4 product-wap rounded-0">
                         <div class="card rounded-0">
-                            <img class="card-img-top" src="/img/feature_prod_01.jpg" alt="@product.Name" width="500" height="350">
+                            <img class="card-img-top" src="@product.ImgUrl" alt="@product.Name" width="500" height="350">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
                                     <form id="votesForm" method="post"></form>
@@ -112,11 +112,10 @@
                             <a href="#" class="h3 text-decoration-none">@product.Name</a>
                             <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                 <li>
-                                    <p>К. № @product.CatalogueNumber</p>
+                                    <p class="text-center">К. № @product.CatalogueNumber</p>
                                 </li>
                             </ul>
-                            <p id="votesCount" class="bx bx-heart text-muted">Products @product.VotesCount</p>
-                            <p>@product.Id</p>
+                            <p id="votesCount" class="bx bxs-heart text-primary"> @product.VotesCount</p>
                             <a class="text-decoration-none" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">
                                 <p class="text-center mb-0">@product.ShortDescription</p>
                             </a>

@@ -82,6 +82,7 @@
 
         public IActionResult _GetRelatedProducts(int id)
         {
+            
             var related = this.categoryService.GetById<CategoryViewModel>(id).Products.ToList();
 
             return this.PartialView(related);

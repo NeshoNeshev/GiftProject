@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace GiftProject.Web.ViewModels.Product
+﻿namespace GiftProject.Web.ViewModels.Product
 {
+    using System;
     using System.Linq;
 
     using AutoMapper;
