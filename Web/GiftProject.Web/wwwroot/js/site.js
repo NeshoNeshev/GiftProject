@@ -17,3 +17,6 @@ function topFunction() {
     document.documentElement.scrollTop = 0;
 }
 
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+})

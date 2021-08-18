@@ -7,7 +7,7 @@
 
     public class IndexViewModel
     {
-        public IEnumerable<CategoryViewModel> CategoryViewModels { get; set; }
+        public IEnumerable<IndexCategoryViewModel> CategoryViewModels { get; set; }
 
         public IEnumerable<ProductsViewModel> ProductsViewModels { get; set; }
     }

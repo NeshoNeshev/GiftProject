@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using GiftProject.Web.ViewModels.Product;
-
-namespace GiftProject.Web.Controllers
+﻿namespace GiftProject.Web.Controllers
 {
     using GiftProject.Services.Data;
     using GiftProject.Web.ViewModels.Category;
@@ -21,6 +18,10 @@ namespace GiftProject.Web.Controllers
         public IActionResult CategoryById(int id)
         {
             var category = this.categoryService.GetById<CategoryViewModel>(id);
+            if (category == null)
+            {
+                return this.NotFound();
+            }
 
             return this.View(category);
         }
@@ -30,18 +31,6 @@ namespace GiftProject.Web.Controllers
             var model = this.categoryService.GetAll<CategoryViewModel>();
             var viewModel = new AllCategoryViewModel() { AllCategories = model };
             return this.View(viewModel);
-        }
-
-        public JsonResult GetCategories()
-        {
-            var categories = this.categoryService.GetAll<CategoryViewModel>().ToList();
-            return this.Json(categories);
-        }
-
-        public JsonResult GetProducts(int? id)
-        {
-            var types = this.productService.GetAll<ProductsViewModel>().Where(x => x.CategoryId == id).ToList();
-            return this.Json(types);
         }
     }
 }

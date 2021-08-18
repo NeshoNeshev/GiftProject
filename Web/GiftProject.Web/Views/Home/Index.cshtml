@@ -80,7 +80,31 @@
         <i class="bx bx-chevron-right"></i>
     </a>
 </div>
+<section class="container py-5">
+    <div class="row text-center pt-3">
+        <div class="col-lg-6 m-auto">
+            <h1 class="h1">Categories of The Month</h1>
+            <p>
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var category in Model.CategoryViewModels.Take(3))
+        {
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-Id="@category.Id">
+                <img src="@category.ImgUrl" class="rounded-circle img-fluid border">
+                </a>
+                <h5 class="text-center mt-3 mb-3">Watches</h5>
+                <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
+            </div>
+        }
 
+    </div>
+</section>
+<!-- End Categories of The Month -->
 <section class="bg-light">
     <div class="container py-5">
         <div class="row text-center py-3">
@@ -102,19 +126,13 @@
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
                                     <form id="votesForm" method="post"></form>
-                                    <li><a class="btn btn-primary text-white" href="#" onclick="upVote(@product.Id)"><i class="bx bx-heart"></i></a></li>
-                                    <li><a class="btn btn-primary text-white mt-2" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"><i class="bx bx-happy-heart-eyes"></i></a></li>
-                                    <li><a class="btn btn-primary text-white mt-2" href="#"><i class="bx bx-card"></i></a></li>
+                                    <li><a class="btn btn-primary text-white" data-toggle="tooltip" data-placement="right" title="харесай ме" onclick="upVote(@product.Id)"><i class="bx bx-heart"></i></a></li>
+                                    <li><a class="btn btn-primary text-white mt-2" data-toggle="tooltip" data-placement="right" title="детайли" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"><i class="bx bx-happy-heart-eyes"></i></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="card-body text-center">
                             <a href="#" class="h3 text-decoration-none">@product.Name</a>
-                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                <li>
-                                    <p class="text-center">К. № @product.CatalogueNumber</p>
-                                </li>
-                            </ul>
                             <p id="votesCount" class="bx bxs-heart text-primary"> @product.VotesCount</p>
                             <a class="text-decoration-none" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">
                                 <p class="text-center mb-0">@product.ShortDescription</p>
@@ -141,8 +159,8 @@
                 data: JSON.stringify(json),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                headers: {'X-CSRF-TOKEN': token},
-                success: function(data) {
+                headers: { 'X-CSRF-TOKEN': token },
+                success: function (data) {
                     $("#votesCount").html(data.votesCount);
                 }
             });

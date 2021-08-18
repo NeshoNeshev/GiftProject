@@ -2,12 +2,11 @@
 @{
     this.ViewData["Title"] = "All Products";
 }
-
-
 @{
     var prevDisabled = !Model.ProductsViewModel.HasPreviousPage ? "disabled" : "";
+    var prevPage = !Model.ProductsViewModel.HasPreviousPage ? "1" : (Model.ProductsViewModel.PageIndex - 1).ToString();
     var nextDisabled = !Model.ProductsViewModel.HasNextPage ? "disabled" : "";
-    int movieCounter = 0;
+    var nextPage = !Model.ProductsViewModel.HasNextPage ? "1" : (Model.ProductsViewModel.PageIndex + 1).ToString();
 
 }
 
@@ -35,7 +34,7 @@
 
             @foreach (var product in Model.ProductsViewModel)
             {
-                movieCounter++;
+
 
                 <div class="col-md-4">
                     <div class="card mb-4 product-wap rounded-0">
@@ -43,10 +42,9 @@
                             <img class="card-img-top" src="@product.ImgUrl" alt="@product.Name" width="500" height="350">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
-
-                                    <li><a class="btn btn-success text-white" href="#"><i class="bx bx-heart"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"><i class="bx bx-happy-heart-eyes"></i></a></li>
-                                    <li><a class="btn btn-success text-white mt-2" href="#"><i class="bx bx-card"></i></a></li>
+                                    <form id="votesForm" method="post"></form>
+                                    <li><a class="btn btn-success text-white" data-toggle="tooltip" data-placement="right" title="харесай ме" onclick="upVote(@product.Id)"><i class="bx bx-heart"></i></a></li>
+                                    <li><a class="btn btn-success text-white mt-2" data-toggle="tooltip" data-placement="right" title="детайли" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"><i class="bx bx-happy-heart-eyes"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -80,6 +78,7 @@
                 <ul class="pagination justify-content-center">
                     <li class="page-item ">
                         <a class="page-link" asp-action="AllProducts"
+                           asp-route-pageNumber="@prevPage"
                            asp-route-currentFilter="@ViewData["CurrentSearchFilter"]" tabindex="-1">Previous</a>
                     </li>
                     @for (int i = 1; i <= Model.ProductsViewModel.TotalPages; i++)
@@ -95,6 +94,7 @@
                     }
                     <li class="page-item ">
                         <a class="page-link" asp-action="AllProducts"
+                           asp-route-pageNumber="@nextPage"
                            asp-route-currentFilter="@ViewData["CurrentSearchFilter"]">Next</a>
                     </li>
                 </ul>
@@ -103,3 +103,26 @@
     </div>
 </div>
 
+@section Scripts
+{
+
+    <script>
+        function upVote(productId) {
+
+            var token = $("#votesForm input[name=__RequestVerificationToken]").val();
+            var json = { productId: productId, isUpVote: true };
+            console.log(json);
+            $.ajax({
+                url: "/api/votes",
+                type: "POST",
+                data: JSON.stringify(json),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                headers: { 'X-CSRF-TOKEN': token },
+                success: function (data) {
+                    $("#votesCount").html(data.votesCount);
+                }
+            });
+        }
+    </script>
+}

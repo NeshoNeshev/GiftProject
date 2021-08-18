@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
-
-namespace GiftProject.Services.Data
+﻿namespace GiftProject.Services.Data
 {
-    using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Threading.Tasks;
 
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
+    using Microsoft.AspNetCore.Http;
 
     public class CloudinaryService : ICloudinaryService
     {
@@ -21,13 +19,11 @@ namespace GiftProject.Services.Data
 
         public async Task<string> UploadAsync(IFormFile file, string fileName)
         {
-            byte[] destinationImage;
-
-            using var memoryStream = new MemoryStream();
+            await using var memoryStream = new MemoryStream();
             await file.CopyToAsync(memoryStream);
-            destinationImage = memoryStream.ToArray();
+            var destinationImage = memoryStream.ToArray();
 
-            using var destinationStream = new MemoryStream(destinationImage);
+            await using var destinationStream = new MemoryStream(destinationImage);
 
             fileName = fileName.Replace("&", "And");
             var uploadParams = new ImageUploadParams()

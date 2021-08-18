@@ -1,6 +1,4 @@
-﻿using GiftProject.Web.ViewModels.Details;
-
-namespace GiftProject.Web.Controllers
+﻿namespace GiftProject.Web.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -9,6 +7,7 @@ namespace GiftProject.Web.Controllers
     using GiftProject.Services.Data;
     using GiftProject.Web.Infrastructure.Pagination;
     using GiftProject.Web.ViewModels.Category;
+    using GiftProject.Web.ViewModels.Details;
     using GiftProject.Web.ViewModels.Product;
     using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +16,7 @@ namespace GiftProject.Web.Controllers
         private readonly IProductService productService;
         private readonly ICategoryService categoryService;
         private readonly IEnumerable<CategoryViewModel> category;
-        private const int PageSize = 6;
+        private const int ProductCount = 6;
 
         public ProductController(IProductService productService, ICategoryService categoryService, IEnumerable<CategoryViewModel> category)
         {
@@ -36,19 +35,11 @@ namespace GiftProject.Web.Controllers
         public async Task<IActionResult> AllProducts(string searchString, string currentFilter, string selectedLetter, int? pageNumber)
         {
             this.ViewData["Current"] = nameof(this.AllProducts);
-            if (searchString != null)
-            {
-                pageNumber = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
 
             this.ViewData["CurrentSearchFilter"] = searchString;
-            var product = this.productService
-                .GetAllProductsByFilterAsQueryeable<ProductsViewModel>(selectedLetter);
-
+            var product = await Task.Run(() => this.productService
+               .GetAllProductAsQueryeable<ProductsViewModel>());
+            var a = product.Count();
             if (!string.IsNullOrEmpty(searchString))
             {
                 var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
@@ -56,7 +47,7 @@ namespace GiftProject.Web.Controllers
                 product = any.Any() ? product.Where(m => m.Name.ToLower().Contains(searchString.ToLower())) : product.Where(x => x.CatalogueNumber.ToLower().Contains(searchString.ToLower()));
             }
 
-            var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, PageSize);
+            var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, ProductCount);
 
             var alphabeticalPagingViewModel = new AlphabeticalPagingViewModel
             {
@@ -78,6 +69,7 @@ namespace GiftProject.Web.Controllers
             {
                 return this.NotFound();
             }
+
             var details = new DetailsViewModel
             {
                 Id = product.Id,
@@ -88,17 +80,10 @@ namespace GiftProject.Web.Controllers
                 CatalogueNumber = product.CatalogueNumber,
                 CategoryId = product.CategoryId,
                 CategoryName = product.CategoryName,
-                RelatedProducts = this.categoryService.GetById<CategoryViewModel>(id).Products.Where(x=>x.Id != id).ToList().Take(3),
+                RelatedProducts = this.categoryService.GetById<CategoryViewModel>(product.CategoryId).Products.Where(x => x.Id != product.Id).ToList().Take(3),
             };
 
             return this.View(details);
-        }
-
-        public IActionResult _GetRelatedProducts(int id)
-        {
-            var related = this.categoryService.GetById<CategoryViewModel>(id).Products.ToList();
-
-            return this.PartialView(related);
         }
     }
 }

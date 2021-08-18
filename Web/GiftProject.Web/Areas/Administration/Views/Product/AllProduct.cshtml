@@ -6,9 +6,9 @@
 }
 @{
     var prevDisabled = !Model.ProductsViewModel.HasPreviousPage ? "disabled" : "";
+    var prevPage = !Model.ProductsViewModel.HasPreviousPage ? "1" : (Model.ProductsViewModel.PageIndex - 1).ToString();
     var nextDisabled = !Model.ProductsViewModel.HasNextPage ? "disabled" : "";
-    int movieCounter = 0;
-
+    var nextPage = !Model.ProductsViewModel.HasNextPage ? "1" : (Model.ProductsViewModel.PageIndex + 1).ToString();
 }
 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
 {
@@ -29,9 +29,8 @@
 
                 @foreach (var product in Model.ProductsViewModel)
                 {
-                    movieCounter++;
 
-                <div class="col-md-4 ">
+                    <div class="col-md-4 ">
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="@product.ImgUrl" alt="@product.Name" width="250" height="300">
                         <div class="card-body">
@@ -52,6 +51,7 @@
                     <ul class="pagination justify-content-center">
                         <li class="page-item ">
                             <a class="page-link" asp-action="AllProducts"
+                               asp-route-pageNumber="@prevPage"
                                asp-route-currentFilter="@ViewData["CurrentSearchFilter"]" tabindex="-1">Previous</a>
                         </li>
                         @for (int i = 1; i <= Model.ProductsViewModel.TotalPages; i++)
@@ -67,6 +67,7 @@
                         }
                         <li class="page-item ">
                             <a class="page-link" asp-action="AllProducts"
+                               asp-route-pageNumber="@nextPage"
                                asp-route-currentFilter="@ViewData["CurrentSearchFilter"]">Next</a>
                         </li>
                     </ul>

@@ -1,9 +1,8 @@
-﻿using CloudinaryDotNet;
-
-namespace GiftProject.Web
+﻿namespace GiftProject.Web
 {
     using System.Reflection;
 
+    using CloudinaryDotNet;
     using GiftProject.Data;
     using GiftProject.Data.Common;
     using GiftProject.Data.Common.Repositories;
@@ -14,7 +13,6 @@ namespace GiftProject.Web
     using GiftProject.Services.Mapping;
     using GiftProject.Services.Messaging;
     using GiftProject.Web.ViewModels;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -112,6 +110,8 @@ namespace GiftProject.Web
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            app.UseStatusCodePagesWithRedirects("/Home/HttpError?statusCode={0}");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

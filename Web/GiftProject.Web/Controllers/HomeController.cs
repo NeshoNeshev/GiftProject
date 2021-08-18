@@ -23,7 +23,7 @@
 
         public IActionResult Index()
         {
-            var categoryModel = this.categoryService.GetAll<CategoryViewModel>();
+            var categoryModel = this.categoryService.GetAll<IndexCategoryViewModel>();
 
             var productModel = this.productService.GetAll<ProductsViewModel>().OrderBy(x => x.CreatedOn).Take(3);
             var viewModel = new IndexViewModel
@@ -39,6 +39,17 @@
         {
             return this.View();
         }
+
+        public IActionResult HttpError(int statusCode)
+        {
+            if (statusCode == 404)
+            {
+                return this.View("404", statusCode);
+            }
+
+            return this.View("Error");
+        }
+
 
         public IActionResult Privacy()
         {

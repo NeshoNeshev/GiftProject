@@ -93,25 +93,17 @@
         public async Task<IActionResult> AllProduct(string searchString, string currentFilter, string selectedLetter, int? pageNumber)
         {
             this.ViewData["Current"] = nameof(this.AllProduct);
-            if (searchString != null)
-            {
-                pageNumber = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
 
             this.ViewData["CurrentSearchFilter"] = searchString;
-            var movies = this.productService
-                .GetAllProductsByFilterAsQueryeable<ProductsViewModel>(selectedLetter);
+            var product = this.productService
+                .GetAllProductAsQueryeable<ProductsViewModel>();
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                movies = movies.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
+                product = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
             }
 
-            var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(movies, pageNumber ?? 1, PageSize);
+            var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, PageSize);
 
             var alphabeticalPagingViewModel = new AlphabeticalPagingViewModel
             {

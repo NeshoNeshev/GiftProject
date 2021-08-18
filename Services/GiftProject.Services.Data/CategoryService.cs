@@ -17,11 +17,13 @@
     {
         private readonly IDeletableEntityRepository<Category> categoryRepository;
         private readonly ICloudinaryService cloudinaryService;
+        private readonly IDeletableEntityRepository<Product> _productRepository;
 
-        public CategoryService(IDeletableEntityRepository<Category> categoryRepository, ICloudinaryService cloudinaryService)
+        public CategoryService(IDeletableEntityRepository<Category> categoryRepository, ICloudinaryService cloudinaryService, IDeletableEntityRepository<Product> productRepository)
         {
             this.categoryRepository = categoryRepository;
             this.cloudinaryService = cloudinaryService;
+            _productRepository = productRepository;
         }
 
         public async Task CreateAsync(InputCategoryModel model)
@@ -52,6 +54,7 @@
                 throw new NullReferenceException(
                     string.Format(ExceptionMessages.CategoryNotFound, model.Id));
             }
+
             var coverUrl = await this.cloudinaryService
                 .UploadAsync(model.NewImgUrl, model.NewName);
             category.Name = model.NewName;
@@ -75,6 +78,16 @@
             category.DeletedOn = DateTime.UtcNow;
             this.categoryRepository.Update(category);
             await this.categoryRepository.SaveChangesAsync();
+
+            var products = await this._productRepository.All().Where(x => x.CategoryId == categoryId).ToListAsync();
+            foreach (var product in products)
+            {
+                product.IsDeleted = true;
+                product.DeletedOn = DateTime.UtcNow;
+                this._productRepository.Update(product);
+            }
+
+            await this._productRepository.SaveChangesAsync();
         }
 
         public IEnumerable<T> GetAll<T>(int? count = null)

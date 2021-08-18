@@ -1,6 +1,4 @@
-﻿using GiftProject.Web.ViewModels.Category;
-
-namespace GiftProject.Web.Areas.Administration.Controllers
+﻿namespace GiftProject.Web.Areas.Administration.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -11,6 +9,7 @@ namespace GiftProject.Web.Areas.Administration.Controllers
     using GiftProject.Services.Data;
     using GiftProject.Web.CloudinaryHelper;
     using GiftProject.Web.ViewModels.Administration.Category;
+    using GiftProject.Web.ViewModels.Category;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
