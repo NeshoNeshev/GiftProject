@@ -1,4 +1,6 @@
-﻿namespace GiftProject.Web.Controllers
+﻿using GiftProject.Web.ViewModels.Details;
+
+namespace GiftProject.Web.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -76,13 +78,24 @@
             {
                 return this.NotFound();
             }
+            var details = new DetailsViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                ImgUrl = product.ImgUrl,
+                VotesCount = product.VotesCount,
+                CatalogueNumber = product.CatalogueNumber,
+                CategoryId = product.CategoryId,
+                CategoryName = product.CategoryName,
+                RelatedProducts = this.categoryService.GetById<CategoryViewModel>(id).Products.Where(x=>x.Id != id).ToList().Take(3),
+            };
 
-            return this.View(product);
+            return this.View(details);
         }
 
         public IActionResult _GetRelatedProducts(int id)
         {
-            
             var related = this.categoryService.GetById<CategoryViewModel>(id).Products.ToList();
 
             return this.PartialView(related);

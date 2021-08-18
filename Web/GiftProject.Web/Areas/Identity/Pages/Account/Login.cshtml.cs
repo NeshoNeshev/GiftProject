@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
@@ -45,13 +46,15 @@ namespace GiftProject.Web.Areas.Identity.Pages.Account
         {
             [Required]
             [EmailAddress]
+            [DisplayName("Вашият email адрес")]
             public string Email { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
+            [DisplayName("Парола")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Запомни ме?")]
             public bool RememberMe { get; set; }
         }
 

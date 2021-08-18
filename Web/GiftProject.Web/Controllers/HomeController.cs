@@ -1,14 +1,13 @@
-﻿using System.Linq;
-using GiftProject.Web.ViewModels.Index;
-using GiftProject.Web.ViewModels.Product;
-
-namespace GiftProject.Web.Controllers
+﻿namespace GiftProject.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Linq;
 
     using GiftProject.Services.Data;
     using GiftProject.Web.ViewModels;
     using GiftProject.Web.ViewModels.Category;
+    using GiftProject.Web.ViewModels.Index;
+    using GiftProject.Web.ViewModels.Product;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController

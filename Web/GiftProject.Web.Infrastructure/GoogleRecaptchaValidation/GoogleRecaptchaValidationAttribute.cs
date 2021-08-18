@@ -48,6 +48,7 @@
 
             var jsonResponse = httpResponse.Content.ReadAsStringAsync().Result;
             var siteVerifyResponse = JsonSerializer.Deserialize<ReCaptchaSiteVerifyResponse>(jsonResponse);
+            Console.WriteLine(siteVerifyResponse);
             return siteVerifyResponse.Success
                        ? ValidationResult.Success
                        : new ValidationResult(

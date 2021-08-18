@@ -7,20 +7,20 @@
     public class ContactInputModel
     {
         [Required]
-        [Display(Name = "Your Name")]
+        [Display(Name = "Вашите имена")]
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Your Email")]
+        [Display(Name = "Вашият email адрес")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Subject")]
+        [Display(Name = "Заглавие на съобщението")]
         public string Subject { get; set; }
 
         [Required]
-        [Display(Name = "Message")]
+        [Display(Name = "Съдържание на съобщението")]
         public string Message { get; set; }
 
         [GoogleRecaptchaValidation]
