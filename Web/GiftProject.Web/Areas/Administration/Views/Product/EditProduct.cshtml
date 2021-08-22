@@ -5,31 +5,33 @@
 
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <div class="card mb-4 product-wap rounded-0">
+            <div class="card rounded-0">
+                <img class="card-img-top" src="@Model.ImgUrl" alt="@Model.Name" width="500" height="350">
+            </div>
+        </div>
         <form asp-area="Administration" asp-controller="Product" asp-action="EditProduct" enctype="multipart/form-data" method="post">
-            <label asp-for="Id"></label>
-            <select asp-for="Id" class="form-control">
-                @foreach (var item in Model.ProductDropDown)
-                {
-                    <option class="text-center" value="@item.Id">@item.Name</option>
-                }
-            </select>
             <div class="form-group">
-                <label asp-for="NewName"></label>
-                <input asp-for="NewName" class="form-control" placeholder="Ново име" />
-                <span asp-validation-for="NewName" class="text-danger"></span>
+                <label asp-for="Id">@Model.Id</label>
+                <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NewDescription"></label>
-                <input asp-for="NewDescription" class="form-control" placeholder="Ново описание" />
-                <span asp-validation-for="NewDescription" class="text-danger"></span>
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" placeholder="Ново име"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" rows="4" class="form-control" placeholder="Enter description"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group border border-secondary">
                 <label for="customFile">Качи снимка</label>
-                <input type="file" class="form-control-file border border-secondary" id="customFile" asp-for="NewImgUrl" />
+                <input type="file" class="form-control-file border border-secondary" id="customFile" asp-for="NewImgUrl"/>
                 <span asp-validation-for="NewImgUrl" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-danger">Промени</button>
-            <a class="btn btn-primary" asp-area="Administration" asp-controller="Product" asp-action="AllProduct" role="button">Всички продукти</a>
+            <a class="btn btn-primary" asp-area="Administration" asp-controller="Product" asp-action="ProductDetails" asp-route-id="@Model.Id" role="button">Всички продукти</a>
         </form>
     </div>
 </div>

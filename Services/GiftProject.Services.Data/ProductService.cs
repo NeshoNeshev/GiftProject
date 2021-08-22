@@ -41,11 +41,11 @@
             var coverUrl = await this.cloudinaryService
                 .UploadAsync(model.ImgUrl, model.Name);
 
-            var catalogerNumber = String.Empty;
+            var catalogueNumber = String.Empty;
 
             try
             {
-                catalogerNumber = this.number.CreateCatalogueNumber(ConstDate);
+                catalogueNumber = this.number.CreateCatalogueNumber(ConstDate);
             }
             catch (Exception e)
             {
@@ -56,7 +56,7 @@
             {
                 Name = model.Name,
                 ImgUrl = coverUrl,
-                CatalogueNumber = catalogerNumber,
+                CatalogueNumber = catalogueNumber,
                 Description = model.Description,
                 CategoryId = model.CategoryId,
             };
@@ -74,12 +74,20 @@
                     string.Format(ExceptionMessages.ProductNotFound, model.Id));
             }
 
-            var coverUrl = await this.cloudinaryService
-                .UploadAsync(model.NewImgUrl, model.NewName);
+            var coverUrl = String.Empty;
+            if (model.NewImgUrl != null)
+            {
+                 coverUrl = await this.cloudinaryService
+                    .UploadAsync(model.NewImgUrl, model.Name);
+            }
+            else
+            {
+                coverUrl = product.ImgUrl;
+            }
 
-            product.Name = model.NewName;
+            product.Name = model.Name;
             product.ImgUrl = coverUrl;
-            product.Description = model.NewDescription;
+            product.Description = model.Description;
             product.ModifiedOn = DateTime.UtcNow;
 
             this.productRepository.Update(product);
@@ -116,7 +124,7 @@
         {
             var product = this.productRepository
                 .All()
-                .OrderBy(x => x.Name)
+                .OrderByDescending(x => x.ProductVotes.Count)
                 .To<TViewModel>();
 
             return product;

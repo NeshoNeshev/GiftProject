@@ -3,7 +3,7 @@
     this.ViewData["Title"] = "Product Page";
 }
 @{
-    var firstCategory = Model.AllCategories.FirstOrDefault(c => c.Products.Count()>2);
+    var firstCategory = Model.AllCategories.FirstOrDefault(c => c.Products.Count() > 2);
     if (Model.AllCategories.Any())
     {
 
@@ -14,19 +14,36 @@
     <div class="row">
         <div class="col-lg-3">
             <h1 class="h2 pb-4">Categories</h1>
-            @foreach (var category in Model.AllCategories)
-            {
-                <ul class="list-unstyled templatemo-accordion">
-                    <li class="pb-3">
-                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-id="@category.Id">
-                            @category.Name
-                            <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
+            <div class="accordion" id="accordionExample">
+
+                <div id="headingOne">
+                    <h5 class="mb-0">
+                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Категории
+                            <i class="fa bx bx-chevron-down-circle mt-1"></i>
                         </a>
-                    </li>
-                
-                </ul>
-            }
-            
+
+                    </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <ul class="list-unstyled templatemo-accordion">
+                        @foreach (var category in Model.AllCategories.Where(c => c.Products.Any()))
+                        {
+
+                            <li class="pb-3">
+                                <a class="collapsed d-flex justify-content-between h3 text-decoration-none" asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-id="@category.Id">
+                                    @category.Name
+                                    <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
+                                </a>
+                            </li>
+
+
+                        }
+                    </ul>
+                </div>
+
+            </div>
         </div>
 
         <div class="col-lg-9">
@@ -34,13 +51,10 @@
                 <div class="col-md-6">
                     <ul class="list-inline shop-top-menu pb-3 pt-1">
                         <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none mr-3" asp-area="" asp-controller="Product" asp-action="AllProducts">All</a>
+                            <a class="h3 text-dark text-decoration-none mr-3" asp-area="" asp-controller="Product" asp-action="AllProducts">Всички</a>
                         </li>
                         <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none mr-3" href="#">Naj novi</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none" href="#">Women's</a>
+                            <a class="h3 text-dark text-decoration-none mr-3" href="#">Нови</a>
                         </li>
                     </ul>
                 </div>
@@ -55,6 +69,7 @@
                 </div>
             </div>
             <div class="row">
+             
                 @foreach (var product in firstCategory.Products)
                 {
                     <div class="col-md-4">

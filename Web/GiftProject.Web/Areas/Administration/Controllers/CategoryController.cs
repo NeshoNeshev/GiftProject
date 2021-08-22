@@ -52,7 +52,7 @@
             }
 
             await this.categoryService.CreateAsync(input);
-            return this.RedirectToAction("CreateProduct", "Product", new {area = "Administration"});
+            return this.RedirectToAction("CreateProduct", "Product", new { area = "Administration" });
         }
 
         [Authorize]
@@ -64,16 +64,25 @@
 
         [HttpGet]
         [Authorize]
-        public IActionResult EditCategory()
-            => this.View(new EditCategoryModel() { CategoryDropDown = this.categoryDropDown.ToList() });
+        public IActionResult EditCategory(int id)
+        {
+            var category = this.categoryService.GetAll<EditCategoryModel>().FirstOrDefault(x => x.Id == id);
+            if (category == null)
+            {
+                return this.NotFound();
+            }
+
+            return this.View(category);
+        }
+        //=> this.View(new EditCategoryModel() { CategoryDropDown = this.categoryDropDown.ToList() });
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> EditCategory(EditCategoryModel model, IFormFile file)
+        public async Task<IActionResult> EditCategory(int id, EditCategoryModel model)
         {
             if (!this.ModelState.IsValid)
             {
-                model.CategoryDropDown = this.categoryDropDown.ToList();
+                //model.CategoryDropDown = this.categoryDropDown.ToList();
                 return this.View(model);
             }
 
@@ -87,7 +96,7 @@
         {
             var model = this.categoryService.GetAll<CategoryViewModel>();
 
-            var viewModel = new AllCategoryViewModel {AllCategories = model};
+            var viewModel = new AllCategoryViewModel { AllCategories = model };
             return this.View(viewModel);
         }
     }

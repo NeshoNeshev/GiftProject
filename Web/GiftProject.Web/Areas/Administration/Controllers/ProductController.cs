@@ -61,8 +61,11 @@
 
         [HttpGet]
         [Authorize]
-        public IActionResult EditProduct()
-            => this.View(new EditProductModel { ProductDropDown = this.productDropDown.ToList() });
+        public IActionResult EditProduct(int id)
+        {
+            var product = this.productService.GetAll<EditProductModel>().FirstOrDefault(x => x.Id == id);
+            return this.View(product);
+        }
 
         [HttpPost]
         [Authorize]
@@ -71,15 +74,12 @@
 
             if (!this.ModelState.IsValid)
             {
-                model.ProductDropDown = this.productDropDown.ToList();
                 return this.View(model);
             }
 
             await this.productService.EditAsync(model);
-
-            return this.RedirectToAction("AllProduct", "Product", new { area = "Administration" });
+            return this.RedirectToAction("ProductDetails", "Product", new { area = "Administration", model.Id });
         }
-
 
         [Authorize]
         public async Task<IActionResult> Remove(int productId)
@@ -116,6 +116,31 @@
                 AlphabeticalProductsViewModel = alphabeticalPagingViewModel,
             };
             return this.View(viewModel);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult ProductDetails(int id)
+        {
+            var product = this.productService.GetById<ProductsViewModel>(id);
+            if (product == null)
+            {
+                return this.NotFound();
+            }
+
+            var details = new AdministrationProductDetailsViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                ImgUrl = product.ImgUrl,
+                VotesCount = product.VotesCount,
+                CatalogueNumber = product.CatalogueNumber,
+                CategoryId = product.CategoryId,
+                CategoryName = product.CategoryName,
+            };
+
+            return this.View(details);
         }
     }
 }

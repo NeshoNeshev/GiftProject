@@ -1,4 +1,9 @@
-﻿namespace GiftProject.Web.Controllers
+﻿using System.Linq;
+using System.Threading.Tasks;
+using GiftProject.Web.Infrastructure.Pagination;
+using GiftProject.Web.ViewModels.Product;
+
+namespace GiftProject.Web.Controllers
 {
     using GiftProject.Services.Data;
     using GiftProject.Web.ViewModels.Category;
@@ -8,6 +13,7 @@
     {
         private readonly ICategoryService categoryService;
         private readonly IProductService productService;
+        private const int ProductCount = 6;
 
         public CategoryController(ICategoryService categoryService, IProductService productService)
         {
@@ -15,15 +21,42 @@
             this.productService = productService;
         }
 
-        public IActionResult CategoryById(int id)
+        public async Task<IActionResult> CategoryById(int id, string searchString, string currentFilter, string selectedLetter, int? pageNumber)
         {
+
+            this.ViewData["Current"] = nameof(this.CategoryById);
+
+            this.ViewData["CurrentSearchFilter"] = searchString;
+            var product = await Task.Run(() => this.productService
+                .GetAllProductAsQueryeable<ProductsViewModel>().Where(x => x.CategoryId == id));
+            var a = product.Count();
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
+
+                product = any.Any() ? product.Where(m => m.Name.ToLower().Contains(searchString.ToLower())) : product.Where(x => x.CatalogueNumber.ToLower().Contains(searchString.ToLower()));
+            }
+
+            var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, ProductCount);
+
+
+            var all = this.categoryService.GetAll<CategoryViewModel>();
             var category = this.categoryService.GetById<CategoryViewModel>(id);
+
+            var viewModel = new AllCategoryViewModel
+            {
+                AllCategories = all,
+                Id = category.Id,
+                Name = category.Name,
+                Products = productPaginated,
+            };
+
             if (category == null)
             {
                 return this.NotFound();
             }
 
-            return this.View(category);
+            return this.View(viewModel);
         }
 
         public IActionResult AllCategories()

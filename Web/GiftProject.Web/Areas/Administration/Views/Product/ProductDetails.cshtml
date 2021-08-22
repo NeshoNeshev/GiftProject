@@ -1,0 +1,75 @@
+﻿@using GiftProject.Web.ViewModels.Administration.Product
+@model GiftProject.Web.ViewModels.Administration.Product.AdministrationProductDetailsViewModel
+@{
+    this.ViewData["Title"] = "Product Details";
+}
+<section class="bg-light">
+    <div class="container">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+            <div class="tileCard">
+                @*Todo: change margin bottom*@
+                <p class="text-center">@Model.Name</p>
+                <div class="wrapper">
+                    <div class="banner-img">
+                        <img src="@Model.ImgUrl" alt="@Model.Name">
+                    </div>
+
+                    <div class="dates">
+                        <div>
+                            <h5 class="text-center"> @Model.CategoryName</h5>
+                        </div>
+                    </div>
+
+                    <div class="stats">
+
+                        <div class="text-center">
+                            <span>
+                                N: @Model.CategoryName
+                            </span>
+                        </div>
+
+
+                    </div>
+
+                    <div class="stats">
+
+                        <div>
+                            <strong>INVITED</strong> 3098
+                        </div>
+
+                        <div>
+                            <strong>JOINED</strong> 562
+                        </div>
+
+                        <div>
+                            <strong>DECLINED</strong> 182
+                        </div>
+
+                    </div>
+
+                    <div class="stats">
+
+                        <div>
+                            <strong>INVITED</strong> 3098
+                        </div>
+
+                        <div>
+                            <strong>JOINED</strong> 562
+                        </div>
+
+                        <div>
+                            <strong>DECLINED</strong> 182
+                        </div>
+
+                    </div>
+
+                    <div class="footer text-center">
+                        <a asp-area="Administration" asp-controller="Product" asp-action="ProductDetails" asp-route-Id="@Model.Id" class="btn btn-outline-primary btn-sm">Детайли</a>
+                        <a asp-area="Administration" asp-controller="Product" asp-action="EditProduct" asp-route-Id="@Model.Id" class="btn btn-outline-warning btn-sm">Промени</a>
+                        <a asp-area="Administration" asp-controller="Product" asp-action="Remove" asp-route-productId="@Model.Id" class="btn btn-outline-danger btn-sm">Изтрий</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

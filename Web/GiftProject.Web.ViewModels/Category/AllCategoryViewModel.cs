@@ -2,8 +2,18 @@
 {
     using System.Collections.Generic;
 
+    using GiftProject.Web.Infrastructure.Pagination;
+    using GiftProject.Web.ViewModels.Product;
+
     public class AllCategoryViewModel
     {
         public IEnumerable<CategoryViewModel> AllCategories { get; set; }
+
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public PaginatedList<ProductsViewModel> Products { get; set; }
+
     }
 }

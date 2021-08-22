@@ -7,19 +7,20 @@
     using GiftProject.Services.Mapping;
     using Microsoft.AspNetCore.Http;
 
-    public class EditCategoryModel
+    public class EditCategoryModel : IMapFrom<Data.Models.Category>
     {
         [DisplayName("Категория")]
         public int Id { get; set; }
 
         [Required]
         [DisplayName("Ново име")]
-        public string NewName { get; set; }
+        public string Name { get; set; }
 
-        [Required]
+        public string ImgUrl { get; set; }
+
         [DisplayName("Снимка")]
         public IFormFile NewImgUrl { get; set; }
 
-        public ICollection<CategoryDropDownModel> CategoryDropDown { get; set; }
+        //public ICollection<CategoryDropDownModel> CategoryDropDown { get; set; }
     }
 }

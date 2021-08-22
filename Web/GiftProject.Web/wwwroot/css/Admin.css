@@ -1,17 +1,15 @@
-﻿a.navbar-brand {
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
 }
 
-a.navbar-brand:hover {
-    color: black !important;
-}
-
 /* Provide sufficient contrast against white background */
 a {
     color: #0366d6;
-    
 }
 
 .btn-primary {
@@ -21,19 +19,11 @@ a {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #1b6ec2;
+    color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
 
-
-.navbar-nav .nav-link:hover {
-    color: black !important;
-}
-
-.color-me a {
-    color: #0563bb;
-}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
@@ -55,7 +45,7 @@ html {
 }
 
 .box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 255,0.3);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
@@ -80,13 +70,9 @@ body {
     bottom: 0;
     width: 100%;
     white-space: nowrap;
-    line-height: 60px;
-    /* Vertically center the text there */
+    line-height: 60px; /* Vertically center the text there */
 }
 
-.footer span {
-    color: #0563bb
-}
 /*--------------------------------------------------------------
 # Top Button
 --------------------------------------------------------------*/
@@ -107,6 +93,123 @@ body {
     border-radius: 4px;
 }
 
-#topButton:hover {
-    background-color: #555;
+    #topButton:hover {
+        background-color: #555;
+    }
+/*--------------------------------------------------------------
+# Admin details card
+--------------------------------------------------------------*/
+
+.tileCard {
+    width: 100%;
+    background: #fff;
+    border-radius: 5px;
+    border-color: #101010;
+    box-shadow: 0px 2px 3px -1px rgba(151, 171, 187, 0.7);
+    float: left;
+    transform-style: preserve-3d;
+    margin: 10px 5px;
+    display: contents;
+
 }
+
+.banner-img {
+    padding: 5px 5px 0;
+}
+
+    .banner-img img {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+.dates {
+    border: 1px solid #ebeff2;
+    border-radius: 5px;
+    padding: 20px 0px;
+    margin: 10px 20px;
+    font-size: 16px;
+    color: #5aadef;
+    font-weight: 600;
+    overflow: auto;
+}
+
+    .dates div {
+        float: left;
+        width: 50%;
+        text-align: center;
+        position: relative;
+    }
+
+    .dates strong,
+    .stats strong {
+        display: block;
+        color: #adb8c2;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .dates span {
+        width: 1px;
+        height: 40px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        background: #ebeff2;
+    }
+
+.stats {
+    border-top: 1px solid #ebeff2;
+    background: #f7f8fa;
+    overflow: auto;
+    padding: 15px 0;
+    font-size: 16px;
+    color: #59687f;
+    font-weight: 600;
+    border-radius: 0 0 5px 5px;
+}
+
+    .stats div {
+        border-right: 1px solid #ebeff2;
+        width: 33.33333%;
+        float: left;
+        text-align: center
+    }
+
+        .stats div:nth-of-type(3) {
+            border: none;
+        }
+
+div.footer {
+    text-align: right;
+    position: relative;
+    margin: 20px 5px;
+}
+
+    div.footer a.Cbtn {
+        padding: 10px 25px;
+        background-color: #DADADA;
+        color: #666;
+        margin: 10px 2px;
+        text-transform: uppercase;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 3px;
+    }
+
+    div.footer a.Cbtn-primary {
+        background-color: #5AADF2;
+        color: #FFF;
+    }
+
+        div.footer a.Cbtn-primary:hover {
+            background-color: #7dbef5;
+        }
+
+    div.footer a.Cbtn-danger {
+        background-color: #fc5a5a;
+        color: #FFF;
+    }
+
+        div.footer a.Cbtn-danger:hover {
+            background-color: #fd7676;
+        }

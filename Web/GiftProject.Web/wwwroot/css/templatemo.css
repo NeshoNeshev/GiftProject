@@ -174,18 +174,62 @@ body, ul, li, p, a, label, input, div {
   width: 6px;
   height: 6px;
 }
+@media (max-width: 992px) {
+    .navbar-header {
+        float: none;
+    }
 
-@media (min-width: 576px) {
-  .tempaltemo-carousel .h1 { font-size: 1em !important;}
+    .navbar-left, .navbar-right {
+        float: none !important;
+    }
+
+    .navbar-toggle {
+        display: block;
+    }
+
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+
+    .navbar-fixed-top {
+        top: 0;
+        border-width: 0 0 1px;
+    }
+
+    .navbar-collapse.collapse {
+        display: none !important;
+    }
+
+    .navbar-nav {
+        float: none !important;
+        margin-top: 7.5px;
+    }
+
+    .navbar-nav > li {
+        float: none;
+    }
+
+    .navbar-nav > li > a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .collapse.in {
+        display: block !important;
+    }
 }
+/*@media (min-width: 576px) {
+  .tempaltemo-carousel .h1 { font-size: 1em !important;}
+}*/
 
 /*// Medium devices (tablets, 768px and up)*/
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
   #templatemo_main_nav .navbar-nav {max-width: 450px;}
- }
+ }*/
 
 /* Large devices (desktops, 992px and up)*/
-@media (min-width: 992px) {
+/*@media (min-width: 992px) {
   #templatemo_main_nav .navbar-nav {max-width: 550px;}
   #template-mo-zay-hero-carousel .carousel-item {min-height: 30rem !important;}
   .product-wap .h3, .product-wap li, .product-wap i, .product-wap p {font-size: 18px !important;}
@@ -193,7 +237,7 @@ body, ul, li, p, a, label, input, div {
     width: 12px;
     height: 12px;
   }
-}
+}*/
 
 /* Extra large devices (large desktops, 1200px and up)*/
-@media (min-width: 1200px) {}
+/*@media (min-width: 1200px) {}*/

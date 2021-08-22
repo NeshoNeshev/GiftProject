@@ -95,7 +95,7 @@
         {
             <div class="col-12 col-md-4 p-5 mt-3">
                 <a asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-Id="@category.Id">
-                <img src="@category.ImgUrl" class="rounded-circle img-fluid border">
+                <img src="@category.ImgUrl" class="rounded-circle img-fluid border" alt="@category.Name">
                 </a>
                 <h5 class="text-center mt-3 mb-3">Watches</h5>
                 <p class="text-center"><a class="btn btn-success">Go Shop</a></p>
@@ -110,24 +110,22 @@
         <div class="row text-center py-3">
             <div class="col-lg-6 m-auto">
                 <h1 class="h1">Най-нови продукти</h1>
-                <p>
-                    Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident.
-                </p>
+            
             </div>
         </div>
         <div class="row">
             @foreach (var product in Model.ProductsViewModels)
             {
+               
                 <div class="col-md-4">
                     <div class="card mb-4 product-wap rounded-0">
                         <div class="card rounded-0">
-                            <img class="card-img-top" src="@product.ImgUrl" alt="@product.Name" width="500" height="350">
+                            <img class="card-img-top" src="/img/feature_prod_01.jpg" alt="@product.Name" width="500" height="350">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
                                     <form id="votesForm" method="post"></form>
-                                    <li><a class="btn btn-primary text-white" data-toggle="tooltip" data-placement="right" title="харесай ме" onclick="upVote(@product.Id)"><i class="bx bx-heart"></i></a></li>
-                                    <li><a class="btn btn-primary text-white mt-2" data-toggle="tooltip" data-placement="right" title="детайли" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"><i class="bx bx-happy-heart-eyes"></i></a></li>
+                                    <li><a class="btn btn-primary text-white"  onclick="upVote(@product.Id)"><i class="bx bx-heart"></i></a></li>
+                                    <li><a class="btn btn-primary text-white mt-2" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"><i class="bx bx-happy-heart-eyes"></i></a></li>
                                 </ul>
                             </div>
                         </div>

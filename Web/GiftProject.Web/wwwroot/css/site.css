@@ -1,32 +1,42 @@
-﻿/*
+﻿
+    /*header ends*/
+}
 
-TemplateMo 559 Zay Shop
+/*a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
 
-https://templatemo.com/tm-559-zay-shop
+    a.navbar-brand:hover {
+        color: #0563bb !important;
+    }
 
----------------------------------------------
-Table of contents
-------------------------------------------------
-1. Typography
-2. General
-3. Nav
-4. Hero Carousel
-5. Accordion
-6. Shop
-7. Product
-8. Carousel Hero
-9. Carousel Brand
-10. Services
-11. Contact map
-12. Footer
-13. Small devices (landscape phones, 576px and up)
-14. Medium devices (tablets, 768px and up)
-15. Large devices (desktops, 992px and up)
-16. Extra large devices (large desktops, 1200px and up)
---------------------------------------------- */
+ Provide sufficient contrast against white background 
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #1b6ec2;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
 
 
+.navbar-nav .nav-link:hover {
+    color: #0563bb !important;
+}
 
+.color-me a {
+    color: #0563bb;
+}*/
 
 /* Typography */
 body, ul, li, p, a, label, input, div {
@@ -403,7 +413,4 @@ body, ul, li, p, a, label, input, div {
 
 .contact .email-form button[type="submit"]:hover {
     background: #0678e3;
-}
-/* Extra large devices (large desktops, 1200px and up)*/
-@media (min-width: 1200px) {
 }

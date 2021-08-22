@@ -17,13 +17,13 @@
     {
         private readonly IDeletableEntityRepository<Category> categoryRepository;
         private readonly ICloudinaryService cloudinaryService;
-        private readonly IDeletableEntityRepository<Product> _productRepository;
+        private readonly IDeletableEntityRepository<Product> productRepository;
 
         public CategoryService(IDeletableEntityRepository<Category> categoryRepository, ICloudinaryService cloudinaryService, IDeletableEntityRepository<Product> productRepository)
         {
             this.categoryRepository = categoryRepository;
             this.cloudinaryService = cloudinaryService;
-            _productRepository = productRepository;
+            this.productRepository = productRepository;
         }
 
         public async Task CreateAsync(InputCategoryModel model)
@@ -55,10 +55,20 @@
                     string.Format(ExceptionMessages.CategoryNotFound, model.Id));
             }
 
-            var coverUrl = await this.cloudinaryService
-                .UploadAsync(model.NewImgUrl, model.NewName);
-            category.Name = model.NewName;
-            category.ImgUrl = coverUrl;
+            var url = String.Empty;
+
+            if (model.NewImgUrl != null)
+            {
+                url = await this.cloudinaryService
+                               .UploadAsync(model.NewImgUrl, model.Name);
+            }
+            else
+            {
+                url = category.ImgUrl;
+            }
+
+            category.Name = model.Name;
+            category.ImgUrl = url;
             category.ModifiedOn = DateTime.UtcNow;
 
             this.categoryRepository.Update(category);
@@ -79,15 +89,15 @@
             this.categoryRepository.Update(category);
             await this.categoryRepository.SaveChangesAsync();
 
-            var products = await this._productRepository.All().Where(x => x.CategoryId == categoryId).ToListAsync();
+            var products = await this.productRepository.All().Where(x => x.CategoryId == categoryId).ToListAsync();
             foreach (var product in products)
             {
                 product.IsDeleted = true;
                 product.DeletedOn = DateTime.UtcNow;
-                this._productRepository.Update(product);
+                this.productRepository.Update(product);
             }
 
-            await this._productRepository.SaveChangesAsync();
+            await this.productRepository.SaveChangesAsync();
         }
 
         public IEnumerable<T> GetAll<T>(int? count = null)
