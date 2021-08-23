@@ -1,5 +1,7 @@
 ﻿namespace GiftProject.Web.ViewModels.Administration.Product
 {
+    using System;
+
     using GiftProject.Services.Mapping;
 
     public class AdministrationProductDetailsViewModel : IMapFrom<Data.Models.Product>
@@ -19,5 +21,10 @@
         public string Description { get; set; }
 
         public int VotesCount { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
     }
 }

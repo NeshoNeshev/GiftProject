@@ -13,10 +13,17 @@
                     <div class="banner-img">
                         <img src="@Model.ImgUrl" alt="@Model.Name">
                     </div>
-
+                    <div>
+                        <h5 class="text-center"> @Model.CategoryName</h5>
+                    </div>
                     <div class="dates">
-                        <div>
-                            <h5 class="text-center"> @Model.CategoryName</h5>
+
+                        <div class="start">
+                            <strong>STARTS</strong> @Model.CreatedOn
+                            <span></span>
+                        </div>
+                        <div class="ends">
+                            <strong>ENDS</strong> @Model.ModifiedOn
                         </div>
                     </div>
 
@@ -24,7 +31,7 @@
 
                         <div class="text-center">
                             <span>
-                                N: @Model.CategoryName
+                                N: @Model.CatalogueNumber
                             </span>
                         </div>
 
@@ -34,6 +41,29 @@
                     <div class="stats">
 
                         <div>
+                            <strong>INVITED</strong> @Model.VotesCount
+                        </div>
+
+                        <div>
+                            <strong>JOINED</strong> @Model.Id
+                        </div>
+
+                        <div>
+                            <strong>DECLINED</strong> @Model.CategoryId
+                        </div>
+
+                    </div>
+
+                    @*<p class="text-center mb-0"></p>*@
+                    <div class="card-body text-center">
+
+                        <p class="text-center mb-0">
+                            @Model.Description
+                        </p>
+
+                    </div>
+
+                    @*<div>
                             <strong>INVITED</strong> 3098
                         </div>
 
@@ -43,25 +73,7 @@
 
                         <div>
                             <strong>DECLINED</strong> 182
-                        </div>
-
-                    </div>
-
-                    <div class="stats">
-
-                        <div>
-                            <strong>INVITED</strong> 3098
-                        </div>
-
-                        <div>
-                            <strong>JOINED</strong> 562
-                        </div>
-
-                        <div>
-                            <strong>DECLINED</strong> 182
-                        </div>
-
-                    </div>
+                        </div>*@
 
                     <div class="footer text-center">
                         <a asp-area="Administration" asp-controller="Product" asp-action="ProductDetails" asp-route-Id="@Model.Id" class="btn btn-outline-primary btn-sm">Детайли</a>
