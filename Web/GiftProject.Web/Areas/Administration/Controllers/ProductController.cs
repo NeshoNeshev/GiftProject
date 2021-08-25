@@ -96,11 +96,25 @@
 
             this.ViewData["CurrentSearchFilter"] = searchString;
             var product = this.productService
-                .GetAllProductAsQueryeable<ProductsViewModel>();
+                .GetAllProductAsQueryable<ProductsViewModel>();
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                product = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
+                var existProduct = this.productService.GetByName(searchString);
+                var existNumber = this.productService.GetByCatalogueNumber(searchString);
+                if (existProduct != null)
+                {
+                    return this.RedirectToAction("ProductDetails", "Product",new {id = existProduct.Id});
+                }
+
+                if (existNumber != null)
+                {
+                    return this.RedirectToAction("ProductDetails", "Product", new { id = existNumber.Id });
+                }
+
+                var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
+
+                product = any.Any() ? product.Where(m => m.Name.ToLower().Contains(searchString.ToLower())) : product.Where(x => x.CatalogueNumber.ToLower().Contains(searchString.ToLower()));
             }
 
             var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, PageSize);

@@ -25,7 +25,7 @@
         {
             var categoryModel = this.categoryService.GetAll<IndexCategoryViewModel>();
 
-            var productModel = this.productService.GetAll<ProductsViewModel>().OrderBy(x => x.CreatedOn).Take(3);
+            var productModel = this.productService.GetNewProducts<ProductsViewModel>();
             var viewModel = new IndexViewModel
             {
                 CategoryViewModels = categoryModel,

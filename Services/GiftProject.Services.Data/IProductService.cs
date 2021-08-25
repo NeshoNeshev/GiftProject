@@ -17,12 +17,18 @@
 
         public Task DeleteByIdAsync(int id);
 
-        public IQueryable<TViewModel> GetAllProductAsQueryeable<TViewModel>();
+        public IQueryable<TViewModel> GetAllProductAsQueryable<TViewModel>();
 
-        public IQueryable<TViewModel> GetAllProductsByFilterAsQueryeable<TViewModel>(string letter = null);
+        public IQueryable<TViewModel> GetAllProductsByFilterAsQueryable<TViewModel>(string letter = null);
+
+        public ProductsViewModel GetByName(string searchString);
+
+        public ProductsViewModel GetByCatalogueNumber(string searchString);
 
         public ProductsViewModel GetById<T>(int id);
 
-        public IEnumerable<ProductsViewModel> NewProducts<T>();
+        public IEnumerable<T> GetNewProducts<T>(int? count = null);
+
+        public IQueryable<TViewModel> GetAllSearchProductsAsQueryable<TViewModel>();
     }
 }

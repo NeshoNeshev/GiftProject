@@ -77,8 +77,8 @@
             var coverUrl = String.Empty;
             if (model.NewImgUrl != null)
             {
-                 coverUrl = await this.cloudinaryService
-                    .UploadAsync(model.NewImgUrl, model.Name);
+                coverUrl = await this.cloudinaryService
+                   .UploadAsync(model.NewImgUrl, model.Name);
             }
             else
             {
@@ -111,7 +111,7 @@
 
         public IEnumerable<T> GetAll<T>(int? count = null)
         {
-            IQueryable<Product> query = this.productRepository.All().OrderBy(x => x.Name);
+            IQueryable<Product> query = this.productRepository.All().OrderBy(x => x.Name).ThenBy(x => x.CreatedOn);
             if (count.HasValue)
             {
                 query = query.Take(count.Value);
@@ -120,7 +120,18 @@
             return query.To<T>().ToList();
         }
 
-        public IQueryable<TViewModel> GetAllProductAsQueryeable<TViewModel>()
+        public IEnumerable<T> GetNewProducts<T>(int? count = null)
+        {
+            IQueryable<Product> query = this.productRepository.All().OrderByDescending(x => x.CreatedOn).Take(3);
+            if (count.HasValue)
+            {
+                query = query.Take(count.Value);
+            }
+
+            return query.To<T>().ToList();
+        }
+
+        public IQueryable<TViewModel> GetAllProductAsQueryable<TViewModel>()
         {
             var product = this.productRepository
                 .All()
@@ -130,7 +141,17 @@
             return product;
         }
 
-        public IQueryable<TViewModel> GetAllProductsByFilterAsQueryeable<TViewModel>(string letter = null)
+        public IQueryable<TViewModel> GetAllSearchProductsAsQueryable<TViewModel>()
+        {
+            var product = this.productRepository
+                .All()
+                .OrderByDescending(x => x.ProductVotes.Count)
+                .To<TViewModel>();
+
+            return product;
+        }
+
+        public IQueryable<TViewModel> GetAllProductsByFilterAsQueryable<TViewModel>(string letter = null)
         {
             var productByFilter = Enumerable.Empty<TViewModel>().AsQueryable();
 
@@ -151,14 +172,28 @@
             }
             else
             {
-                productByFilter = this.GetAllProductAsQueryeable<TViewModel>();
+                productByFilter = this.GetAllProductAsQueryable<TViewModel>();
             }
 
             return productByFilter;
         }
 
-        public IEnumerable<ProductsViewModel> NewProducts<T>()
-            => this.productRepository.All().To<ProductsViewModel>().OrderBy(p => p.CreatedOn).Take(3);
+        public ProductsViewModel GetByCatalogueNumber(string searchString)
+        {
+            var product = this.productRepository
+                .All().To<ProductsViewModel>()
+                .FirstOrDefault(p => p.CatalogueNumber == searchString);
+            return product;
+        }
+
+        public ProductsViewModel GetByName(string searchString)
+        {
+            var product = this.productRepository
+                .All().To<ProductsViewModel>()
+                .FirstOrDefault(p => p.Name.ToLower() == searchString.ToLower());
+
+            return product;
+        }
 
         public ProductsViewModel GetById<T>(int id)
             => this.productRepository.All().To<ProductsViewModel>().FirstOrDefault(x => x.Id == id);

@@ -28,13 +28,31 @@
 
             this.ViewData["CurrentSearchFilter"] = searchString;
             var product = await Task.Run(() => this.productService
-                .GetAllProductAsQueryeable<ProductsViewModel>().Where(x => x.CategoryId == id));
-            var a = product.Count();
+                .GetAllProductAsQueryable<ProductsViewModel>().Where(x => x.CategoryId == id));
+
+            var searchProduct = await Task.Run(() => this.productService
+                .GetAllSearchProductsAsQueryable<ProductsViewModel>());
+
+            var productsCount = product.Count();
             if (!string.IsNullOrEmpty(searchString))
             {
-                var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
+                var existProduct = this.productService.GetByName(searchString);
+                var existNumber = this.productService.GetByCatalogueNumber(searchString);
+                if (existProduct != null)
+                {
+                    return this.RedirectToAction("Details", "Product", new { id = existProduct.Id });
+                }
+                else if (existNumber != null)
+                {
+                    return this.RedirectToAction("Details", "Product", new { id = existNumber.Id });
+                }
+                else
+                {
+                    var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
 
-                product = any.Any() ? product.Where(m => m.Name.ToLower().Contains(searchString.ToLower())) : product.Where(x => x.CatalogueNumber.ToLower().Contains(searchString.ToLower()));
+                    product = any.Any() ? product.Where(m => m.Name.ToLower().Contains(searchString.ToLower())) : product.Where(x => x.CatalogueNumber.ToLower().Contains(searchString.ToLower()));
+
+                }
             }
 
             var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, ProductCount);
