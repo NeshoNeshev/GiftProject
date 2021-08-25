@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/boxicons/css/boxicons.css" />
-
+    <link rel="stylesheet" href="~/css/Search.css" />
 
 </head>
 <body>
@@ -52,12 +52,12 @@
 
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Начало <span class="sr-only">(current)</span></a></li>
-                    <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="About" class="nav-link">За нас</a></li>
-                    <li class="nav-item"><a asp-area="" asp-controller="Category" asp-action="AllCategories" class="nav-link">Категории</a></li>
-                    <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="AllProducts" class="nav-link">Продукти</a></li>
-                    <li class="nav-item"><a asp-area="" asp-controller="Contact" asp-action="Contact" class="nav-link">Контакти</a></li>
-                    <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="Product" class="nav-link">sdaad</a></li>
+                    <li class="nav-item active"><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-dark">Начало <span class="sr-only">(current)</span></a></li>
+                    <li class="nav-item "><a asp-area="" asp-controller="Home" asp-action="About" class="nav-link text-dark">За нас</a></li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Category" asp-action="AllCategories" class="nav-link text-dark">Категории</a></li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="AllProducts" class="nav-link text-dark">Продукти</a></li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Contact" asp-action="Contact" class="nav-link text-dark">Контакти</a></li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="Product" class="nav-link text-dark">sdaad</a></li>
                     <partial name="_LoginPartial" />
                 </ul>
             </div>
@@ -152,7 +152,7 @@
                 <div class="row pt-2">
                     <div class="col-12">
                         <p class="text-left text-light">
-                            Copyright &copy; 2021 Company Name
+                            Copyright &copy; @DateTime.UtcNow.Year Company Name
                             | Designed by <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
                         </p>
                     </div>

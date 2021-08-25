@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using GiftProject.Web.Infrastructure.Pagination;
-using GiftProject.Web.ViewModels.Product;
-
-namespace GiftProject.Web.Controllers
+﻿namespace GiftProject.Web.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+
     using GiftProject.Services.Data;
+    using GiftProject.Web.Infrastructure.Pagination;
     using GiftProject.Web.ViewModels.Category;
+    using GiftProject.Web.ViewModels.Product;
     using Microsoft.AspNetCore.Mvc;
 
     public class CategoryController : Controller
@@ -38,7 +38,6 @@ namespace GiftProject.Web.Controllers
             }
 
             var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, ProductCount);
-
 
             var all = this.categoryService.GetAll<CategoryViewModel>();
             var category = this.categoryService.GetById<CategoryViewModel>(id);

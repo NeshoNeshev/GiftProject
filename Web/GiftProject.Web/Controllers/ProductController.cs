@@ -25,10 +25,30 @@
             this.category = this.categoryService.GetAll<CategoryViewModel>();
         }
 
-        public IActionResult Product()
+        public async Task<IActionResult> Product(string searchString, string currentFilter, string selectedLetter, int? pageNumber)
         {
+            this.ViewData["Current"] = nameof(this.AllProducts);
+
+            this.ViewData["CurrentSearchFilter"] = searchString;
+            var product = await Task.Run(() => this.productService
+                .GetAllProductAsQueryeable<ProductsViewModel>());
+            var productsCount = product.Count();
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
+
+                product = any.Any() ? product.Where(m => m.Name.ToLower().Contains(searchString.ToLower())) : product.Where(x => x.CatalogueNumber.ToLower().Contains(searchString.ToLower()));
+            }
+
+            var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, ProductCount);
+
             var model = this.categoryService.GetAll<CategoryViewModel>();
-            var viewModel = new AllCategoryViewModel() { AllCategories = model };
+            var viewModel = new AllCategoryViewModel()
+            {
+                AllCategories = model,
+                Products = productPaginated,
+
+            };
             return this.View(viewModel);
         }
 
@@ -39,7 +59,7 @@
             this.ViewData["CurrentSearchFilter"] = searchString;
             var product = await Task.Run(() => this.productService
                .GetAllProductAsQueryeable<ProductsViewModel>());
-            var a = product.Count();
+            var productsCount = product.Count();
             if (!string.IsNullOrEmpty(searchString))
             {
                 var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
@@ -49,15 +69,9 @@
 
             var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, ProductCount);
 
-            var alphabeticalPagingViewModel = new AlphabeticalPagingViewModel
-            {
-                SelectedLetter = selectedLetter,
-            };
-
             var viewModel = new AllProductViewModel
             {
                 ProductsViewModel = productPaginated,
-                AlphabeticalProductsViewModel = alphabeticalPagingViewModel,
             };
             return this.View(viewModel);
         }

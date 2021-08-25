@@ -138,6 +138,8 @@
                 CatalogueNumber = product.CatalogueNumber,
                 CategoryId = product.CategoryId,
                 CategoryName = product.CategoryName,
+                CreatedOn = product.CreatedOn,
+                ModifiedOn = product.ModifiedOn,
             };
 
             return this.View(details);
