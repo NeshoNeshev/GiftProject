@@ -23,7 +23,7 @@
         [Display(Name = "Съдържание на съобщението")]
         public string Message { get; set; }
 
-        [GoogleRecaptchaValidation]
-        public string RecaptchaValue { get; set; }
+        //[GoogleRecaptchaValidation]
+        //public string RecaptchaValue { get; set; }
     }
 }

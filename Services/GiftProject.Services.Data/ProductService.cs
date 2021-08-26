@@ -190,7 +190,7 @@
         {
             var product = this.productRepository
                 .All().To<ProductsViewModel>()
-                .FirstOrDefault(p => p.Name.ToLower() == searchString.ToLower());
+                .FirstOrDefault(p => p.Name.ToLower() == searchString.ToLower() || p.CatalogueNumber == searchString);
 
             return product;
         }

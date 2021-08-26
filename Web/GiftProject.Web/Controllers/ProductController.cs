@@ -46,11 +46,9 @@
                 {
                     return this.RedirectToAction("Details", "Product", new { id = existNumber.Id });
                 }
-              
-                    var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
 
-                    product = any.Any() ? product.Where(m => m.Name.ToLower().Contains(searchString.ToLower())) : product.Where(x => x.CatalogueNumber.ToLower().Contains(searchString.ToLower()));
-
+                var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
+                product = any.Any() ? product.Where(m => m.Name.ToLower().Contains(searchString.ToLower())) : product.Where(x => x.CatalogueNumber.ToLower().Contains(searchString.ToLower()));
             }
 
             var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, ProductCount);

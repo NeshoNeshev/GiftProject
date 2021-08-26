@@ -16,7 +16,7 @@
 
         public const string Email = "neshev1978@gmail.com";
 
-        public const string SenderEmail = "nesho1978@abv.bg";
+        public const string SenderEmail = "ivangertse@abv.bg";
 
         public const string Address = "11 Georgi Kirkov Street";
 

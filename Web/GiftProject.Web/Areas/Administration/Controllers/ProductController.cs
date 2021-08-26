@@ -107,10 +107,10 @@
                     return this.RedirectToAction("ProductDetails", "Product",new {id = existProduct.Id});
                 }
 
-                if (existNumber != null)
-                {
-                    return this.RedirectToAction("ProductDetails", "Product", new { id = existNumber.Id });
-                }
+                //if (existNumber != null)
+                //{
+                //    return this.RedirectToAction("ProductDetails", "Product", new { id = existNumber.Id });
+                //}
 
                 var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
 

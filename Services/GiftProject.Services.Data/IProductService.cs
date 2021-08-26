@@ -28,7 +28,6 @@
         public ProductsViewModel GetById<T>(int id);
 
         public IEnumerable<T> GetNewProducts<T>(int? count = null);
-
         public IQueryable<TViewModel> GetAllSearchProductsAsQueryable<TViewModel>();
     }
 }
