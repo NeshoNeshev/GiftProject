@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using GiftProject.Common;
 using Microsoft.AspNetCore.Authorization;
 using GiftProject.Data.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -89,6 +90,7 @@ namespace GiftProject.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)

@@ -36,23 +36,15 @@
             var productsCount = product.Count();
             if (!string.IsNullOrEmpty(searchString))
             {
+
                 var existProduct = this.productService.GetByName(searchString);
-                var existNumber = this.productService.GetByCatalogueNumber(searchString);
                 if (existProduct != null)
                 {
                     return this.RedirectToAction("Details", "Product", new { id = existProduct.Id });
                 }
-                else if (existNumber != null)
-                {
-                    return this.RedirectToAction("Details", "Product", new { id = existNumber.Id });
-                }
-                else
-                {
-                    var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
 
-                    product = any.Any() ? product.Where(m => m.Name.ToLower().Contains(searchString.ToLower())) : product.Where(x => x.CatalogueNumber.ToLower().Contains(searchString.ToLower()));
-
-                }
+                var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
+                product = any.Any() ? product.Where(m => m.Name.ToLower().Contains(searchString.ToLower())) : product.Where(x => x.CatalogueNumber.ToLower().Contains(searchString.ToLower()));
             }
 
             var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, ProductCount);

@@ -101,16 +101,11 @@
             if (!string.IsNullOrEmpty(searchString))
             {
                 var existProduct = this.productService.GetByName(searchString);
-                var existNumber = this.productService.GetByCatalogueNumber(searchString);
+                
                 if (existProduct != null)
                 {
                     return this.RedirectToAction("ProductDetails", "Product",new {id = existProduct.Id});
                 }
-
-                //if (existNumber != null)
-                //{
-                //    return this.RedirectToAction("ProductDetails", "Product", new { id = existNumber.Id });
-                //}
 
                 var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
 
@@ -119,15 +114,9 @@
 
             var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, PageSize);
 
-            var alphabeticalPagingViewModel = new AlphabeticalPagingViewModel
-            {
-                SelectedLetter = selectedLetter,
-            };
-
             var viewModel = new AllProductViewModel
             {
                 ProductsViewModel = productPaginated,
-                AlphabeticalProductsViewModel = alphabeticalPagingViewModel,
             };
             return this.View(viewModel);
         }

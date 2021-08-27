@@ -9,6 +9,7 @@
     var nextPage = !Model.Products.HasNextPage ? "1" : (Model.Products.PageIndex + 1).ToString();
 
 }
+
 <div class="container py-5">
     <div class="row">
         <div class="col-lg-3">
@@ -17,7 +18,7 @@
 
                 <div id="headingOne">
                     <h5 class="mb-0">
-                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <a id="acordionId" class="collapsed d-flex justify-content-between h3 text-decoration-none" style="color: #212529" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             Категории
                             <i class="fa bx bx-chevron-down-circle mt-1"></i>
                         </a>
@@ -50,10 +51,7 @@
                 <div class="col-md-6">
                     <ul class="list-inline shop-top-menu pb-3 pt-1">
                         <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none mr-3" asp-area="" asp-controller="Product" asp-action="AllProducts">Всички</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none mr-3" href="#">Нови</a>
+                            <a class="h3 text-dark text-decoration-none mr-3" asp-area="" asp-controller="Product" asp-action="Product">Всички</a>
                         </li>
                     </ul>
                 </div>
@@ -90,7 +88,7 @@
                             <div class="card-body text-center">
                                 <h4 class="h3 text-decoration-none">@product.Name</h4>
                                 
-                                <p id="votesCount" class="py-2 text-center text-primary">@product.VotesCount</p>
+                                <p id="votesCount" class="py-2 text-center text-primary">Харесвания: @product.VotesCount</p>
                                 <a class="text-decoration-none" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">
                                     <p class="text-center mb-0">@product.ShortDescription</p>
                                 </a>

@@ -6,7 +6,12 @@ a.navbar-brand {
     text-align: center;
     word-break: break-all;
 }
-
+a.navbar-brand:hover {
+    color: #0563bb !important;
+}
+.navbar-nav .nav-link:hover {
+    color: #0563bb !important;
+}
 /* Provide sufficient contrast against white background */
 a {
     color: #0366d6;
@@ -104,7 +109,7 @@ body {
     width: 100%;
     background: #fff;
     border-radius: 5px;
-    border-color: #101010;
+    border-color: #10101 !important;
     box-shadow: 0px 2px 3px -1px rgba(151, 171, 187, 0.7);
     float: left;
     transform-style: preserve-3d;

@@ -27,7 +27,7 @@
 
         public async Task<IActionResult> Product(string searchString, string currentFilter, string selectedLetter, int? pageNumber)
         {
-            this.ViewData["Current"] = nameof(this.AllProducts);
+            this.ViewData["Current"] = nameof(this.Product);
 
             this.ViewData["CurrentSearchFilter"] = searchString;
             var product = await Task.Run(() => this.productService
@@ -36,15 +36,9 @@
             if (!string.IsNullOrEmpty(searchString))
             {
                 var existProduct = this.productService.GetByName(searchString);
-                var existNumber = this.productService.GetByCatalogueNumber(searchString);
                 if (existProduct != null)
                 {
                     return this.RedirectToAction("Details", "Product", new { id = existProduct.Id });
-                }
-
-                if (existNumber != null)
-                {
-                    return this.RedirectToAction("Details", "Product", new { id = existNumber.Id });
                 }
 
                 var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
@@ -63,29 +57,6 @@
             return this.View(viewModel);
         }
 
-        public async Task<IActionResult> AllProducts(string searchString, string currentFilter, string selectedLetter, int? pageNumber)
-        {
-            this.ViewData["Current"] = nameof(this.AllProducts);
-
-            this.ViewData["CurrentSearchFilter"] = searchString;
-            var product = await Task.Run(() => this.productService
-               .GetAllProductAsQueryable<ProductsViewModel>());
-            var productsCount = product.Count();
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
-
-                product = any.Any() ? product.Where(m => m.Name.ToLower().Contains(searchString.ToLower())) : product.Where(x => x.CatalogueNumber.ToLower().Contains(searchString.ToLower()));
-            }
-
-            var productPaginated = await PaginatedList<ProductsViewModel>.CreateAsync(product, pageNumber ?? 1, ProductCount);
-
-            var viewModel = new AllProductViewModel
-            {
-                ProductsViewModel = productPaginated,
-            };
-            return this.View(viewModel);
-        }
 
         public IActionResult Details(int id)
         {

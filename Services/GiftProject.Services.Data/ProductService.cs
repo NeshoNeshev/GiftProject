@@ -178,14 +178,6 @@
             return productByFilter;
         }
 
-        public ProductsViewModel GetByCatalogueNumber(string searchString)
-        {
-            var product = this.productRepository
-                .All().To<ProductsViewModel>()
-                .FirstOrDefault(p => p.CatalogueNumber == searchString);
-            return product;
-        }
-
         public ProductsViewModel GetByName(string searchString)
         {
             var product = this.productRepository
