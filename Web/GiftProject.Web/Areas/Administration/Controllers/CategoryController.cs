@@ -94,9 +94,9 @@
         [Authorize]
         public IActionResult AllCategory()
         {
-            var model = this.categoryService.GetAll<CategoryViewModel>();
+            var model = this.categoryService.GetAll<AdminCategoryViewModel>();
 
-            var viewModel = new AllCategoryViewModel { AllCategories = model };
+            var viewModel = new AdminAllCategoryViewModel() { AllCategories = model };
             return this.View(viewModel);
         }
     }

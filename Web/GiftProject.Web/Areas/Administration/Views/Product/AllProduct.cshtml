@@ -39,61 +39,45 @@
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="tileCard">
 
-                            <p class="text-center">@product.Name</p>
                             <div class="card">
                                 <div class="banner-img">
                                     <img src="@product.ImgUrl" alt="@product.Name">
                                 </div>
-
+                                <div>
+                                    <h5 class="card-title text-center mt-2">@product.Name</h5>
+                                </div>
                                 <div class="dates">
-                                    <div>
-                                        <h5 class="text-center"> @product.CategoryName</h5>
+                                    <div class="start">
+                                        <strong>Създаден:</strong> @product.CreatedOn.Date.ToString("dd/MM/yyyy")
+
+                                    </div>
+                                    <div class="ends">
+                                        <strong>Променен: </strong> @product.ModifiedOn.GetValueOrDefault().Date.ToString("dd/MM/yyyy")
                                     </div>
                                 </div>
-
-                                <div class="stats">
-
-                                    <div class="text-center">
-                                        <span>
-                                            N: @product.CategoryName
-                                        </span>
-                                    </div>
-
-
+                                <div class="text-center">
+                                    <h6>Код: @product.CatalogueNumber</h6>
                                 </div>
+
 
                                 <div class="stats">
 
                                     <div>
-                                        <strong>INVITED</strong> 3098
+                                        <strong>Харесвания: </strong>@product.VotesCount
                                     </div>
 
                                     <div>
-                                        <strong>JOINED</strong> 562
+                                        <strong>Продукт ИД: </strong>@product.Id
                                     </div>
 
                                     <div>
-                                        <strong>DECLINED</strong> 182
+                                        <strong>Категория ИД: </strong>@product.CategoryId
                                     </div>
 
                                 </div>
-
-                                <div class="stats">
-
-                                    <div>
-                                        <strong>INVITED</strong> 3098
-                                    </div>
-
-                                    <div>
-                                        <strong>JOINED</strong> 562
-                                    </div>
-
-                                    <div>
-                                        <strong>DECLINED</strong> 182
-                                    </div>
-
+                                <div>
+                                    <h6 class="text-center">Категория: @product.CategoryName</h6>
                                 </div>
-
                                 <div class="footer text-center">
                                     <a asp-area="Administration" asp-controller="Product" asp-action="ProductDetails" asp-route-Id="@product.Id" class="btn btn-outline-primary btn-sm">Детайли</a>
                                     <a asp-area="Administration" asp-controller="Product" asp-action="EditProduct" asp-route-Id="@product.Id" class="btn btn-outline-warning btn-sm">Промени</a>
@@ -108,10 +92,12 @@
             {
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item ">
-                            <a class="page-link" asp-action="AllProduct"
-                               asp-route-pageNumber="@prevPage"
-                               asp-route-currentFilter="@ViewData["CurrentSearchFilter"]" tabindex="-1">Previous</a>
+                        <li class="page-item @prevDisabled">
+                            <a class="page-link " aria-label="Previous" asp-action="AllProduct"
+                               asp-route-pageNumber="@prevPage">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
                         </li>
                         @for (int i = 1; i <= Model.ProductsViewModel.TotalPages; i++)
                         {
@@ -124,10 +110,12 @@
                                 </a>
                             </li>
                         }
-                        <li class="page-item ">
-                            <a class="page-link" asp-action="AllProduct"
-                               asp-route-pageNumber="@nextPage"
-                               asp-route-currentFilter="@ViewData["CurrentSearchFilter"]">Next</a>
+                        <li class="page-item @nextDisabled">
+                            <a class="page-link" aria-label="Next" asp-action="AllProduct"
+                               asp-route-pageNumber="@nextPage">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
                         </li>
                     </ul>
                 </nav>

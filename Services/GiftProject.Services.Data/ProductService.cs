@@ -29,14 +29,14 @@
             this.cloudinaryService = cloudinaryService;
         }
 
-        public async Task CreateAsync(ProductInputModel model)
+        public async Task<int> CreateAsync(ProductInputModel model)
         {
-            var productExist = await this.productRepository.All().AnyAsync(x => x.Name == model.Name);
-            if (productExist)
-            {
-                throw new ArgumentException(
-                    string.Format(ExceptionMessages.ProductAlreadyExists, model.Name, model.ImgUrl, model.Description));
-            }
+            //var productExist = await this.productRepository.All().AnyAsync(x => x.Name == model.Name );
+            //if (productExist)
+            //{
+            //    throw new ArgumentException(
+            //        string.Format(ExceptionMessages.ProductAlreadyExists, model.Name, model.ImgUrl, model.Description));
+            //}
 
             var coverUrl = await this.cloudinaryService
                 .UploadAsync(model.ImgUrl, model.Name);
@@ -62,6 +62,7 @@
             };
             await this.productRepository.AddAsync(product);
             await this.productRepository.SaveChangesAsync();
+            return product.Id;
         }
 
         public async Task EditAsync(EditProductModel model)
@@ -189,5 +190,11 @@
 
         public ProductsViewModel GetById<T>(int id)
             => this.productRepository.All().To<ProductsViewModel>().FirstOrDefault(x => x.Id == id);
+
+        public bool FindByName(string name, int id)
+        {
+            var exist =  this.productRepository.All().Any(x => x.CategoryId == id && x.Name == name);
+            return exist;
+        }
     }
 }

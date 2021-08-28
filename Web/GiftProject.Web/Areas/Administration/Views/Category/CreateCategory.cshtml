@@ -3,21 +3,21 @@
     ViewData["Title"] = "Create Category";
 }
 <div class="text-center">
-    <h1 class="text-secondary">Създай категория</h1>
+    <h1 class="text-primary">Създай категория</h1>
 </div>
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
         <form method="post" asp-action="CreateCategory" enctype="multipart/form-data">
             <div class="form-group">
-                    <label asp-for="Name"></label>
-                    <input asp-for="Name" class="form-control text-center" placeholder="Име на категорията" />
-                    <span asp-validation-for="Name" class="text-danger text-center"></span>
-                </div>
-                <div class="form-group border border-secondary">
-                    <label for="customFile">Качи снимка</label>
-                    <input type="file" class="form-control-file border border-secondary" id="customFile" asp-for="ImgUrl" />
-                    <span asp-validation-for="ImgUrl" class="text-danger"></span>
-                </div>
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control text-center" placeholder="Име на категорията"/>
+                <span asp-validation-for="Name" class="text-danger text-center"></span>
+            </div>
+            <div class="form-group border border-secondary">
+                <label for="customFile">Качи снимка</label>
+                <input type="file" class="form-control-file border border-secondary" id="customFile" asp-for="ImgUrl"/>
+                <span asp-validation-for="ImgUrl" class="text-danger"></span>
+            </div>
             <button type="submit" class="btn btn-primary">Създай</button>
         </form>
     </div>

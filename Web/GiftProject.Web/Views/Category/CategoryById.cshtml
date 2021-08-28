@@ -29,15 +29,12 @@
                     <ul class="list-unstyled templatemo-accordion">
                         @foreach (var category in Model.AllCategories.Where(c => c.Products.Any()))
                         {
-
                             <li class="pb-3">
                                 <a class="collapsed d-flex justify-content-between h3 text-decoration-none" asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-id="@category.Id">
                                     @category.Name
                                     <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
                                 </a>
                             </li>
-
-
                         }
                     </ul>
                 </div>
@@ -59,7 +56,6 @@
                     <form action="">
                         <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
                             <div class="input-group">
-                                @*<input id="search" type="search" class="form-control mr-sm-2" name="SearchString" value="@ViewData["currentSearchFilter"]" required />*@
                                 <input type="search" name="SearchString" value="@ViewData["currentSearchFilter"]" required placeholder="What're you searching for?" aria-describedby="button-addon1" class="form-control border-0 bg-light">
                                 <div class="input-group-append">
                                     <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="bx bx-search"></i></button>
@@ -99,10 +95,11 @@
             {
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item ">
-                            <a class="page-link" asp-action="CategoryById"
+                        <li class="page-item @prevDisabled">
+                            <a class="page-link " aria-label="Previous" asp-action="CategoryById"
                                asp-route-pageNumber="@prevPage"
-                               asp-route-currentFilter="@ViewData["CurrentSearchFilter"]" tabindex="-1">Previous</a>
+                               ><span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span></a>
                         </li>
                         @for (int i = 1; i <= Model.Products.TotalPages; i++)
                         {
@@ -115,10 +112,11 @@
                                 </a>
                             </li>
                         }
-                        <li class="page-item ">
-                            <a class="page-link" asp-action="CategoryById"
+                        <li class="page-item @nextDisabled">
+                            <a class="page-link" aria-label="Next" asp-action="CategoryById"
                                asp-route-pageNumber="@nextPage"
-                               asp-route-currentFilter="@ViewData["CurrentSearchFilter"]">Next</a>
+                               ><span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span></a>
                         </li>
                     </ul>
                 </nav>

@@ -9,7 +9,7 @@
 
     public interface IProductService
     {
-        Task CreateAsync(ProductInputModel model);
+        Task<int> CreateAsync(ProductInputModel model);
 
         public IEnumerable<T> GetAll<T>(int? count = null);
 
@@ -28,5 +28,7 @@
         public IEnumerable<T> GetNewProducts<T>(int? count = null);
 
         public IQueryable<TViewModel> GetAllSearchProductsAsQueryable<TViewModel>();
+
+        public  bool FindByName(string name, int id);
     }
 }

@@ -46,17 +46,20 @@
         public async Task<IActionResult> CreateProduct(ProductInputModel model)
         {
             //todo: findByName and FindById
-
-            //todo : "Details", "Product", new { area = string.Empty, model.Id }
+            var existProductName = this.productService.FindByName(model.Name, model.CategoryId);
+            if (existProductName)
+            {
+                return Json("ok");
+            }
             if (!this.ModelState.IsValid)
             {
                 model.CategoryDropDown = this.categoryDropDown.ToList();
                 return this.View(model);
             }
 
-            await this.productService.CreateAsync(model);
+            var productId = await this.productService.CreateAsync(model);
 
-            return this.RedirectToAction("AllProduct", "Product", new { area = "Administration" });
+            return this.RedirectToAction("ProductDetails", "Product", new { area = "Administration", id = productId });
         }
 
         [HttpGet]
@@ -101,10 +104,10 @@
             if (!string.IsNullOrEmpty(searchString))
             {
                 var existProduct = this.productService.GetByName(searchString);
-                
+
                 if (existProduct != null)
                 {
-                    return this.RedirectToAction("ProductDetails", "Product",new {id = existProduct.Id});
+                    return this.RedirectToAction("ProductDetails", "Product", new { id = existProduct.Id });
                 }
 
                 var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
@@ -123,7 +126,7 @@
 
         [HttpGet]
         [Authorize]
-        public IActionResult ProductDetails(int id)
+        public async Task<IActionResult> ProductDetails(int id)
         {
             var product = this.productService.GetById<ProductsViewModel>(id);
             if (product == null)
