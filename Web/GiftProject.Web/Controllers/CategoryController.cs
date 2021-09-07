@@ -29,15 +29,15 @@
             var product = await Task.Run(() => this.productService
                 .GetAllProductAsQueryable<ProductsViewModel>().Where(x => x.CategoryId == id));
 
-            var searchProduct = await Task.Run(() => this.productService
-                .GetAllSearchProductsAsQueryable<ProductsViewModel>());
+            //var searchProduct = await Task.Run(() => this.productService
+            //    .GetAllSearchProductsAsQueryable<ProductsViewModel>());
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                var existProduct = this.productService.GetByName(searchString);
-                if (existProduct != null)
+                var existProduct = this.productService.GetByNameAsync(searchString);
+                if (existProduct.Result != null)
                 {
-                    return this.RedirectToAction("Details", "Product", new { id = existProduct.Id });
+                    return this.RedirectToAction("Details", "Product", new { id = existProduct.Result.Id });
                 }
 
                 var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));

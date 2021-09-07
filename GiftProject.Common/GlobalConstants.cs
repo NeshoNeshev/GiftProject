@@ -12,11 +12,13 @@
 
         public const string AdministratorEmail = "neshev1978@gmail.com";
 
-        public const string PhoneNumber = "888 888 888";
+        public const string PhoneNumber = "0896 717 866";
 
-        public const string Email = "neshev1978@gmail.com";
+        public const string Email = "the_princes@abv.bg";
 
-        public const string SenderEmail = "ivangertse@abv.bg";
+        public const string SenderEmail = "xax0933@abv.bg";
+
+        public const string GlobalEmail = "fabulousgifts@abv.bg";
 
         public const string Address = "11 Georgi Kirkov Street";
 

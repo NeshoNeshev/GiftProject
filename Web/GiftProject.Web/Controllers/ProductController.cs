@@ -1,6 +1,5 @@
 ﻿namespace GiftProject.Web.Controllers
 {
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -15,32 +14,27 @@
     {
         private readonly IProductService productService;
         private readonly ICategoryService categoryService;
-        private readonly IEnumerable<CategoryViewModel> category;
         private const int ProductCount = 6;
 
-        public ProductController(IProductService productService, ICategoryService categoryService, IEnumerable<CategoryViewModel> category)
+        public ProductController(IProductService productService, ICategoryService categoryService)
         {
             this.productService = productService;
             this.categoryService = categoryService;
-            this.category = this.categoryService.GetAll<CategoryViewModel>();
         }
 
         public async Task<IActionResult> Product(string searchString, string currentFilter, string selectedLetter, int? pageNumber)
         {
-            this.ViewData["Current"] = nameof(this.Product);
-
             this.ViewData["CurrentSearchFilter"] = searchString;
             var product = await Task.Run(() => this.productService
                 .GetAllProductAsQueryable<ProductsViewModel>());
             var productsCount = product.Count();
             if (!string.IsNullOrEmpty(searchString))
             {
-                var existProduct = this.productService.GetByName(searchString);
-                if (existProduct != null)
+                var existProduct = this.productService.GetByNameAsync(searchString);
+                if (existProduct.Result != null)
                 {
-                    return this.RedirectToAction("Details", "Product", new { id = existProduct.Id });
+                    return this.RedirectToAction("Details", "Product", new { id = existProduct.Result.Id });
                 }
-
                 var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
                 product = any.Any() ? product.Where(m => m.Name.ToLower().Contains(searchString.ToLower())) : product.Where(x => x.CatalogueNumber.ToLower().Contains(searchString.ToLower()));
             }
@@ -52,15 +46,13 @@
             {
                 AllCategories = model,
                 Products = productPaginated,
-
             };
             return this.View(viewModel);
         }
 
-
         public IActionResult Details(int id)
         {
-            var product = this.productService.GetById<ProductsViewModel>(id);
+            var product = this.productService.GetByIdAsync(id).Result;
             if (product == null)
             {
                 return this.NotFound();

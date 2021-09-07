@@ -75,19 +75,19 @@
                     string.Format(ExceptionMessages.ProductNotFound, model.Id));
             }
 
-            var coverUrl = String.Empty;
+            var imageUrl = string.Empty;
             if (model.NewImgUrl != null)
             {
-                coverUrl = await this.cloudinaryService
+                imageUrl = await this.cloudinaryService
                    .UploadAsync(model.NewImgUrl, model.Name);
             }
             else
             {
-                coverUrl = product.ImgUrl;
+                imageUrl = product.ImgUrl;
             }
 
             product.Name = model.Name;
-            product.ImgUrl = coverUrl;
+            product.ImgUrl = imageUrl;
             product.Description = model.Description;
             product.ModifiedOn = DateTime.UtcNow;
 
@@ -152,48 +152,21 @@
             return product;
         }
 
-        public IQueryable<TViewModel> GetAllProductsByFilterAsQueryable<TViewModel>(string letter = null)
+        public async Task<ProductsViewModel> GetByNameAsync(string searchString)
         {
-            var productByFilter = Enumerable.Empty<TViewModel>().AsQueryable();
-
-            if (!string.IsNullOrEmpty(letter) && letter != AllPaginationFilter && letter != DigitPaginationFilter)
-            {
-                productByFilter = this.productRepository
-                    .All()
-                    .Where(x => x.Name.ToLower().StartsWith(letter))
-                    .To<TViewModel>();
-            }
-            else if (letter == DigitPaginationFilter)
-            {
-                var numbers = Enumerable.Range(0, 10).Select(i => i.ToString());
-                productByFilter = this.productRepository
-                    .All()
-                    .Where(x => numbers.Contains(x.Name.Substring(0, 1)))
-                    .To<TViewModel>();
-            }
-            else
-            {
-                productByFilter = this.GetAllProductAsQueryable<TViewModel>();
-            }
-
-            return productByFilter;
-        }
-
-        public ProductsViewModel GetByName(string searchString)
-        {
-            var product = this.productRepository
+            var product = await this.productRepository
                 .All().To<ProductsViewModel>()
-                .FirstOrDefault(p => p.Name.ToLower() == searchString.ToLower() || p.CatalogueNumber == searchString);
+                .FirstOrDefaultAsync(p => p.Name.ToLower() == searchString.ToLower() || p.CatalogueNumber == searchString);
 
             return product;
         }
 
-        public ProductsViewModel GetById<T>(int id)
-            => this.productRepository.All().To<ProductsViewModel>().FirstOrDefault(x => x.Id == id);
+        public async Task<ProductsViewModel> GetByIdAsync(int id)
+            => await this.productRepository.All().To<ProductsViewModel>().FirstOrDefaultAsync(x => x.Id == id);
 
         public bool FindByName(string name, int id)
         {
-            var exist =  this.productRepository.All().Any(x => x.CategoryId == id && x.Name == name);
+            var exist = this.productRepository.All().Any(x => x.CategoryId == id && x.Name.ToLower().Equals(name.ToLower()));
             return exist;
         }
     }

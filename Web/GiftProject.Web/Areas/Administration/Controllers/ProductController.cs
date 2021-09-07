@@ -45,15 +45,48 @@
         [Authorize]
         public async Task<IActionResult> CreateProduct(ProductInputModel model)
         {
-            //todo: findByName and FindById
             var existProductName = this.productService.FindByName(model.Name, model.CategoryId);
             if (existProductName)
             {
-                return Json("ok");
+                this.ModelState.AddModelError(
+                    nameof(ProductInputModel.Name),
+                    $"Съществува продукт с това име {model.Name}");
+                model.CategoryDropDown = this.categoryDropDown.ToList();
+                return this.View(model);
             }
+
             if (!this.ModelState.IsValid)
             {
                 model.CategoryDropDown = this.categoryDropDown.ToList();
+                return this.View(model);
+            }
+
+            var productId = await this.productService.CreateAsync(model);
+
+            return this.RedirectToAction("ProductDetails", "Product", new { area = "Administration", id = productId });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult CreateProductInCategory(int id)
+            => this.View(new ProductInputModel { CategoryId = id });
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CreateProductInCategory(int id, ProductInputModel model)
+        {
+            var existCategory = this.categoryService.FindById(id);
+            var existingProduct = this.productService.FindByName(model.Name, model.Id);
+            if (!existCategory)
+            {
+                this.ModelState.AddModelError(
+                    nameof(ProductInputModel.CategoryId),
+                    $"Съществува продукт с това Id {model.Name}");
+            }
+
+            model.CategoryId = id;
+            if (!this.ModelState.IsValid)
+            {
                 return this.View(model);
             }
 
@@ -95,19 +128,17 @@
         [Authorize]
         public async Task<IActionResult> AllProduct(string searchString, string currentFilter, string selectedLetter, int? pageNumber)
         {
-            this.ViewData["Current"] = nameof(this.AllProduct);
-
             this.ViewData["CurrentSearchFilter"] = searchString;
             var product = this.productService
                 .GetAllProductAsQueryable<ProductsViewModel>();
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                var existProduct = this.productService.GetByName(searchString);
+                var existProduct = this.productService.GetByNameAsync(searchString);
 
-                if (existProduct != null)
+                if (existProduct.Result != null)
                 {
-                    return this.RedirectToAction("ProductDetails", "Product", new { id = existProduct.Id });
+                    return this.RedirectToAction("ProductDetails", "Product", new { id = existProduct.Result.Id});
                 }
 
                 var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
@@ -126,9 +157,9 @@
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> ProductDetails(int id)
+        public IActionResult ProductDetails(int id)
         {
-            var product = this.productService.GetById<ProductsViewModel>(id);
+            var product = this.productService.GetByIdAsync(id).Result;
             if (product == null)
             {
                 return this.NotFound();

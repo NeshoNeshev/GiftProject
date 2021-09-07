@@ -1,14 +1,15 @@
 ﻿@{
     this.ViewData["Title"] = "Thank you";
 }
-<div class="text-center">
-
-    <h2 class="text-primary">Благодаря, че се свързахте с мен!</h2>
-    <p class="text-primary">Очаквайте отговор на посочения от вас имейл адрес.</p>
-
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4 text-primary">Благодаря, че се свързахте с нас!</h1>
+        <p class="lead">Очаквайте отговор на посочения от вас имейл адрес.</p>
+    </div>
 </div>
+
 <script>
-    window.setTimeout(function(){
-        window.location.href ='/Product/Product';
+    window.setTimeout(function () {
+        window.location.href = '/Product/Product';
     }, 4000);
 </script>

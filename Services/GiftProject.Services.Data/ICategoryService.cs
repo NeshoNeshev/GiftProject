@@ -19,6 +19,8 @@ namespace GiftProject.Services.Data
 
         public bool FindByName(string name);
 
+        public bool FindById(int id);
+
         Task<T> GetByNameAsync<T>(string name);
 
         public CategoryViewModel GetById<T>(int id);

@@ -116,6 +116,11 @@
                 .All()
                 .Any(c => c.Name == name);
 
+        public bool FindById(int id)
+            => this.categoryRepository
+                .All()
+                .Any(c => c.Id == id);
+
         public async Task<T> GetByNameAsync<T>(string name)
             => await this.categoryRepository.All().Where(x => x.Name == name).To<T>().FirstOrDefaultAsync();
 

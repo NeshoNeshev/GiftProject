@@ -1,20 +1,18 @@
-﻿
+﻿@using GiftProject.Common
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@this.ViewData["Title"] - Portfolio.Web</title>
-    @*lsdlslds*@
-    <link rel="apple-touch-icon" href="img/apple-icon.png">
+    <title>@this.ViewData["Title"] - Fabulous gifts</title>
+
+    <link rel="apple-touch-icon" href="img/Logo.png">
     <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-    @*<link rel="stylesheet" href="css/templatemo.css">*@
-    <link rel="stylesheet" href="css/custom.css">
 
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
     <link rel="stylesheet" href="css/fontawesome.min.css">
-    @*dsasa*@
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/boxicons/css/boxicons.css" />
@@ -27,14 +25,13 @@
             <div class="w-100 d-flex justify-content-between">
                 <div>
                     <i class="bx bx-envelope mx-2"></i>
-                    <a class=" text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                    <a class=" text-light text-decoration-none" href="mailto:@GlobalConstants.GlobalEmail">@GlobalConstants.GlobalEmail</a>
                     <i class="bx bx-phone"></i>
-                    <a class="text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                    <a class="text-light text-decoration-none" href="tel:@GlobalConstants.PhoneNumber">@GlobalConstants.PhoneNumber</a>
                 </div>
                 <div>
-                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="bx bxl-facebook"></i></a>
+                    <a class="text-light" href="https://www.facebook.com/Приказни-подаръчета-110850221249086/" target="_blank" rel="sponsored"><i class="bx bxl-facebook"></i></a>
                     <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="bx bxl-instagram"></i></a>
-                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="bx bxl-twitter"></i></a>
                 </div>
             </div>
         </div>
@@ -43,9 +40,9 @@
         <div class="container">
             <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">
                 <!-- Logo Image -->
-                <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2">
+                <img src="~/img/Logo.png" width="70" alt="" class="d-inline-block align-middle mr-2">
                 <!-- Logo Text -->
-                <span class="text-uppercase font-weight-bold">Company</span>
+
             </a>
 
             <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
@@ -54,7 +51,6 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active"><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-dark">Начало <span class="sr-only">(current)</span></a></li>
                     <li class="nav-item "><a asp-area="" asp-controller="Home" asp-action="About" class="nav-link text-dark">За нас</a></li>
-                    <li class="nav-item"><a asp-area="" asp-controller="Category" asp-action="AllCategories" class="nav-link text-dark">Категории</a></li>
                     <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="Product" class="nav-link text-dark">Продукти</a></li>
                     <li class="nav-item"><a asp-area="" asp-controller="Contact" asp-action="Contact" class="nav-link text-dark">Контакти</a></li>
                     <partial name="_LoginPartial" />
@@ -77,19 +73,15 @@
             <div class="row">
                 <button onclick="topFunction()" id="topButton" class="btn btn-primary btn-sm">Top</button>
                 <div class="col-md-4 pt-5">
-                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">Zay Shop</h2>
+                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">Приказни подаръци</h2>
                     <ul class="list-unstyled text-light footer-link-list">
                         <li>
-                            <i class="fas fa-map-marker-alt fa-fw"></i>
-                            123 Consectetur at ligula 10660
+                            <i class="fa bx bx-mail-send"></i>
+                            <a class="text-decoration-none" href="tel:@GlobalConstants.GlobalEmail">@GlobalConstants.GlobalEmail</a>
                         </li>
                         <li>
-                            <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
+                            <i class="fa bx bxs-phone"></i>
+                            <a class="text-decoration-none" href="mailto:@GlobalConstants.GlobalEmail">@GlobalConstants.PhoneNumber</a>
                         </li>
                     </ul>
                 </div>
@@ -125,23 +117,12 @@
                 <div class="col-auto me-auto">
                     <ul class="list-inline text-left footer-icons">
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i class="bx bxl-facebook-circle"></i></a>
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.facebook.com/Приказни-подаръчета-110850221249086/"><i class="bx bxl-facebook-circle"></i></a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
                             <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a>
                         </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i class="bx bxl-twitter"></i></a>
-                        </li>
-
                     </ul>
-                </div>
-                <div class="col-auto">
-                    <label class="sr-only" for="subscribeEmail">Email address</label>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="Email address">
-                        <div class="input-group-text btn-success text-light">Subscribe</div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -151,8 +132,7 @@
                 <div class="row pt-2">
                     <div class="col-12">
                         <p class="text-left text-light">
-                            Copyright &copy; @DateTime.UtcNow.Year Company Name
-                            | Designed by <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                            Copyright &copy; @DateTime.UtcNow.Year Fabulous gifts Всички права запазени! | Product by <a rel="sponsored" href="https://github.com/NeshoNeshev" target="_blank">Nesho Neshev</a>
                         </p>
                     </div>
                 </div>
@@ -160,13 +140,10 @@
         </div>
 
     </footer>
-    @*fsdsfs*@
-    @*<script src="js/jquery-1.11.0.min.js"></script>*@
     <script src="js/jquery-migrate-1.2.1.min.js" asp-append-version="true"></script>
     <script src="js/bootstrap.bundle.min.js" asp-append-version="true"></script>
-    <script src="js/templatemo.js" asp-append-version="true"></script>
+    <script src="js/custom.js" asp-append-version="true"></script>
     <script src="js/custom.js"></script>
-    @*csasdadsa*@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

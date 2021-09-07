@@ -74,7 +74,6 @@
 
             return this.View(category);
         }
-        //=> this.View(new EditCategoryModel() { CategoryDropDown = this.categoryDropDown.ToList() });
 
         [HttpPost]
         [Authorize]
@@ -82,7 +81,6 @@
         {
             if (!this.ModelState.IsValid)
             {
-                //model.CategoryDropDown = this.categoryDropDown.ToList();
                 return this.View(model);
             }
 

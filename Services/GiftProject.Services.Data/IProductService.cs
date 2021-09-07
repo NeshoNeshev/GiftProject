@@ -19,11 +19,9 @@
 
         public IQueryable<TViewModel> GetAllProductAsQueryable<TViewModel>();
 
-        public IQueryable<TViewModel> GetAllProductsByFilterAsQueryable<TViewModel>(string letter = null);
+        public Task<ProductsViewModel> GetByNameAsync(string searchString);
 
-        public ProductsViewModel GetByName(string searchString);
-
-        public ProductsViewModel GetById<T>(int id);
+        public Task<ProductsViewModel> GetByIdAsync(int id);
 
         public IEnumerable<T> GetNewProducts<T>(int? count = null);
 
