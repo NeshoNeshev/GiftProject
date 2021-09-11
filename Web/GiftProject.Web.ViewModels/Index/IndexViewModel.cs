@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
 
-    using GiftProject.Web.ViewModels.Category;
     using GiftProject.Web.ViewModels.Product;
 
     public class IndexViewModel

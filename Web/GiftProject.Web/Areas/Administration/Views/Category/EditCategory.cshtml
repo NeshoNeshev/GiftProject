@@ -10,7 +10,6 @@
         
         <form asp-area="Administration" asp-controller="Category" asp-action="EditCategory" enctype="multipart/form-data" method="post">
             <div class="form-group">
-                <label asp-for="Id"></label>
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -24,7 +23,7 @@
                 <span asp-validation-for="NewImgUrl" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-danger">Промени</button>
-            <a class="btn btn-primary" asp-area="" asp-controller="Category" asp-action="AllCategories" role="button">Всички</a>
+            <a class="btn btn-primary" asp-area="Administration" asp-controller="Category" asp-action="AllCategory" role="button">Всички</a>
         </form>
     </div>
 </div>

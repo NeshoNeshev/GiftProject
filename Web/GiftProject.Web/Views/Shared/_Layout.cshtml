@@ -1,4 +1,10 @@
 ﻿@using GiftProject.Common
+@using GiftProject.Web.ViewModels.Category
+@using System.Collections.Generic
+@using GiftProject.Services.Data
+@using GiftProject.Web.ViewModels.Index
+@inject ICategoryService asService
+@{ var categories = asService.GetAll<CategoryViewModel>().Take(5); }
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - Fabulous gifts</title>
 
-    <link rel="apple-touch-icon" href="img/Logo.png">
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="apple-touch-icon" href="img/NewLogo.png">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 
     <!-- Load fonts style after rendering the layout styles -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
@@ -20,6 +26,7 @@
 
 </head>
 <body>
+
     <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
         <div class="container text-light">
             <div class="w-100 d-flex justify-content-between">
@@ -30,7 +37,7 @@
                     <a class="text-light text-decoration-none" href="tel:@GlobalConstants.PhoneNumber">@GlobalConstants.PhoneNumber</a>
                 </div>
                 <div>
-                    <a class="text-light" href="https://www.facebook.com/Приказни-подаръчета-110850221249086/" target="_blank" rel="sponsored"><i class="bx bxl-facebook"></i></a>
+                    <a class="text-light" href="https://www.facebook.com/Приказни-подаръчета-110850221249086" target="_blank" rel="sponsored"><i class="bx bxl-facebook"></i></a>
                     <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="bx bxl-instagram"></i></a>
                 </div>
             </div>
@@ -61,10 +68,11 @@
 
 
     <div>
-        <partial name="_CookieConsentPartial" />
+
         <main role="main">
             @this.RenderBody()
         </main>
+        @*<partial name="_CookieConsentPartial" />*@
     </div>
 
 
@@ -76,12 +84,12 @@
                     <h2 class="h2 text-success border-bottom pb-3 border-light logo">Приказни подаръци</h2>
                     <ul class="list-unstyled text-light footer-link-list">
                         <li>
-                            <i class="fa bx bx-mail-send"></i>
-                            <a class="text-decoration-none" href="tel:@GlobalConstants.GlobalEmail">@GlobalConstants.GlobalEmail</a>
+                            <i class="fa bx bxs-phone"></i>
+                            <a class="text-decoration-none" href="tel:@GlobalConstants.PhoneNumber">@GlobalConstants.PhoneNumber</a>
                         </li>
                         <li>
-                            <i class="fa bx bxs-phone"></i>
-                            <a class="text-decoration-none" href="mailto:@GlobalConstants.GlobalEmail">@GlobalConstants.PhoneNumber</a>
+                            <i class="fa bx bx-mail-send"></i>
+                            <a class="text-decoration-none" href="mailto:@GlobalConstants.GlobalEmail">@GlobalConstants.GlobalEmail</a>
                         </li>
                     </ul>
                 </div>
@@ -89,13 +97,17 @@
                 <div class="col-md-4 pt-5">
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Продукти</h2>
                     <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Luxury</a></li>
-                        <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
-                        <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
-                        <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
-                        <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
-                        <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
-                        <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
+                        @foreach (var category in categories)
+                        {
+            <li><a class="text-decoration-none" asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-Id="@category.Id">@category.Name</a></li>
+}
+                        @*<li><a class="text-decoration-none" href="#">Luxury</a></li>
+                            <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
+                            <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
+                            <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
+                            <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
+                            <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
+                            <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>*@
                     </ul>
                 </div>
 
@@ -117,7 +129,7 @@
                 <div class="col-auto me-auto">
                     <ul class="list-inline text-left footer-icons">
                         <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://www.facebook.com/Приказни-подаръчета-110850221249086/"><i class="bx bxl-facebook-circle"></i></a>
+                            <a class="text-light text-decoration-none" target="_blank" href="https://www.facebook.com/Приказни-подаръчета-110850221249086"><i class="bx bxl-facebook-circle"></i></a>
                         </li>
                         <li class="list-inline-item border border-light rounded-circle text-center">
                             <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i class="bx bxl-instagram"></i></a>

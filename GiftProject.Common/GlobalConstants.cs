@@ -1,4 +1,6 @@
-﻿namespace GiftProject.Common
+﻿using System.Collections.Generic;
+
+namespace GiftProject.Common
 {
     public static class GlobalConstants
     {
@@ -23,5 +25,6 @@
         public const string Address = "11 Georgi Kirkov Street";
 
         public const string Town = "Burgas";
+
     }
 }

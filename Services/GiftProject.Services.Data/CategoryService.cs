@@ -19,6 +19,10 @@
         private readonly ICloudinaryService cloudinaryService;
         private readonly IDeletableEntityRepository<Product> productRepository;
 
+        public CategoryService(): this(null,null, null)
+        {
+            
+        }
         public CategoryService(IDeletableEntityRepository<Category> categoryRepository, ICloudinaryService cloudinaryService, IDeletableEntityRepository<Product> productRepository)
         {
             this.categoryRepository = categoryRepository;

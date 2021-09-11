@@ -13,11 +13,11 @@
 <div class="container py-5">
     <div class="row">
         <div class="col-lg-3">
-            <h1 class="h2 pb-4">Categories</h1>
+
             <div class="accordion" id="accordionExample">
 
                 <div id="headingOne">
-                    <h5 class="mb-0">
+                    <h5 class="mb-4">
                         <a id="acordionId" class="collapsed d-flex justify-content-between h3 text-decoration-none" style="color: #212529" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             Категории
                             <i class="fa bx bx-chevron-down-circle mt-1"></i>
@@ -26,12 +26,12 @@
                     </h5>
                 </div>
 
-                <div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <ul class="list-unstyled templatemo-accordion">
                         @foreach (var category in Model.AllCategories.Where(c => c.Products.Any()))
                         {
 
-                            <li class="pb-3">
+                            <li class="pb-3 ">
                                 <a class="collapsed d-flex justify-content-between h3 text-decoration-none" asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-id="@category.Id">
                                     @category.Name
                                     <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
@@ -51,7 +51,7 @@
                 <div class="col-md-6">
                     <ul class="list-inline shop-top-menu pb-3 pt-1">
                         <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none mr-3" asp-area="" asp-controller="Product" asp-action="Product">Всички</a>
+                            <a class="h3 text-dark text-decoration-none mr-3" asp-area="" asp-controller="Product" asp-action="Product">Всички продукти</a>
                         </li>
                     </ul>
                 </div>
