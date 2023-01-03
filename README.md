@@ -16,11 +16,11 @@
 
 -	Project dependency
 
-![Dependencies Graph](https://github.com/NeshoNeshev/LawyerServices/blob/master/PravenportalDiagram.jpg)
+![Dependencies Graph](https://github.com/NeshoNeshev/GiftProject/blob/master/GiftProjectDiagram.jpg)
 
 -	Project structure
 
-![image](https://github.com/NeshoNeshev/LawyerServices/blob/master/PravenportalSnapShot.jpg)
+![image](https://github.com/NeshoNeshev/GiftProject/blob/master/GiftProject.jpg)
 
 ### Common
 
