@@ -43,6 +43,13 @@ This solution folder contains two subfolders:
 Roles
 
 - Administrator
+Opportunities
+- Create category
+- Create product
+- All categories
+- All products
+- Search by Catalogue number 
+- Search by name
 #### GiftProject.Data.Common
 
 [GiftProject.Data.Common](https://github.com/NeshoNeshev/GiftProject/tree/master/Data/GiftProject.Data.Common) contains Repository and Base models.
