@@ -1,10 +1,11 @@
-﻿namespace GiftProject.Web.ViewModels.Administration.Product
+﻿using GiftProject.Services.Mapping;
+
+namespace GiftProject.Web.ViewModels.Administration.Product
 {
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
-    using GiftProject.Services.Mapping;
     using GiftProject.Web.ViewModels.Administration.Category;
     using Microsoft.AspNetCore.Http;
 
@@ -27,6 +28,8 @@
         [Required]
         [DisplayName("Категория")]
         public int CategoryId { get; set; }
+
+        public string CategoryName { get; set; }
 
         public ICollection<CategoryDropDownModel> CategoryDropDown { get; set; }
     }

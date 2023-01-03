@@ -35,6 +35,7 @@
                 {
                     return this.RedirectToAction("Details", "Product", new { id = existProduct.Result.Id });
                 }
+
                 var any = product.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
                 product = any.Any() ? product.Where(m => m.Name.ToLower().Contains(searchString.ToLower())) : product.Where(x => x.CatalogueNumber.ToLower().Contains(searchString.ToLower()));
             }

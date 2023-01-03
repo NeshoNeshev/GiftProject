@@ -10,30 +10,41 @@
     public class VoteService : IVoteService
     {
         private readonly IDeletableEntityRepository<ProductVote> voteRepository;
+        private readonly IDeletableEntityRepository<Product> productRepository;
 
-        public VoteService(IDeletableEntityRepository<ProductVote> voteRepository)
+        public VoteService(IDeletableEntityRepository<ProductVote> voteRepository, IDeletableEntityRepository<Product> productRepository)
         {
             this.voteRepository = voteRepository;
+            this.productRepository = productRepository;
         }
 
-        public async Task VoteAsync(int productId, string userId, bool isUpVote)
+        public async Task VoteAsync(int productId, bool isUpVote)
         {
-            var vote = this.voteRepository.All()
-                .FirstOrDefault(x => x.ProductId == productId && x.ApplicationUserId == userId);
-            if (vote != null)
+            var productVote = this.productRepository.All().FirstOrDefault(x => x.Id == productId);
+            if (productVote != null)
             {
-                vote.Vote = isUpVote ? VoteType.UpVote : VoteType.Neutral;
-            }
-            else
-            {
-                vote = new ProductVote
+                var vote = new ProductVote
                 {
                     ProductId = productId,
-                    ApplicationUserId = userId,
                     Vote = isUpVote ? VoteType.UpVote : VoteType.Neutral,
                 };
                 await this.voteRepository.AddAsync(vote);
             }
+            //var vote = this.voteRepository.All()
+            //    .FirstOrDefault(x => x.ProductId == productId);
+            //if (vote != null)
+            //{
+            //    vote.Vote = !isUpVote ? VoteType.Neutral : VoteType.UpVote;
+            //}
+            //else
+            //{
+            //    vote = new ProductVote
+            //    {
+            //        ProductId = productId,
+            //        Vote = isUpVote ? VoteType.UpVote : VoteType.Neutral,
+            //    };
+            //    await this.voteRepository.AddAsync(vote);
+            //}
 
             await this.voteRepository.SaveChangesAsync();
         }

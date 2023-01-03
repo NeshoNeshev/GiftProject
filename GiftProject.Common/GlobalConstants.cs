@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace GiftProject.Common
+﻿namespace GiftProject.Common
 {
     public static class GlobalConstants
     {
@@ -8,21 +6,21 @@ namespace GiftProject.Common
 
         public const string AdministratorRoleName = "Administrator";
 
-        public const string AdministratorUserName = "neshev1978@gmail.com";
+        public const string AdministratorUserName = "admin@admin.com";
 
         public const string AdministratorPassword = "Administrator";
 
-        public const string AdministratorEmail = "neshev1978@gmail.com";
+        public const string AdministratorEmail = "admin@admin.com";
 
-        public const string PhoneNumber = "0896 717 866";
+        public const string PhoneNumber = "0888888888";
 
-        public const string Email = "the_princes@abv.bg";
+        public const string Email = "admin@admin.com";
 
-        public const string SenderEmail = "xax0933@abv.bg";
+        public const string SenderEmail = "admin@admin.com";
 
-        public const string GlobalEmail = "fabulousgifts@abv.bg";
+        public const string GlobalEmail = "admin@admin.com";
 
-        public const string Address = "11 Georgi Kirkov Street";
+        public const string Address = " Burgas / Bulgaria";
 
         public const string Town = "Burgas";
 

@@ -16,19 +16,15 @@
             <div class="container">
                 <div class="row p-5">
                     <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                        <img class="img-fluid" src="img/Front/viber_изображение_2021-09-10_15-00-09-494-removebg-preview.png" alt="">
+                        <img class="img-fluid" src="img/present-preview.png" alt="">
                     </div>
                     <div class="col-lg-6 mb-0 d-flex align-items-center">
                         <div class="text-align-left align-self-center">
                             <h1 class="h1 text-success"><b>Приказни</b> подаръци</h1>
-                            <h3 class="h2">Перфектните подаръци за вашият повод</h3>
+
                             <p>
-                                Zay Shop is an eCommerce HTML5 CSS template with latest version of Bootstrap 5 (beta 1).
-                                This template is 100% free provided by <a rel="sponsored" class="text-success" >Fabulous gifts</a> website.
-                                Image credits go to <a rel="sponsored" class="text-success" href="https://stories.freepik.com/" target="_blank">Freepik Stories</a>,
-                                <a rel="sponsored" class="text-success" href="https://unsplash.com/" target="_blank">Unsplash</a> and
-                                <a rel="sponsored" class="text-success" href="https://icons8.com/" target="_blank">Icons 8</a>.
-                            </p>
+                                Перфектните подаръци за вашият повод <a rel="sponsored" class="text-success" asp-area="" asp-controller="Product" asp-action="Product">Виж повече...</a>,
+
                         </div>
                     </div>
                 </div>
@@ -38,16 +34,16 @@
             <div class="container">
                 <div class="row p-5">
                     <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                        <img class="img-fluid" src="img/Front/guardian-angel-1690840_1280-removebg-preview.png" alt="">
+                        <img class="img-fluid" src="img/gift-box-new1.png" alt="">
                     </div>
                     <div class="col-lg-6 mb-0 d-flex align-items-center">
                         <div class="text-align-left">
-                            
-                            <h3 class="h2">Комплекти за кръщене</h3>
-                            <br/>
+
+                            <h3 class="h2">Вълшебства от картон.</h3>
+                            <br />
                             <p>
-                                You are permitted to use this Zay CSS template for your commercial websites.
-                                You are <strong>not permitted</strong> to re-distribute the template ZIP file in any kind of template collection websites.
+                                В тази категория може да откриете вълшебствата които сме изработили от картон,
+                                като <strong>Картонени торти</strong> визитки, стикери, банери и др.
                             </p>
                         </div>
                     </div>
@@ -62,10 +58,10 @@
                     </div>
                     <div class="col-lg-6 mb-0 d-flex align-items-center">
                         <div class="text-align-left">
-                            <h3 class="h2">Елементи от керамична смес.</h3>
+                            <h3 class="h2">Вълшебства от керамична смес.</h3>
                             <p>
-                                We bring you 100% free CSS templates for your websites.
-                                If you wish to support TemplateMo, please make a small contribution via PayPal or tell your friends about our website. Thank you.
+                                В тази категория може да откриете уникални и нестандарни изделия изработени лично от нас,
+                                подходящи за всеки ваш повод.
                             </p>
                         </div>
                     </div>
@@ -86,28 +82,32 @@
         <div class="row text-center py-3">
             <div class="col-lg-6 m-auto">
                 <h1 class="h1">Най-нови продукти</h1>
-            
+
             </div>
         </div>
         <div class="row">
+            @if (!Model.ProductsViewModels.Any())
+            {
+
+            }
             @foreach (var product in Model.ProductsViewModels)
             {
-               
+
                 <div class="col-md-4">
                     <div class="card mb-4 product-wap rounded-0">
                         <div class="card rounded-0">
-                            <img class="card-img-top" src="/img/feature_prod_01.jpg" alt="@product.Name" width="500" height="350">
+                            <img class="card-img-top" src="@product.ImgUrl" alt="@product.Name" width="500" height="350">
                             <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                 <ul class="list-unstyled">
                                     <form id="votesForm" method="post"></form>
-                                    <li><a class="btn btn-primary text-white"  onclick="upVote(@product.Id)"><i class="bx bx-heart"></i></a></li>
+                                    <li><a class="btn btn-primary text-white" onclick="upVote(@product.Id)"><i class="bx bx-heart"></i></a></li>
                                     <li><a class="btn btn-primary text-white mt-2" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"><i class="bx bx-happy-heart-eyes"></i></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="card-body text-center">
                             <h5 class="text-decoration-none">@product.Name</h5>
-                            <p id="votesCount" class="bx bxs-heart text-primary"> @product.VotesCount</p>
+                            <p id="@product.Id" class="bx bxs-heart text-primary"> @product.VotesCount</p>
                             <a class="text-decoration-none" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">
                                 <p class="text-center mb-0">@product.ShortDescription</p>
                             </a>
@@ -120,12 +120,12 @@
 </section>
 @section Scripts
 {
-
     <script>
         function upVote(productId) {
 
             var token = $("#votesForm input[name=__RequestVerificationToken]").val();
             var json = { productId: productId, isUpVote: true };
+
             console.log(json);
             $.ajax({
                 url: "/api/votes",
@@ -135,7 +135,8 @@
                 dataType: "json",
                 headers: { 'X-CSRF-TOKEN': token },
                 success: function (data) {
-                    $("#votesCount").html(data.votesCount);
+                    var id = "#" + productId.toString();
+                    $(id).html(data.votesCount);
                 }
             });
         }

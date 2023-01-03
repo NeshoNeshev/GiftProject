@@ -13,7 +13,7 @@
                         <div class="address">
                             <i class="bx bx-location-plus"></i>
                             <h4>Адрес:</h4>
-                            <p>@GlobalConstants.Address @GlobalConstants.Town</p>
+                            <p>@GlobalConstants.Address</p>
                         </div>
 
                         <div class="email">
@@ -31,7 +31,6 @@
                 </div>
                 <div class="col-lg-8 mt-5 mt-lg-0">
                     <form method="post">
-                        <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
                             <label asp-for="Name"></label>
                             <input asp-for="Name" class="form-control" />
@@ -60,7 +59,7 @@
         </div>
     </section>
 </div>
-@*@section Scripts
+@section Scripts
 {
     <script src="https://www.google.com/recaptcha/api.js?render=@this.Configuration["GoogleReCaptcha:Key"]"></script>
     <script>
@@ -70,4 +69,4 @@
             });
         });
     </script>
-}*@
+}

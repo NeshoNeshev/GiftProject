@@ -74,6 +74,28 @@
                 @foreach (var product in Model.Products)
                 {
                     <div class="col-md-4">
+                        @*<div class="a-box">
+                            <div class="img-container ">
+                                <div class="img-inner">
+                                    <div class="inner-skew ">
+                                        <img src="@product.ImgUrl" alt="@product.Name">
+                                        <ul class="list-unstyled">
+                                            <form id="votesForm" method="post"></form>
+                                            <li><a class="btn btn-primary text-white" onclick="upVote(@product.Id)"><i class="bx bx-heart"></i></a></li>
+                                            <li><a class="btn btn-primary text-white mt-2" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id"><i class="bx bx-happy-heart-eyes"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-container">
+                                <h4 class="h3 text-decoration-none">@product.Name</h4>
+
+                                <p id="@product.Id" class="py-2 text-center text-primary">Харесвания: @product.VotesCount</p>
+                                <a class="text-decoration-none" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">
+                                    <p class="text-center mb-0">@product.ShortDescription</p>
+                                </a>
+                            </div>
+                        </div>*@
                         <div class="card mb-4 product-wap rounded-0">
                             <div class="card rounded-0">
                                 <img class="card-img rounded-0 img-fluid" src="@product.ImgUrl" alt="">
@@ -87,8 +109,8 @@
                             </div>
                             <div class="card-body text-center">
                                 <h4 class="h3 text-decoration-none">@product.Name</h4>
-                                
-                                <p id="votesCount" class="py-2 text-center text-primary">Харесвания: @product.VotesCount</p>
+
+                                <p id="@product.Id" class="py-2 text-center text-primary">Харесвания: @product.VotesCount</p>
                                 <a class="text-decoration-none" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">
                                     <p class="text-center mb-0">@product.ShortDescription</p>
                                 </a>
@@ -99,7 +121,7 @@
             </div>
             @if (Model.Products.TotalPages != 0)
             {
-                <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation example" class="mt-4">
                     <ul class="pagination justify-content-center">
                         <li class="page-item @prevDisabled">
                             <a class="page-link " aria-label="Previous" asp-action="Product"
@@ -149,7 +171,8 @@
                 dataType: "json",
                 headers: { 'X-CSRF-TOKEN': token },
                 success: function (data) {
-                    $("#votesCount").html(data.votesCount);
+                    var id ="#" + productId.toString();
+                    $(id).html("Харесвания:" + data.votesCount);
                 }
             });
         }

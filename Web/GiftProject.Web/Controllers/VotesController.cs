@@ -14,20 +14,16 @@
     public class VotesController : ControllerBase
     {
         private readonly IVoteService voteService;
-        private readonly UserManager<ApplicationUser> user;
 
-        public VotesController(IVoteService voteService, UserManager<ApplicationUser> user)
+        public VotesController(IVoteService voteService)
         {
             this.voteService = voteService;
-            this.user = user;
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<VoteResponseModel>> Vote(VoteInputModel input)
         {
-            var userId = this.user.GetUserId(this.User);
-            await this.voteService.VoteAsync(input.ProductId, userId, input.IsUpVote);
+            await this.voteService.VoteAsync(input.ProductId, input.IsUpVote);
             var votes = this.voteService.GetVotes(input.ProductId);
             return new VoteResponseModel { VotesCount = votes };
         }

@@ -52,14 +52,14 @@
             }
 
             await this.categoryService.CreateAsync(input);
-            return this.RedirectToAction("CreateProduct", "Product", new { area = "Administration" });
+            return this.RedirectToAction("AllCategory", "Category", new { area = "Administration" });
         }
 
         [Authorize]
         public async Task<IActionResult> Delete(int categoryId)
         {
             await this.categoryService.DeleteByIdAsync(categoryId);
-            return this.RedirectToAction("Index", "Dashboard", new { area = "Administration" });
+            return this.RedirectToAction("AllCategory", "Category", new { area = "Administration" });
         }
 
         [HttpGet]
@@ -85,7 +85,7 @@
             }
 
             await this.categoryService.EditAsync(model);
-            return this.RedirectToAction("Index", "Dashboard", new { area = "Administration" });
+            return this.RedirectToAction("AllCategory", "Category", new { area = "Administration" });
         }
 
         [HttpGet]

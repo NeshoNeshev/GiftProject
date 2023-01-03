@@ -5,11 +5,13 @@
 @using GiftProject.Web.ViewModels.Index
 @inject ICategoryService asService
 @{ var categories = asService.GetAll<CategoryViewModel>().Take(5); }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content="2t-FxxggvX2qNCkfbX5un8potewmHnM7iEb4u2XY_zk" />
     <title>@this.ViewData["Title"] - Fabulous gifts</title>
 
     <link rel="apple-touch-icon" href="img/NewLogo.png">
@@ -59,6 +61,7 @@
                     <li class="nav-item active"><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-dark">Начало <span class="sr-only">(current)</span></a></li>
                     <li class="nav-item "><a asp-area="" asp-controller="Home" asp-action="About" class="nav-link text-dark">За нас</a></li>
                     <li class="nav-item"><a asp-area="" asp-controller="Product" asp-action="Product" class="nav-link text-dark">Продукти</a></li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Category" asp-action="AllCategories" class="nav-link text-dark">Категории</a></li>
                     <li class="nav-item"><a asp-area="" asp-controller="Contact" asp-action="Contact" class="nav-link text-dark">Контакти</a></li>
                     <partial name="_LoginPartial" />
                 </ul>
@@ -81,7 +84,7 @@
             <div class="row">
                 <button onclick="topFunction()" id="topButton" class="btn btn-primary btn-sm">Top</button>
                 <div class="col-md-4 pt-5">
-                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">Приказни подаръци</h2>
+                    <h2 class="h2 text-light border-bottom pb-3 border-light logo">Приказни подаръци</h2>
                     <ul class="list-unstyled text-light footer-link-list">
                         <li>
                             <i class="fa bx bxs-phone"></i>
@@ -154,7 +157,7 @@
     </footer>
     <script src="js/jquery-migrate-1.2.1.min.js" asp-append-version="true"></script>
     <script src="js/bootstrap.bundle.min.js" asp-append-version="true"></script>
-    <script src="js/custom.js" asp-append-version="true"></script>
+    @*<script src="js/custom.js" asp-append-version="true"></script>*@
     <script src="js/custom.js"></script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

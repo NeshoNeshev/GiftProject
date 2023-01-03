@@ -6,14 +6,13 @@
 
     using CloudinaryDotNet;
     using GiftProject.Common;
+    using GiftProject.Data.Models;
     using GiftProject.Services.Data;
-    using GiftProject.Web.CloudinaryHelper;
     using GiftProject.Web.Infrastructure.Pagination;
     using GiftProject.Web.ViewModels.Administration.Category;
     using GiftProject.Web.ViewModels.Administration.Product;
     using GiftProject.Web.ViewModels.Product;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -69,7 +68,14 @@
         [HttpGet]
         [Authorize]
         public IActionResult CreateProductInCategory(int id)
-            => this.View(new ProductInputModel { CategoryId = id });
+            => this.View(new ProductInputModel { CategoryId = id, CategoryName = this.GetCategoryName(id) });
+
+        private string GetCategoryName(int id)
+        {
+            var category = this.categoryService.GetById<Category>(id);
+
+            return category.Name;
+        }
 
         [HttpPost]
         [Authorize]

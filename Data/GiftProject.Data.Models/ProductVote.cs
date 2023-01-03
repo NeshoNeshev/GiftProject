@@ -11,10 +11,6 @@
 
         public Product Product { get; set; }
 
-        public string ApplicationUserId { get; set; }
-
-        public ApplicationUser ApplicationUser { get; set; }
-
         public VoteType Vote { get; set; }
 
         public DateTime NextVoteDate { get; set; }

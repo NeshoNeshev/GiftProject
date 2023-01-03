@@ -8,7 +8,7 @@
     using GiftProject.Data.Models;
     using GiftProject.Services.Data.Common;
     using Microsoft.EntityFrameworkCore;
-
+    //Todo: delete
     public class RatingsService : IRatingsService
     {
         private readonly IDeletableEntityRepository<ProductVote> _productvoteRepository;
@@ -22,7 +22,7 @@
         {
             var starRating = await this._productvoteRepository
                 .All()
-                .FirstOrDefaultAsync(x => x.ProductId == productId && x.ApplicationUserId == userId);
+                .FirstOrDefaultAsync(x => x.ProductId == productId);
 
             if (starRating != null)
             {
@@ -39,7 +39,6 @@
                 starRating = new ProductVote
                 {
                     ProductId = productId,
-                    ApplicationUserId = userId,
                     //Vote = rating,
                     NextVoteDate = DateTime.UtcNow.AddDays(1),
                 };
@@ -64,7 +63,7 @@
         {
             var starRating = await this._productvoteRepository
                 .All()
-                .FirstAsync(x => x.ProductId == productId && x.ApplicationUserId == userId);
+                .FirstAsync(x => x.ProductId == productId);
 
             return starRating.NextVoteDate;
         }

@@ -47,11 +47,11 @@
                 <div class="col-md-6">
                     <ul class="list-inline shop-top-menu pb-3 pt-1">
                         <li class="list-inline-item">
-                            <a class="h3 text-dark text-decoration-none mr-3" asp-area="" asp-controller="Product" asp-action="Product">Всички</a>
+                            <a class="h3 text-dark text-decoration-none mr-3" asp-area="" asp-controller="Product" asp-action="Product">Всички продукти</a>
                         </li>
                     </ul>
                 </div>
-                
+
                 <div class="col-md-6 pb-4">
                     <form action="">
                         <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
@@ -80,8 +80,8 @@
                             </div>
                             <div class="card-body text-center">
                                 <h4 class="h3 text-decoration-none">@product.Name</h4>
-                                
-                                <p id="votesCount" class="py-2 text-center text-primary">Харесвания: @product.VotesCount</p>
+
+                                <p id="@product.Id" class="py-2 text-center text-primary">Харесвания: @product.VotesCount</p>
                                 <a class="text-decoration-none" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">
                                     <p class="text-center mb-0">@product.ShortDescription</p>
                                 </a>
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                 }
-               
+
             </div>
             @if (Model.Products.TotalPages != 0)
             {
@@ -97,9 +97,10 @@
                     <ul class="pagination justify-content-center">
                         <li class="page-item @prevDisabled">
                             <a class="page-link " aria-label="Previous" asp-action="CategoryById"
-                               asp-route-pageNumber="@prevPage"
-                               ><span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span></a>
+                               asp-route-pageNumber="@prevPage">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
                         </li>
                         @for (int i = 1; i <= Model.Products.TotalPages; i++)
                         {
@@ -114,9 +115,10 @@
                         }
                         <li class="page-item @nextDisabled">
                             <a class="page-link" aria-label="Next" asp-action="CategoryById"
-                               asp-route-pageNumber="@nextPage"
-                               ><span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span></a>
+                               asp-route-pageNumber="@nextPage">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
                         </li>
                     </ul>
                 </nav>
@@ -125,3 +127,27 @@
 
     </div>
 </div>
+@section Scripts
+{
+
+    <script>
+        function upVote(productId) {
+
+            var token = $("#votesForm input[name=__RequestVerificationToken]").val();
+            var json = { productId: productId, isUpVote: true };
+            console.log(json);
+            $.ajax({
+                url: "/api/votes",
+                type: "POST",
+                data: JSON.stringify(json),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                headers: { 'X-CSRF-TOKEN': token },
+                success: function (data) {
+                    var id = "#" + productId.toString();
+                    $(id).html("Харесвания:" + data.votesCount);
+                }
+            });
+        }
+    </script>
+}

@@ -1,157 +1,79 @@
-﻿@page
-@model RegisterModel
-@{
-    ViewData["Title"] = "Register";
+﻿.rc-anchor-invisible {
+    height: 60px;
+    width: 256px;
+    display: flex;
 }
-<style>
-    .o-hidden {
-        overflow: hidden !important;
-    }
-    form.user .custom-checkbox.small label {
-        line-height: 1.5rem;
-    }
-
-    form.user .form-control-user {
-        font-size: 0.8rem;
-        border-radius: 10rem;
-        padding: 1.5rem 1rem;
-    }
-
-    form.user .btn-user {
-        font-size: 0.8rem;
-        border-radius: 10rem;
-        padding: 0.75rem 1rem;
-    }
-    .bg-login-image {
-        background: url("https://source.unsplash.com/K4mSJ7kc0As/600x800");
-        background-position: center;
-        background-size: cover;
-    }
-
-    .bg-register-image {
-        background: url("https://source.unsplash.com/Mv9hjnEUHR4/600x800");
-        background-position: center;
-        background-size: cover;
-    }
-
-    .bg-password-image {
-        background: url("https://source.unsplash.com/oWTW-jNGl9I/600x800");
-        background-position: center;
-        background-size: cover;
-    }
-    .text-gray-900 {
-        color: #3a3b45 !important;
-    }
-</style>
-<div class="container">
-
-    <div class="card o-hidden border-0 shadow-lg my-5">
-        <div class="card-body p-0">
-
-            <div class="row">
-                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-                <div class="col-lg-7">
-                    <div class="p-5">
-                        <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Създаване на нов акаунт!</h1>
-                        </div>
-                        <div asp-validation-summary="All" class="text-danger"></div>
-                        <form class="user" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                           
-                            <div class="form-group">
-                                <label asp-for="Input.Email"></label>
-                                <input asp-for="Input.Email" type="email" id="exampleInputEmail" class="form-control form-control-user" placeholder="Вашият email адрес" />
-                                <span asp-validation-for="Input.Email" class="text-danger"></span>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <label asp-for="Input.Password"></label>
-                                    <input asp-for="Input.Password" type="password" id="exampleInputPassword" class="form-control form-control-user" placeholder="Парола" />
-                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                                </div>
-                                <div class="col-sm-6">
-                                    <label asp-for="Input.ConfirmPassword"></label>
-                                    <input asp-for="Input.ConfirmPassword" type="password" class="form-control form-control-user"
-                                           id="exampleRepeatPassword" placeholder="Повторете паролата" />
-                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-user btn-block">Регистрация</button>
-                            
-                            <hr>
-                            
-                        </form>
-                        <hr>
-                        <div class="text-center">
-                            <a class="small" asp-page="./ForgotPassword">Забравена парола?</a>
-                        </div>
-                        <div class="text-center">
-                            <a class="small" asp-page="./Login">Вече имате акаунт? Вход!</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-@*<div class="container py-5">
-    <h1>Регистрация</h1>
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                <h4>Създаване на нов акаунт.</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" placeholder="Вашият email адрес" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" placeholder="Парола" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.ConfirmPassword"></label>
-                    <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Повторете паролата" />
-                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                </div>
-                <button type="submit" class="btn btn-primary">Регистрация</button>
-            </form>
-        </div>*@
-        @*<div class="col-md-6 col-md-offset-2">
-            <section>
-                <h4>Use another service to register.</h4>
-                <hr />
-                @{
-                    if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                    {
-                        <div>
-                            <p>
-                                There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                                for details on setting up this ASP.NET application to support logging in via external services.
-                            </p>
-                        </div>
-                    }
-                    else
-                    {
-                        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                            <div>
-                                <p>
-                                    @foreach (var provider in Model.ExternalLogins)
-                                    {
-                                        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                    }
-                                </p>
-                            </div>
-                        </form>
-                    }
-                }
-            </section>
-        </div>*@
-
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+.rc-anchor-light {
+    background: #f9f9f9;
+    color: #000;
+}
+.rc-anchor {
+    border-radius: 3px;
+    box-shadow: 0 0 4px 1px rgb(0 0 0 / 8%);
+    -webkit-box-shadow: 0 0 4px 1px rgb(0 0 0 / 8%);
+    -moz-box-shadow: 0 0 4px 1px rgba(0,0,0,0.08);
+}
+.rc-anchor-aria-status {
+    display: none;
+}
+.rc-anchor-error-msg-container {
+    color: #ff0000;
+    font-family: Roboto,helvetica,arial,sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    left: 0;
+    line-height: 14px;
+    margin: 2px;
+    position: absolute;
+    top: 0;
+}
+.rc-anchor-invisible-text {
+    background: #1a73e8;
+    color: white;
+    display: flex;
+    flex-basis: 166px;
+    flex-direction: column;
+    flex-grow: 1;
+    font-family: Roboto,helvetica,arial,sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    height: 100%;
+    justify-content: center;
+    line-height: 20px;
+    padding: 0 16px;
+    white-space: nowrap;
+}
+.rc-anchor-invisible-nohover .rc-anchor-invisible-text .rc-anchor-pt, .rc-anchor-invisible-hover:hover .rc-anchor-invisible-text .rc-anchor-pt {
+    opacity: 1;
+}
+.rc-anchor-pt a {
+    display: inline;
+    padding-left: 1px;
+    padding-right: 1px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-decoration: none;
+}
+.rc-anchor-normal-footer {
+    display: inline-block;
+    height: 74px;
+    vertical-align: top;
+    width: 70px;
+}
+.rc-anchor-invisible-nohover .rc-anchor-logo-img-large, .rc-anchor-invisible-hover:hover .rc-anchor-logo-img-large {
+    background-size: 44px;
+    margin: 8px 13px 0 13px;
+    height: 44px;
+    width: 44px;
+}
+.rc-anchor-logo-img-large {
+    transition: all 0.3s ease;
+    background-size: 40px;
+    margin: 5px 15px 0 15px;
+    height: 40px;
+    width: 40px;
+}
+.rc-anchor-logo-img {
+    background: url(https://www.gstatic.com/recaptcha/api2/logo_48.png);
+    background-repeat: no-repeat;
 }

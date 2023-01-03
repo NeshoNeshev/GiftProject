@@ -6,7 +6,7 @@
 
 <section class="bg-light">
 
-    
+
     <div class="container py-5 mt-3">
         <div class="row text-center pt-3">
             <div class="col-lg-6 m-auto">
@@ -18,26 +18,21 @@
             {
 
                 <div class="col-12 col-md-4 mb-4">
-                    <div class="card h-100">
-                        <a asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-Id="@category.Id">
-                            <img src="@category.ImgUrl" class="card-img-top" alt="@category.Name" width="800" height="400">
-                        </a>
-                        <div class="card-body">
-                            <ul class="list-unstyled d-flex justify-content-between">
-                                <li>
-                                    <i class="text-warning bx bx-star"></i>
-                                    <i class="text-warning bx bx-star"></i>
-                                    <i class="text-warning bx bx-star"></i>
-                                    <i class="text-muted bx bx-star"></i>
-                                    <i class="text-muted bx bx-star"></i>
-                                </li>
-                                <li class="text-muted text-right">$240.00</li>
-                            </ul>
-                            <h3 style="text-align: center">@category.Name</h3>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt in culpa qui officia deserunt.
-                            </p>
-                            <p class="text-muted">Products @category.Products.Count()</p>
+                    <div class="a-box">
+                        <div class="img-container">
+                            <div class="img-inner">
+                                <div class="inner-skew">
+                                    <a asp-area="" asp-controller="Category" asp-action="CategoryById" asp-route-Id="@category.Id">
+                                        <img src="@category.ImgUrl" alt="@category.Name">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-container">
+                            <h3>@category.Name</h3>
+                            <div>
+                                Продукти: @category.Products.Count()
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -45,3 +40,4 @@
         </div>
     </div>
 </section>
+

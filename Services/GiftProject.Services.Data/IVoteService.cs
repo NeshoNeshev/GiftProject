@@ -4,7 +4,7 @@
 
     public interface IVoteService
     {
-        Task VoteAsync(int productId, string userId, bool isUpVote);
+        Task VoteAsync(int productId, bool isUpVote);
 
         int GetVotes(int productId);
     }

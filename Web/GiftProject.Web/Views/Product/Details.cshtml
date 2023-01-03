@@ -80,7 +80,7 @@
                                         <p class="text-center mt-1">Категория: @product.CategoryName</p>
                                     </li>
                                 </ul>
-                                <p id="votesCount" class="bx bxs-heart text-primary"> @product.VotesCount</p>
+                                <p id="@product.Id" class="bx bxs-heart text-primary"> @product.VotesCount</p>
                                 <a class="text-decoration-none" asp-controller="Product" asp-action="Details" asp-route-id="@product.Id">
                                     <p class="text-center mb-0">@product.ShortDescription</p>
                                 </a>
@@ -109,7 +109,8 @@
                 dataType: "json",
                 headers: { 'X-CSRF-TOKEN': token },
                 success: function (data) {
-                    $("#votesCount").html(data.votesCount);
+                    var id = "#" + productId.toString();
+                    $(id).html(data.votesCount);
                 }
             });
         }

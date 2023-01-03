@@ -26,6 +26,7 @@
             await using var destinationStream = new MemoryStream(destinationImage);
 
             fileName = fileName.Replace("&", "And");
+            //todo: Try Catch
             var uploadParams = new ImageUploadParams()
             {
                 File = new FileDescription(fileName, destinationStream),

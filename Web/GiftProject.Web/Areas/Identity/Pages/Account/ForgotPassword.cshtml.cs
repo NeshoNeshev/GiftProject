@@ -1,4 +1,6 @@
-﻿namespace GiftProject.Web.Areas.Identity.Pages.Account
+﻿using GiftProject.Common;
+
+namespace GiftProject.Web.Areas.Identity.Pages.Account
 {
     using System.ComponentModel.DataAnnotations;
     using System.Text;
@@ -57,7 +59,7 @@
                     protocol: Request.Scheme);
 
                 await this.emailSender.SendEmailAsync(
-                    "nesho1978@abv.bg",
+                    GlobalConstants.SenderEmail,
                     "AYNPlatform",
                     this.Input.Email,
                     "Reset Password",
